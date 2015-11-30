@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="/jquery/jquery.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+
+
+<script>
+    $( document ).ready(function() {
+        console.log( "document loaded" );
+    });
+</script>
+
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h1>This is great</h1>
+            <p>Welcome to templating using EJS</p>
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+    
+</body>
+</html>
