@@ -8,6 +8,30 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var flash = require('connect-flash');
+var session = require('express-session');
+var mongoose = require('mongoose');
+var fs = require("fs");
+
+mongoose.connect('mongodb://localhost/users', function (error) {
+    if (error) {
+        console.log(error);
+    }
+    else{
+        console.log("connection done");
+    }
+});
+
+
+// Asynchronous - Opening File
+// fs.writeFile('helloworld.txt', 'Hello World!', function (err) {
+//     if (err) 
+//         return console.log(err);
+//     console.log('Hello World > helloworld.txt');
+// });
+
+
+
 
 var app = express();
 
@@ -21,6 +45,16 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(session({
+    secret: 'keyboard cat',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+//https://github.com/expressjs/session/issues/56
+app.use(flash());
+
+
 app.use(logger('dev')); 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

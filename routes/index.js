@@ -4,6 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	// console.log(__dirname);
+	req.flash('info', 'Flash is back!')
   var drinks = [
         { name: 'Bloody Mary', drunkness: 3 },
         { name: 'Martini', drunkness: 5 },
