@@ -4,6 +4,9 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	// console.log(__dirname);
+  console.log("in index");
+  justPrintSomething()
+
 	req.flash('info', 'Flash is back!')
   var drinks = [
         { name: 'Bloody Mary', drunkness: 3 },
@@ -21,6 +24,7 @@ router.get('/', function(req, res, next) {
 
 /* GET home page. */
 router.get('/index', function(req, res, next) {
+  console.log("in index");
   res.render('basicPages/index', { title: 'Express' });
 });
 
@@ -28,5 +32,9 @@ router.get('/index', function(req, res, next) {
 router.get('/about', function(req, res, next) {
   res.render('basicPages/about', { title: 'Express' });
 });
+
+var justPrintSomething = function(){
+    console.log("print something");
+}
 
 module.exports = router;

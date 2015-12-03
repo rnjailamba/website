@@ -10,19 +10,13 @@ var users = require('./routes/users');
 
 var flash = require('connect-flash');
 var session = require('express-session');
-var mongoose = require('mongoose');
 var passport = require('passport');
 
 var fs = require("fs");
+var userModel = require('./model/user');
 
-mongoose.connect('mongodb://localhost/users', function (error) {
-    if (error) {
-        console.log(error);
-    }
-    else{
-        console.log("connection done");
-    }
-});
+var configDB = require('./config/mongo.js');
+
 
 
 // Asynchronous - Opening File
@@ -31,9 +25,6 @@ mongoose.connect('mongodb://localhost/users', function (error) {
 //         return console.log(err);
 //     console.log('Hello World > helloworld.txt');
 // });
-
-
-
 
 var app = express();
 
@@ -48,6 +39,8 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
+var passportConfig = require('./config/passport'); // pass passport for configuration
+
 // required for passport
 
 app.use(session({
@@ -59,6 +52,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 
 app.use(logger('dev')); // log every request to the console
