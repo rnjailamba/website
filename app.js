@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
@@ -58,7 +57,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(logger('dev')); // log every request to the console
 app.use(bodyParser.json());// get information from html forms
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());// read cookies (needed for auth)   
+// app.use(cookieParser());// read cookies (needed for auth)   
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
