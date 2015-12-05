@@ -80,6 +80,8 @@ passport.use('signup', new LocalStrategy({
                         newUser.firstName = req.param('firstName');
                         newUser.lastName = req.param('lastName');
 
+                        console.log(newUser);
+
                         // save the user
                         newUser.save(function(err) {
                             if (err){
@@ -102,3 +104,5 @@ passport.use('signup', new LocalStrategy({
     var createHash = function(password){
         return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
     }
+
+

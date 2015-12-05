@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 	// console.log(__dirname);
   console.log("in index");
-  justPrintSomething()
+  justPrintSomething();
 
 	req.flash('info', 'Flash is back!')
   var drinks = [
