@@ -3,6 +3,29 @@ var router = express.Router();
 var User1 = require('../model/user1');
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config/config'); // get our config file
+var path = require('path');
+
+var unless = require('express-unless');
+
+var app = express();
+var session = require('express-session');
+
+app.use(session({
+    secret: 'keyboard cat',
+    proxy: true,
+    resave: true,
+    cookie: {httpOnly: false},
+    saveUninitialized: true
+
+}));//http
+
+// jwtCheck.unless = unless;
+
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
+app.use('/api', expressJwt({secret: config.secret}));
+
+
 
 
 
@@ -29,7 +52,16 @@ router.get('/setup', function(req, res) {
 
 
 router.get('/', function(req, res) {
-      res.status(200).send("pong!");
+  if(req.cookies){
+  console.log(req.cookies,"in base fdfdfd");
+        res.status(200).send(req.cookies);
+
+
+  }
+  else{
+      res.status(200).send("no cookie pong!");
+    
+  }
 
 });
 
@@ -80,6 +112,54 @@ router.post('/authenticate', function(req, res) {
   });
 });
 
+var isAuthenticated = function (req, res, next) {
+  console.log(req.body.username);
+  if ((req.body.username === 'john.doe' && req.body.password === 'foobar')) {
+    res.send(401, 'Wrong user or password');
+    return;
+  }
+
+  var profile = {
+    first_name: 'John',
+    last_name: 'Doe',
+    email: 'john@doe.com',
+    id: 123
+  };
+
+  // We are sending the profile inside the token
+  var token = jwt.sign(profile, config.secret, { expiresInMinutes: 60*5 });
+
+   // if(true) {
+   //  res.write(req.session.lastPage);
+   //  }
+   res.cookie("mycookie", token, {  maxAage:120000 });
+
+// req.session.token = token;
+    // req.session.lastPage = '/awesome';
+
+  // res.json({ token: token,syz:req.session.lastPage });
+ 
+      res.send(JSON.stringify(req.body));
+
+}
+
+
+// app.post('/authenticate', function (req, res) {
+//   //TODO validate req.body.username and req.body.password
+//   //if is invalid, return 401
+  
+// });
+
+/* Handle Login POST */
+router.post('/login', isAuthenticated,function(req, res){
+         res.status(200).send("pong! of login");
+
+
+});
+router.get('/login', function(req, res){
+   res.render('users1/login');
+
+});
 
 
 // route middleware to verify a token
@@ -120,6 +200,9 @@ router.use(function(req, res, next) {
 router.get('/ping', function(req, res){
     res.status(200).send("pong!");
 });
+
+
+
 
 
 

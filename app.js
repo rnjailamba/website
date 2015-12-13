@@ -20,6 +20,10 @@ var configDB = require('./config/mongo.js');
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('./config/config'); // get our config file
 
+var jwt = require("express-jwt");
+var unless = require('express-unless');
+var cookieParser = require('cookie-parser')
+
 
 
 
@@ -51,7 +55,9 @@ app.use(session({
     secret: 'keyboard cat',
     proxy: true,
     resave: true,
+    cookie: {httpOnly: false},
     saveUninitialized: true
+
 }));//https://github.com/expressjs/session/issues/56
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -67,7 +73,7 @@ app.use(logger('dev')); // log every request to the console
 
 app.use(bodyParser.json());// get information from html forms
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());// read cookies (needed for auth)   
+app.use(cookieParser());// read cookies (needed for auth)   
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
