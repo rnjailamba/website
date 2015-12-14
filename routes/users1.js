@@ -9,6 +9,8 @@ var unless = require('express-unless');
 
 var app = express();
 var session = require('express-session');
+var uuid = require('node-uuid');
+
 
 app.use(session({
     secret: 'keyboard cat',
@@ -53,14 +55,14 @@ router.get('/setup', function(req, res) {
 
 router.get('/', function(req, res) {
   if(req.cookies){
-  console.log(req.cookies,"in base fdfdfd");
-        res.status(200).send(req.cookies);
+  // console.log(req.cookies.token,"in base fdfdfd");
+        res.status(200).send(req.cookies.token+"only token");
 
 
   }
   else{
       res.status(200).send("no cookie pong!");
-    
+
   }
 
 });
@@ -125,14 +127,19 @@ var isAuthenticated = function (req, res, next) {
     email: 'john@doe.com',
     id: 123
   };
+   
+  if(!req.cookies.token || !req.cookies.uuid){
+   var token = jwt.sign(profile, config.secret, { expiresIn: 365 * 24 * 60 * 60 });
+   var expiryDate = new Date(Number(new Date()) + 365 * 24 * 60 * 60 * 1000); 
+   res.cookie("token", token, { expires: expiryDate, httpOnly: true });
+   res.cookie("uuid",uuid.v1(), { expires: expiryDate, httpOnly: true });
+   req.session.token = token;//session id created due to this
+   req.session.uuid = uuid;
+   console.log(req.cookies," req while setting");
 
-  // We are sending the profile inside the token
-  var token = jwt.sign(profile, config.secret, { expiresInMinutes: 60*5 });
+  }
 
-   // if(true) {
-   //  res.write(req.session.lastPage);
-   //  }
-   res.cookie("mycookie", token, {  maxAage:120000 });
+
 
 // req.session.token = token;
     // req.session.lastPage = '/awesome';

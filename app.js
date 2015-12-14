@@ -22,9 +22,25 @@ var config = require('./config/config'); // get our config file
 
 var jwt = require("express-jwt");
 var unless = require('express-unless');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
+var redis = require('redis');
+var redisClient = redis.createClient(); //creates a new client
 
+redisClient.on('connect', function() {
+    console.log('connected to redis');
+});
 
+//using db 1 for session token and uuid data
+redisClient.select(1, function(err,res){
+
+  redisClient.set('framework', 'AngularJS', function(err, reply) {
+    console.log(reply);
+  });
+
+  redisClient.get('framework', function(err, reply) {
+      console.log(reply);
+  });
+});
 
 
 // Asynchronous - Opening File
@@ -54,11 +70,16 @@ var passportConfig = require('./config/passport'); // pass passport for configur
 app.use(session({
     secret: 'keyboard cat',
     proxy: true,
-    resave: true,
-    cookie: {httpOnly: false},
-    saveUninitialized: true
+    resave: false,
+    cookie: {httpOnly: true ,maxAge : 365 * 24 * 60 * 60 * 1000},
+    saveUninitialized: false
 
 }));//https://github.com/expressjs/session/issues/56
+// This user should log in again after restarting the browser
+// req.session.cookie.expires = false;
+
+// This user won't have to log in for a year
+// req.session.cookie.maxAge = 365 * 24 * 60 * 60 * 1000;
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
