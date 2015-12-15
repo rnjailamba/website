@@ -23,24 +23,6 @@ var config = require('./config/config'); // get our config file
 var jwt = require("express-jwt");
 var unless = require('express-unless');
 var cookieParser = require('cookie-parser');
-var redis = require('redis');
-var redisClient = redis.createClient(); //creates a new client
-
-redisClient.on('connect', function() {
-    console.log('connected to redis');
-});
-
-//using db 1 for session token and uuid data
-redisClient.select(1, function(err,res){
-
-  redisClient.set('framework', 'AngularJS', function(err, reply) {
-    console.log(reply);
-  });
-
-  redisClient.get('framework', function(err, reply) {
-      console.log(reply);
-  });
-});
 
 
 // Asynchronous - Opening File

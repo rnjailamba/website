@@ -10,6 +10,14 @@ var unless = require('express-unless');
 var app = express();
 var session = require('express-session');
 var uuid = require('node-uuid');
+var configRedis = require('../config/redis');
+var configTwilio = require('../config/twilio');
+
+// console.log(greetings.redisClient,"in users1 and using redis");
+
+
+//using db 1 for session token and uuid data
+
 
 
 app.use(session({
@@ -116,10 +124,7 @@ router.post('/authenticate', function(req, res) {
 
 var isAuthenticated = function (req, res, next) {
   console.log(req.body.username);
-  if ((req.body.username === 'john.doe' && req.body.password === 'foobar')) {
-    res.send(401, 'Wrong user or password');
-    return;
-  }
+  
 
   var profile = {
     first_name: 'John',
@@ -131,13 +136,55 @@ var isAuthenticated = function (req, res, next) {
   if(!req.cookies.token || !req.cookies.uuid){
    var token = jwt.sign(profile, config.secret, { expiresIn: 365 * 24 * 60 * 60 });
    var expiryDate = new Date(Number(new Date()) + 365 * 24 * 60 * 60 * 1000); 
-   res.cookie("token", token, { expires: expiryDate, httpOnly: true });
-   res.cookie("uuid",uuid.v1(), { expires: expiryDate, httpOnly: true });
-   req.session.token = token;//session id created due to this
-   req.session.uuid = uuid;
-   console.log(req.cookies," req while setting");
+   if ((req.body.username === 'john.doe' && req.body.password === 'foobar')) {//make a database call here
+    res.send(401, 'Wrong user or password');
+    return;
+   }
+   else{
+     res.cookie("token", token, { expires: expiryDate, httpOnly: true });
+     res.cookie("uuid",uuid.v1(), { expires: expiryDate, httpOnly: true });
+
+     //save token and uuid in session local memory and redis
+     req.session.token = token;//session id created due to this
+     req.session.uuid = uuid;
+
+     // req.sessionID
+
+     configRedis.redisClient.select(1, function(err,res){
+
+      configRedis.redisClient.set('token'+req.sessionID, token, function(err, reply) {
+        console.log(reply);
+      });
+
+
+      configRedis.redisClient.set('uuid'+req.sessionID, uuid, function(err, reply) {
+        console.log(reply);
+      });
+
+      configRedis.redisClient.get('token'+req.sessionID, function(err, reply) {
+          console.log(reply);
+      });
+
+      configRedis.redisClient.get('uuid'+req.sessionID, function(err, reply) {
+          console.log(reply);
+      });
+    });
+
+
+     console.log(req.cookies," req while setting");
+
+   }
+   
 
   }
+  else{
+  }
+
+   // console.log(req.session,"s");
+   console.log(   req.sessionID,"sssss");
+     // console.log(res.session,"ss");
+     // console.log(res.cookies,"sss");
+     // console.log(req.cookies,"ssss");
 
 
 
@@ -145,21 +192,98 @@ var isAuthenticated = function (req, res, next) {
     // req.session.lastPage = '/awesome';
 
   // res.json({ token: token,syz:req.session.lastPage });
+    console.log("pong of login");
+ 
  
       res.send(JSON.stringify(req.body));
 
 }
+//Handle the registering
+router.post('/register',function(req, res){
+  var phone = req.body.phone;
+  var email = req.body.email;
+  var min = 1000;
+  var max = 9999;
+  var token = Math.floor(Math.random() * (max - min + 1)) + min;
+  //check if phone unique
+  //not required actually
 
 
-// app.post('/authenticate', function (req, res) {
-//   //TODO validate req.body.username and req.body.password
-//   //if is invalid, return 401
-  
-// });
+  console.log("before the twilio appi");
+  configTwilio.client.messages.create({ 
+   to: "+91"+phone, 
+   from: "+12027914038", 
+   body: "please enter this token to register successfully "+token,   
+  }, function(err, message) { 
+
+   console.log(message.sid); 
+  });
+  // put in redis for 10 mins the token
+  configRedis.redisClient.select(1, function(err,res){
+
+    configRedis.redisClient.set(phone, token, function(err, reply) {
+      console.log(reply);
+    });
+    configRedis.redisClient.expire(phone, 3*60);//expires in 180 seconds
+
+
+    configRedis.redisClient.get(phone, function(err, reply) {
+        console.log(reply);
+    });
+  });
+
+
+  console.log("phone is ",phone);
+  res.redirect('/users1/enterCode?phone='+phone);
+
+  // res.status(200).send("pong! of register");
+
+});
+router.get('/register', function(req, res){
+
+  res.render('users1/register');
+
+});
+router.get('/enterCode', function(req, res){
+  var phone = req.query.phone;
+  console.log("in enterCode",phone);
+
+  res.render('users1/enterCode',{phone:phone});
+
+});
+
+router.post('/enterCode', function(req, res){
+  var phone = req.query.phone;
+  var user_entered_code = req.body.code;
+   console.log(req.body.code,"the code by user");
+   configRedis.redisClient.get(phone, function(err, reply) {
+        console.log(reply);
+          var phoneCode = reply;
+          if(user_entered_code == phoneCode){
+           res.send("verified");
+         }
+         else{
+          res.send("not verified"+user_entered_code+phoneCode);
+         }
+
+    });
+   
+});
 
 /* Handle Login POST */
 router.post('/login', isAuthenticated,function(req, res){
-         res.status(200).send("pong! of login");
+
+  // console.log("before the twilio appi");
+  // configTwilio.client.messages.create({ 
+  //  to: "+917838185123", 
+  //  from: "+12027914038", 
+  //  body: "heyy you just registered",   
+  // }, function(err, message) { 
+
+  //  console.log(message.sid); 
+  // });
+
+  res.status(200).send("pong! of login");
 
 
 });
@@ -204,7 +328,7 @@ router.use(function(req, res, next) {
 
 
 
-router.get('/ping', function(req, res){
+router.get('/ping',isAuthenticated, function(req, res){
     res.status(200).send("pong!");
 });
 
