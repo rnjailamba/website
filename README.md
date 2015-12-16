@@ -289,3 +289,57 @@ deep dive
 asynchronous
 
 [http://stackoverflow.com/questions/23667086/why-is-my-variable-unaltered-after-i-modify-it-inside-of-a-function-asynchron](http://stackoverflow.com/questions/23667086/why-is-my-variable-unaltered-after-i-modify-it-inside-of-a-function-asynchron)
+
+# node-dirty
+
+## Purpose
+
+A tiny & fast key value store with append-only disk log. Ideal for apps with < 1 million records.
+
+## Installation
+
+```bash
+npm install dirty
+```
+
+## Why dirty?
+
+This module is called dirty because:
+
+* The file format is newline separated JSON
+* Your database lives in the same process as your application, they share memory
+* There is no query language, you just `forEach` through all records
+
+So dirty means that you will hit a very hard wall with this database after ~1 million records,
+but it is a wonderful solution for anything smaller than that.
+
+## Tutorial
+
+```javascript
+  var dirty = require('dirty');
+  var db = dirty('user.db');
+
+  db.on('load', function() {
+    db.set('john', {eyes: 'blue'});
+    console.log('Added john, he has %s eyes.', db.get('john').eyes);
+
+    db.set('bob', {eyes: 'brown'}, function() {
+      console.log('User bob is now saved on disk.')
+    });
+
+    db.forEach(function(key, val) {
+      console.log('Found key: %s, val: %j', key, val);
+    });
+  });
+
+  db.on('drain', function() {
+    console.log('All records are saved on disk now.');
+  });
+```
+Output:
+
+    Added john, he has blue eyes.
+    Found key: john, val: {"eyes":"blue"}
+    Found key: bob, val: {"eyes":"brown"}
+    User bob is now saved on disk.
+    All records are saved on disk now.
