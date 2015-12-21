@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var User1 = require('../model/user1');
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config/config'); // get our config file
 var path = require('path');
@@ -10,6 +9,8 @@ var unless = require('express-unless');
 var app = express();
 var session = require('express-session');
 var uuid = require('node-uuid');
+
+
 var configRedis = require('../config/redis');
 var configTwilio = require('../config/twilio');
 
