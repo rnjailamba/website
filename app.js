@@ -13,8 +13,6 @@ app.use('/bootstrap', modules.express.static(__dirname + '/node_modules/bootstra
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-var passportConfig = require('./config/passport'); // pass passport for configuration
-
 app.use(modules.session({
     secret: 'keyboard cat',
     proxy: true,
@@ -23,13 +21,7 @@ app.use(modules.session({
     saveUninitialized: false
 
 }));//https://github.com/expressjs/session/issues/56
-// This user should log in again after restarting the browser
-// req.session.cookie.expires = false;
 
-// This user won't have to log in for a year
-// req.session.cookie.maxAge = 365 * 24 * 60 * 60 * 1000;
-app.use(modules.passport.initialize());
-app.use(modules.passport.session()); // persistent login sessions
 app.use(modules.flash()); // use connect-flash for flash messages stored in session
 
 
@@ -46,7 +38,6 @@ app.use(modules.cookieParser());// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
 
 app.use('/', modules.routes);
-app.use('/users', modules.users);
 app.use('/users1', modules.users1);
 
 // catch 404 and forward to error handler
