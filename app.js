@@ -1,4 +1,6 @@
-var modules = require("./all_modules.js");
+var modules = require("./all_modules.js");//simply loads all modules, no initialisation/creation of object of module
+var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections etc.
+
 
 var app = modules.express();
 
@@ -38,7 +40,7 @@ app.use(modules.cookieParser());// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
 
 app.use('/', modules.routes);
-app.use('/users1', modules.users1);
+app.use('/users1', modules.users1.router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

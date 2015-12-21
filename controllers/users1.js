@@ -3,23 +3,21 @@ var router = express.Router();
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config/config'); // get our config file
 var path = require('path');
-
 var unless = require('express-unless');
-
 var app = express();
 var session = require('express-session');
 var uuid = require('node-uuid');
 
 
-var configRedis = require('../config/redis');
-var configTwilio = require('../config/twilio');
-
-// console.log(greetings.redisClient,"in users1 and using redis");
-
-
 //using db 1 for session token and uuid data
 
+var twilioClient;
 
+module.exports.setTwilioClient = function(inClient) { twilioClient = inClient; };
+
+var redisClient;
+
+module.exports.setClient = function(inClient) { redisClient = inClient; };
 
 app.use(session({
     secret: 'keyboard cat',
@@ -151,22 +149,22 @@ var isAuthenticated = function (req, res, next) {
 
      // req.sessionID
 
-     configRedis.redisClient.select(1, function(err,res){
+     redisClient.select(1, function(err,res){
 
-      configRedis.redisClient.set('token'+req.sessionID, token, function(err, reply) {
+      redisClient.set('token'+req.sessionID, token, function(err, reply) {
         console.log(reply);
       });
 
 
-      configRedis.redisClient.set('uuid'+req.sessionID, uuid, function(err, reply) {
+      redisClient.set('uuid'+req.sessionID, uuid, function(err, reply) {
         console.log(reply);
       });
 
-      configRedis.redisClient.get('token'+req.sessionID, function(err, reply) {
+      redisClient.get('token'+req.sessionID, function(err, reply) {
           console.log(reply);
       });
 
-      configRedis.redisClient.get('uuid'+req.sessionID, function(err, reply) {
+      redisClient.get('uuid'+req.sessionID, function(err, reply) {
           console.log(reply);
       });
     });
@@ -211,7 +209,7 @@ router.post('/register',function(req, res){
 
 
   console.log("before the twilio appi");
-  configTwilio.client.messages.create({ 
+  twilioClient.messages.create({
    to: "+91"+phone, 
    from: "+12027914038", 
    body: "please enter this token to register successfully "+token,   
@@ -220,15 +218,15 @@ router.post('/register',function(req, res){
    console.log(message.sid); 
   });
   // put in redis for 10 mins the token
-  configRedis.redisClient.select(1, function(err,res){
+   redisClient.select(1, function(err,res){
 
-    configRedis.redisClient.set(phone, token, function(err, reply) {
+    redisClient.set(phone, token, function(err, reply) {
       console.log(reply);
     });
-    configRedis.redisClient.expire(phone, 3*60);//expires in 180 seconds
+    redisClient.expire(phone, 3*60);//expires in 180 seconds
 
 
-    configRedis.redisClient.get(phone, function(err, reply) {
+    redisClient.get(phone, function(err, reply) {
         console.log(reply);
     });
   });
@@ -257,7 +255,7 @@ router.post('/enterCode', function(req, res){
   var phone = req.query.phone;
   var user_entered_code = req.body.code;
    console.log(req.body.code,"the code by user");
-   configRedis.redisClient.get(phone, function(err, reply) {
+   redisClient.get(phone, function(err, reply) {
         console.log(reply);
           var phoneCode = reply;
           if(user_entered_code == phoneCode){
@@ -333,10 +331,4 @@ router.get('/ping',isAuthenticated, function(req, res){
     res.status(200).send("pong!");
 });
 
-
-
-
-
-
-
-module.exports = router;
+module.exports.router = router;
