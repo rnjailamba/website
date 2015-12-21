@@ -1,45 +1,13 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+var modules = require("./all_modules.js");
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var users1 = require('./routes/users1');
-
-var flash = require('connect-flash');
-var session = require('express-session');
-var passport = require('passport');
-
-var fs = require("fs");
-var userModel = require('./model/user');
-var userModel1 = require('./model/user1');
-
-var configDB = require('./config/mongo.js');
-var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var config = require('./config/config'); // get our config file
-
-var jwt = require("express-jwt");
-var unless = require('express-unless');
-var cookieParser = require('cookie-parser');
-
-
-// Asynchronous - Opening File
-// fs.writeFile('helloworld.txt', 'Hello World!', function (err) {
-//     if (err) 
-//         return console.log(err);
-//     console.log('Hello World > helloworld.txt');
-// });
-
-var app = express();
+var app = modules.express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', modules.path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');// set up ejs for templating
 
-app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
+app.use('/jquery', modules.express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/bootstrap', modules.express.static(__dirname + '/node_modules/bootstrap/dist/'));
 
 
 // uncomment after placing your favicon in /public
@@ -47,9 +15,7 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'
 
 var passportConfig = require('./config/passport'); // pass passport for configuration
 
-// required for passport
-
-app.use(session({
+app.use(modules.session({
     secret: 'keyboard cat',
     proxy: true,
     resave: false,
@@ -62,26 +28,26 @@ app.use(session({
 
 // This user won't have to log in for a year
 // req.session.cookie.maxAge = 365 * 24 * 60 * 60 * 1000;
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(modules.passport.initialize());
+app.use(modules.passport.session()); // persistent login sessions
+app.use(modules.flash()); // use connect-flash for flash messages stored in session
 
 
-app.set('superSecret', config.secret); // secret variable
-console.log(config);
+app.set('superSecret', modules.config.secret); // secret variable
+console.log(modules.config.secret);
 
 
-app.use(logger('dev')); // log every request to the console
+app.use(modules.logger('dev')); // log every request to the console
 // use body parser so we can get info from POST and/or URL parameters
 
-app.use(bodyParser.json());// get information from html forms
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());// read cookies (needed for auth)   
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(modules.bodyParser.json());// get information from html forms
+app.use(modules.bodyParser.urlencoded({ extended: false }));
+app.use(modules.cookieParser());// read cookies (needed for auth)
+app.use(modules.express.static(modules.path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/users1', users1);
+app.use('/', modules.routes);
+app.use('/users', modules.users);
+app.use('/users1', modules.users1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

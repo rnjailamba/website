@@ -1,7 +1,7 @@
 # expressjs1
 EXPRESS SET UP
 https://www.quora.com/What-are-the-biggest-websites-built-with-Node-js-on-the-server-side
-1-Node.js was installed at
+1-Node.js was installed at  dfdd
 
 	   /usr/local/bin/node
 
@@ -25,7 +25,7 @@ https://www.quora.com/What-are-the-biggest-websites-built-with-Node-js-on-the-se
 			npm install redis --save
 			http://www.sitepoint.com/using-redis-node-js/
 
-6-
+6- 
 	npm install passport  
 	npm install bootstrap
 	https://scotch.io/tutorials/easy-node-authentication-setup-and-local

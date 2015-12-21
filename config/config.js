@@ -1,4 +1,2 @@
-module.exports = {
-
-    'secret': 'ilovescotchyscotch'
-};
+var secret = 'ilovescotchyscotch';
+module.exports.secret = secret;

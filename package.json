@@ -24,6 +24,7 @@
     "mongodb": "^2.0.49",
     "mongoose": "^4.2.8",
     "morgan": "~1.6.1",
+    "node-cache": "^3.0.0",
     "node-uuid": "^1.4.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
