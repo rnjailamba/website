@@ -199,8 +199,9 @@ var isAuthenticated = function (req, res, next) {
 }
 //Handle the registering
 router.post('/register',function(req, res){
-  var phone = req.body.phone;
+  var phone = req.body.mobile;
   var email = req.body.email;
+  var password = req.body.password;
   var min = 1000;
   var max = 9999;
   var token = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -254,6 +255,7 @@ router.get('/enterCode', function(req, res){
 router.post('/enterCode', function(req, res){
   var phone = req.query.phone;
   var user_entered_code = req.body.code;
+
    console.log(req.body.code,"the code by user");
    redisClient.get(phone, function(err, reply) {
         console.log(reply);
@@ -269,21 +271,49 @@ router.post('/enterCode', function(req, res){
    
 });
 
+// RESEND CODE
+// ==============================================
+
+router.get('/resendCode', function(req, res){
+  var phone = req.query.phone;
+
+  var min = 1000;
+  var max = 9999;
+  var token = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log("in resend Code",phone);
+    twilioClient.messages.create({
+     to: "+91"+phone,
+     from: "+12027914038",
+     body: "please enter this token to register successfully "+token,
+    }, function(err, message) {
+
+     console.log(message.sid);
+    });
+      // put in redis for 10 mins the token
+       redisClient.select(1, function(err,res){
+
+        redisClient.set(phone, token, function(err, reply) {
+          console.log(reply);
+        });
+        redisClient.expire(phone, 3*60);//expires in 180 seconds
+
+
+        redisClient.get(phone, function(err, reply) {
+            console.log(reply);
+        });
+      });
+
+
+  res.render('users1/enterCode',{phone:phone});
+
+});
+
+
 /* Handle Login POST */
-router.post('/login', isAuthenticated,function(req, res){
-
-  // console.log("before the twilio appi");
-  // configTwilio.client.messages.create({ 
-  //  to: "+917838185123", 
-  //  from: "+12027914038", 
-  //  body: "heyy you just registered",   
-  // }, function(err, message) { 
-
-  //  console.log(message.sid); 
-  // });
+//isAuthenticated
+router.post('/login',function(req, res){
 
   res.status(200).send("pong! of login");
-
 
 });
 router.get('/login', function(req, res){
