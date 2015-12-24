@@ -10,6 +10,7 @@ app.set('view engine', 'ejs');// set up ejs for templating
 
 app.use('/jquery', modules.express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/bootstrap', modules.express.static(__dirname + '/node_modules/bootstrap/dist/'));
+app.use('/css', modules.express.static(__dirname + '/public/stylesheets/'));
 
 
 // uncomment after placing your favicon in /public

@@ -1,33 +1,66 @@
-<!-- views/pages/template.ejs -->
-
+<!-- views/basicPages/template.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-<script src="/jquery/jquery.js"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
-<style type='text/css'>
-
-</style>
-
-
-<header>
-    <% include ../partials/header %>
-</header>
-
-<body >
-
-<main class="container">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
 
 
-</main>
+    <title>Sticky Footer Navbar Template for Bootstrap</title>
+</head>
+
+<body>
+
+<% include ../partials/header1 %>
+
+<!-- Begin page content -->
+<div class="container">
+
+    <div id="wrapper">
+        <div id="box">
+            <div id="top_header">
+                <h3>Login</h3>
+                <h5>Sign in to continue to your profile page.</h5>
+            </div>
+
+            <div id="inputs">
+                <form id='login' action='/users1/login' method='post' accept-charset='UTF-8' style="margin-left:6px;">
+
+                    <input type='hidden' name='submitted' id='submitted' value='1'/>
+
+                    <div class='container'>
+                        <input type='tel' name='mobile' id='mobile' value='' maxlength="50" size="30" placeholder="10 digit Mobile"/><br/>
+                    </div>
+
+                    <div class='container'>
+                        <input type='password' name='password' id='password' maxlength="50" size="30" placeholder="Password" /><br/>
+                    </div>
+
+                    <div class='container'>
+                        <input type='submit' name='Submit' value='Login' />
+                    </div>
+
+                </form>
+
+                <div id="bottom">
+                    <a href="/users1/register">Create an account</a>
+                    <a class="right_a" href="#">Forgot password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<% include ../partials/footer1 %>
 
 </body>
-<footer>
-    <% include ../partials/footer %>
-</footer>
 </html>
+
 
 
 

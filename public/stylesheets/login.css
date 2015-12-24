@@ -1,0 +1,136 @@
+/* CSS file for users1/enterCode.ejs
+                users1/forgotPassword.ejs
+                users1/login.ejs
+                users1/register.ejs
+                users1/template.ejs
+
+*/
+#wrapper {
+width: 100%;
+height: 500px;
+margin: 0 auto;
+}
+
+#box {
+width: 345px;
+height: 400px;
+background-color: #fff;
+margin: 0 auto;
+-webkit-border-radius: 4px;
+-o-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 3px;
+}
+
+#top_header {
+width: 100%;
+margin: 0;
+padding-top: 45px;
+}
+
+#top_header > h3 {
+text-align: center;
+font-family: 'Lato', sans-serif;
+font-size: 32px;
+font-weight: 800;
+color: #378DE5;
+-webkit-text-stroke: 0.5px;
+margin: 0;
+
+}
+
+#top_header > h5 {
+text-align: center;
+font-family: 'Roboto', sans-serif;
+font-size: 15px;
+font-weight: 300;
+color: #378DE5;
+line-height: 1.6;
+margin: 0;
+padding: 15px 0;
+color: #555;
+-webkit-text-stroke: 0.2px;
+}
+
+#inputs {
+width: 100%;
+height: 100%;
+margin: 0 auto;
+position: relative;
+}
+
+input[type=text], input[type=password], input[type=submit], input[type=tel], input[type=email] {
+width: 300px;
+height: 55px;
+position: relative;
+display: block;
+margin-bottom: -10px;
+padding: 15px;
+box-sizing: border-box;
+-webkit-text-stroke: 0.1px;
+}
+
+input[type=text], input[type=password], input[type=tel], input[type=email] {
+font-family: 'Lato', sans-serif;
+font-weight: 300;
+font-size:16px;
+border: thin solid #ccc;
+border-radius: 5px;
+color: #378DE5;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus, input[type=email]:focus {
+border: thin solid #378DE5;
+-webkit-transition: all .4s ease;
+-moz-transition: all .4s ease;
+-o-transition: all .4s ease;
+transition: all .4s ease;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus, input[type=email]:focus {
+border-left: thin solid #378DE5;
+}
+
+
+input[type=submit] {
+color: #378DE5;
+background-color: #fff;
+border: 1px solid #378DE5;
+border-radius: 5px;
+font-family: 'Roboto', sans-serif;
+font-weight: 300;
+font-size: 16px;
+transition: all .3s ease;
+margin-top: 0px;
+cursor: pointer;
+}
+
+input[type=submit]:hover {
+background-color: #378DE5;
+color: #fff;
+}
+
+#bottom {
+width: 300px;
+margin: 0 auto;
+margin-top: 15px;
+}
+
+a {
+text-decoration: none;
+color: #282828;
+font-size: 13px;
+font-family: 'Roboto', sans-serif;
+font-weight: 300;
+transition: color .3s ease;
+outline: none;
+}
+
+a:hover {
+color: #1eb056;
+}
+
+.right_a {
+float: right;
+}
+

@@ -1,198 +1,28 @@
-<!-- views/pages/about.ejs -->
-
+<!-- views/basicPages/template.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-<script src="/jquery/jquery.js"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
-<style type='text/css'>
-    input {
-    outline: none;
-    }
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+    <link rel="stylesheet" type="text/css" href="/css/login.css"></link>
 
-    #wrapper {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    }
+    <title>Sticky Footer Navbar Template for Bootstrap</title>
+</head>
 
-    #box {
-    width: 345px;
-    height: 450px;
-    background-color: #fff;
-    margin: 0 auto;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 3px;
-    }
+<body>
 
-    #top_header {
-    width: 100%;
-    margin: 0;
-    padding-top: 45px;
-    }
+<% include ../partials/header1 %>
 
-    #top_header > h3 {
-    text-align: center;
-    font-family: 'Lato', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
-    color: #378DE5;
-    -webkit-text-stroke: 0.5px;
-    margin: 0;
-
-    }
-
-    #top_header > h5 {
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    color: #378DE5;
-    line-height: 1.6;
-    margin: 0;
-    padding: 15px 0;
-    color: #555;
-    -webkit-text-stroke: 0.2px;
-    }
-
-    #inputs {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    position: relative;
-    }
-
-    input[type=text], input[type=password], input[type=submit], input[type=tel], input[type=email] {
-    width: 300px;
-    height: 55px;
-    position: relative;
-    display: block;
-    margin-bottom: -10px;
-    padding: 15px;
-    box-sizing: border-box;
-    -webkit-text-stroke: 0.1px;
-    }
-
-    input[type=text], input[type=password], input[type=tel], input[type=email] {
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-    font-size:16px;
-    border: thin solid #ccc;
-    border-radius: 5px;
-    color: #378DE5;
-    }
-
-    input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus, input[type=email]:focus {
-    border: thin solid #378DE5;
-    -webkit-transition: all .4s ease;
-    -moz-transition: all .4s ease;
-    -o-transition: all .4s ease;
-    transition: all .4s ease;
-    }
-
-    input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus, input[type=email]:focus {
-    border-left: thin solid #378DE5;
-    }
+<!-- Begin page content -->
 
 
-    input[type=submit] {
-    color: #378DE5;
-    background-color: #fff;
-    border: 1px solid #378DE5;
-    border-radius: 5px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    transition: all .3s ease;
-    margin-top: 0px;
-    cursor: pointer;
-    }
 
-    input[type=submit]:hover {
-    background-color: #378DE5;
-    color: #fff;
-    }
-
-    #bottom {
-    width: 300px;
-    margin: 0 auto;
-    margin-top: 15px;
-    }
-
-    a {
-    text-decoration: none;
-    color: #282828;
-    font-size: 13px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    transition: color .3s ease;
-    outline: none;
-    }
-
-    a:hover {
-    color: #1eb056;
-    }
-
-    .right_a {
-    float: right;
-    }
-    html, body {
-    max-width: 100%;
-    max-height: 100%;
-    overflow-x: hidden;
-    }
-</style>
-
-<header>
-    <% include ../partials/header %>
-</header>
-
-<body >
-
-<main class="container">
-    <div id="wrapper">
-        <div id="box">
-            <div id="top_header">
-                <h3>Verify OTP</h3>
-                <h5>Enter the OTP you recieved on your mobile</h5>
-            </div>
-
-            <div id="inputs">
-                <form id='login' action=<%= "/users1/enterCode?phone="+phone %> method='post' accept-charset='UTF-8' style="margin-left:6px;">
-
-                <input type='hidden' name='submitted' id='submitted' value='1'/>
-
-                <div class='container'>
-                    <input type="text" name="code" id ='code'  value='' maxlength="50" size="30" placeholder="OTP" /><br/>
-                </div>
-
-
-                <div class='container'>
-                    <input type='submit' name='Submit' value='Verify OTP' />
-                </div>
-
-            </form>
-
-            <div id="bottom">
-                <a href=<%= "/users1/resendCode?phone="+phone %>>Resend Code</a>
-            <a class="right_a" href="#">Terms and Conditions</a>
-        </div>
-    </div>
-</div>
-</div>
-</main>
-
-
+<% include ../partials/footer1 %>
 
 </body>
-<% include ../partials/footer %>
 </html>
 
-
-
-
-<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Gafata|Nobile:400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
