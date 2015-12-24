@@ -34,32 +34,6 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 app.use('/api', expressJwt({secret: config.secret}));
 
-
-
-
-
-
-router.get('/setup', function(req, res) {
-
-  // create a sample user
-  var nick = new User1({ 
-    name: 'Nick', 
-    password: 'password',
-    admin: true 
-  });
-  console.log(nick);
-
-  // save the sample user
-  nick.save(function(err) {
-    if (err) throw err;
-
-    console.log('User saved successfully');
-    res.json({ success: true });
-  });
-});
-
-
-
 router.get('/', function(req, res) {
   if(req.cookies){
   // console.log(req.cookies.token,"in base fdfdfd");
@@ -305,6 +279,15 @@ router.get('/resendCode', function(req, res){
 
 
   res.render('users1/enterCode',{phone:phone});
+
+});
+
+
+// TEMPLATE
+// ==============================================
+router.get('/template', function(req, res){
+
+  res.render('users1/template');
 
 });
 
