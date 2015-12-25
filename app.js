@@ -3,39 +3,19 @@ var initHelper = require("./helpers/initializeHelpers.js");//initialize database
 var app = modules.express();
 
 
-// view engine setup
+// VIEW ENGINE SETUP
 // ==============================================
 app.set('views', modules.path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');// set up ejs for templating
-
 app.use('/jquery', modules.express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/bootstrap', modules.express.static(__dirname + '/node_modules/bootstrap/dist/'));
 app.use('/css', modules.express.static(__dirname + '/public/stylesheets/'));
-
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
-app.use(modules.session({
-    secret: 'keyboard cat',
-    proxy: true,
-    resave: false,
-    cookie: {httpOnly: true ,maxAge : 365 * 24 * 60 * 60 * 1000},
-    saveUninitialized: false
-
-}));//https://github.com/expressjs/session/issues/56
-
 app.use(modules.flash()); // use connect-flash for flash messages stored in session
-
-
 app.set('superSecret', modules.config.secret); // secret variable
-console.log(modules.config.secret);
-
-
 app.use(modules.logger('dev')); // log every request to the console
 
 
-// use body parser so we can get info from POST and/or URL parameters
+// USE BODY PARSER SO WE CAN GET INFO FROM POST AND/OR URL PARAMETERS
 // ==============================================
 app.use(modules.bodyParser.json());// get information from html forms
 app.use(modules.bodyParser.urlencoded({ extended: false }));
@@ -43,8 +23,7 @@ app.use(modules.cookieParser());// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
 
 
-//export app for controllers
-//This is not done in starting as app didnt have required properties then
+//THIS IS NOT DONE IN STARTING AS APP DIDNT HAVE REQUIRED PROPERTIES THEN
 // ==============================================
 var exportingApp = require("./controllers/setup/export_app");
 exportingApp.exportApp(app);

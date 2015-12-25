@@ -54,7 +54,6 @@ var isAuthenticated = function (req, res, next) {
   }
   else{
   }
-  // res.json({ token: token,syz:req.session.lastPage });
   console.log("pong of login");
   res.send(JSON.stringify(req.body));
 }
