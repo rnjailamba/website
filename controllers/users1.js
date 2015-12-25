@@ -1,23 +1,10 @@
 var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
-
-
-var config = require('../config/config'); // get our config file
-var app = modules.express();
-var session = require('express-session');
-var uuid = require('node-uuid');
-
 var twilioClient;
-
 module.exports.setTwilioClient = function(inClient) { twilioClient = inClient; };
 
 var redisClient;
-
 module.exports.setClient = function(inClient) { redisClient = inClient; };
-
-var expressJwt = require('express-jwt');
-app.use('/api', expressJwt({secret: config.secret}));
-
 
 // MIDDLEWARE - ISAUTHENTICATED
 // ==============================================
@@ -32,7 +19,7 @@ var isAuthenticated = function (req, res, next) {
   };
    
   if(!req.cookies.token || !req.cookies.uuid){
-   var token = modules.jwt.sign(profile, config.secret, { expiresIn: 365 * 24 * 60 * 60 });
+   var token = modules.jwt.sign(profile, modules.config.secret, { expiresIn: 365 * 24 * 60 * 60 });
    var expiryDate = new Date(Number(new Date()) + 365 * 24 * 60 * 60 * 1000); 
    if ((req.body.username === 'john.doe' && req.body.password === 'foobar')) {//make a database call here
     res.send(401, 'Wrong user or password');
@@ -40,20 +27,13 @@ var isAuthenticated = function (req, res, next) {
    }
    else{
      res.cookie("token", token, { expires: expiryDate, httpOnly: true });
-     res.cookie("uuid",uuid.v1(), { expires: expiryDate, httpOnly: true });
-
-     //save token and uuid in session local memory and redis
-     req.session.token = token;//session id created due to this
-     req.session.uuid = uuid;
-
+     res.cookie("uuid",modules.uuid.v1(), { expires: expiryDate, httpOnly: true });
      // req.sessionID
-
      redisClient.select(1, function(err,res){
 
       redisClient.set('token'+req.sessionID, token, function(err, reply) {
         console.log(reply);
       });
-
 
       redisClient.set('uuid'+req.sessionID, uuid, function(err, reply) {
         console.log(reply);
@@ -67,41 +47,22 @@ var isAuthenticated = function (req, res, next) {
           console.log(reply);
       });
     });
-
-
      console.log(req.cookies," req while setting");
-
    }
    
 
   }
   else{
   }
-
-   // console.log(req.session,"s");
-   console.log(   req.sessionID,"sssss");
-     // console.log(res.session,"ss");
-     // console.log(res.cookies,"sss");
-     // console.log(req.cookies,"ssss");
-
-
-
-// req.session.token = token;
-    // req.session.lastPage = '/awesome';
-
   // res.json({ token: token,syz:req.session.lastPage });
-    console.log("pong of login");
- 
- 
-      res.send(JSON.stringify(req.body));
-
+  console.log("pong of login");
+  res.send(JSON.stringify(req.body));
 }
 
 
 // REGISTER
 // ==============================================
 router.post('/register',function(req, res){
-  console.log(req);
   var phone = req.body.mobile;
   var email = req.body.email;
   var password = req.body.password;
@@ -110,7 +71,6 @@ router.post('/register',function(req, res){
   var token = Math.floor(Math.random() * (max - min + 1)) + min;
   //check if phone unique
   //not required actually
-
 
   console.log("before the twilio appi");
   twilioClient.messages.create({
@@ -129,17 +89,13 @@ router.post('/register',function(req, res){
     });
     redisClient.expire(phone, 3*60);//expires in 180 seconds
 
-
     redisClient.get(phone, function(err, reply) {
         console.log(reply);
     });
   });
 
-
   console.log("phone is ",phone);
   res.redirect('/users1/enterCode?phone='+phone);
-
-  // res.status(200).send("pong! of register");
 
 });
 router.get('/register', function(req, res){
@@ -152,14 +108,15 @@ router.get('/register', function(req, res){
 //  ENTERCODE
 // ==============================================
 router.get('/enterCode', function(req, res){
+
   var phone = req.query.phone;
   console.log("in enterCode",phone);
-
   res.render('users1/enterCode',{phone:phone});
 
 });
 
 router.post('/enterCode', function(req, res){
+
   var phone = req.query.phone;
   var user_entered_code = req.body.code;
 
@@ -173,17 +130,15 @@ router.post('/enterCode', function(req, res){
          else{
           res.send("not verified"+user_entered_code+phoneCode);
          }
-
     });
-   
 });
 
 
 // RESENDCODE
 // ==============================================
 router.get('/resendCode', function(req, res){
-  var phone = req.query.phone;
 
+  var phone = req.query.phone;
   var min = 1000;
   var max = 9999;
   var token = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -209,8 +164,6 @@ router.get('/resendCode', function(req, res){
             console.log(reply);
         });
       });
-
-
   res.render('users1/enterCode',{phone:phone});
 
 });
@@ -242,6 +195,7 @@ router.post('/login',function(req, res){
 
 });
 router.get('/login', function(req, res){
+
    res.render('users1/login');
 
 });
@@ -250,15 +204,14 @@ router.get('/login', function(req, res){
 // MIDDLEWARE
 // ==============================================
 router.use(function(req, res, next) {
+
   console.log("verifying the token");
   // check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
   // decode token
   if (token) {
-
     // verifies secret and checks exp
-    modules.jwt.verify(token, config.secret, function(err, decoded) {
+    modules.jwt.verify(token, modules.config.secret, function(err, decoded) {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {
@@ -270,7 +223,6 @@ router.use(function(req, res, next) {
     });
 
   } else {
-
     // if there is no token
     // return an error
     return res.status(403).send({ 
@@ -285,7 +237,9 @@ router.use(function(req, res, next) {
 // PING
 // ==============================================
 router.get('/ping',isAuthenticated, function(req, res){
+
     res.status(200).send("pong!");
+
 });
 
 module.exports.router = router;

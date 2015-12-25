@@ -1,2 +1,6 @@
-var secret = 'ilovescotchyscotch';
-module.exports.secret = secret;
+//contains key value strings and mapping
+module.exports = {
+
+    'secret': 'ilovescotchyscotch',
+
+};

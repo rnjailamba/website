@@ -2,7 +2,9 @@ var modules = require("./all_modules.js");//simply loads all modules, no initial
 var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections etc.
 var app = modules.express();
 
+
 // view engine setup
+// ==============================================
 app.set('views', modules.path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');// set up ejs for templating
 
@@ -31,15 +33,20 @@ console.log(modules.config.secret);
 
 
 app.use(modules.logger('dev')); // log every request to the console
-// use body parser so we can get info from POST and/or URL parameters
 
+
+// use body parser so we can get info from POST and/or URL parameters
+// ==============================================
 app.use(modules.bodyParser.json());// get information from html forms
 app.use(modules.bodyParser.urlencoded({ extended: false }));
 app.use(modules.cookieParser());// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
 
-var exportingApp = require("./controllers/setup/export_app");//export app for controllers
-console.log('exporting the app from the app.js',exportingApp);
+
+//export app for controllers
+//This is not done in starting as app didnt have required properties then
+// ==============================================
+var exportingApp = require("./controllers/setup/export_app");
 exportingApp.exportApp(app);
 
 // catch 404 and forward to error handler
