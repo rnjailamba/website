@@ -291,6 +291,14 @@ router.get('/template', function(req, res){
 
 });
 
+// BOILERPLATE.ejs
+// ==============================================
+router.get('/boilerplate', function(req, res){
+
+  res.render('users1/boilerplate');
+
+});
+
 
 /* Handle Login POST */
 //isAuthenticated

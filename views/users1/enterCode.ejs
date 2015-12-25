@@ -1,4 +1,4 @@
-<!-- views/basicPages/template.ejs -->
+<!-- views/users1/enterCode.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +8,12 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content=""></meta>
     <meta name="author" content=""></meta>
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"></link>
     <link rel="stylesheet" type="text/css" href="/css/login.css"></link>
+
 
     <title>Sticky Footer Navbar Template for Bootstrap</title>
 </head>
@@ -18,11 +23,43 @@
 <% include ../partials/header1 %>
 
 <!-- Begin page content -->
+<div class="container">
+
+    <div id="wrapper">
+        <div id="box">
+            <div id="top_header">
+                <h3>Verify OTP</h3>
+                <h5>Enter the OTP you recieved on your mobile</h5>
+            </div>
 
 
+            <div id="inputs">
+                <form id='login' action=<%= "/users1/enterCode?phone="+phone %> method='post' accept-charset='UTF-8' style="margin-left:6px;">
+
+                    <input type='hidden' name='submitted' id='submitted' value='1'/>
+
+                    <div class=''>
+                        <input type="text" name="code" id ='code'  value='' maxlength="50" size="30" placeholder="OTP" /><br/>
+                    </div>
+
+                    <div class=''>
+                        <input type='submit' name='Submit' value='Verify OTP' />
+                    </div>
+
+
+
+                </form>
+
+                <div id="bottom">
+                    <a href=<%= "/users1/resendCode?phone="+phone %>>Resend Code</a>
+                    <a class="right_a" href="#">Terms and Conditions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <% include ../partials/footer1 %>
 
 </body>
 </html>
-
