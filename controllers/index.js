@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+
+// INDEX
+// ==============================================
 router.get('/', function(req, res, next) {
 	// console.log(__dirname);
   console.log("in index");
@@ -22,15 +24,26 @@ router.get('/', function(req, res, next) {
 
 });
 
-/* GET home page. */
+
+// INDEX
+// ==============================================
 router.get('/index', function(req, res, next) {
   console.log("in index");
   res.render('basicPages/index', { title: 'Express' });
 });
 
-/* GET about page. */
+
+// ABOUT
+// ==============================================
 router.get('/about', function(req, res, next) {
   res.render('basicPages/about', { title: 'Express' });
+});
+
+
+// TEMPLATE
+// ==============================================
+router.get('/template', function(req, res, next) {
+  res.render('basicPages/template', { title: 'Express' });
 });
 
 var justPrintSomething = function(){

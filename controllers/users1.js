@@ -1,15 +1,10 @@
-var express = require('express');
-var router = express.Router();
+var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
+var router = modules.express.Router();
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config/config'); // get our config file
-var path = require('path');
-var unless = require('express-unless');
-var app = express();
+var app = modules.express();
 var session = require('express-session');
 var uuid = require('node-uuid');
-
-
-//using db 1 for session token and uuid data
 
 var twilioClient;
 
@@ -19,85 +14,14 @@ var redisClient;
 
 module.exports.setClient = function(inClient) { redisClient = inClient; };
 
-app.use(session({
-    secret: 'keyboard cat',
-    proxy: true,
-    resave: true,
-    cookie: {httpOnly: false},
-    saveUninitialized: true
-
-}));//http
-
-// jwtCheck.unless = unless;
-
 var expressJwt = require('express-jwt');
-var jwt = require('jsonwebtoken');
 app.use('/api', expressJwt({secret: config.secret}));
 
-router.get('/', function(req, res) {
-  if(req.cookies){
-  // console.log(req.cookies.token,"in base fdfdfd");
-        res.status(200).send(req.cookies.token+"only token");
 
-
-  }
-  else{
-      res.status(200).send("no cookie pong!");
-
-  }
-
-});
-
-// route to return all users (GET http://localhost:8080/api/users)
-router.get('/users', function(req, res) {
-  User1.find({}, function(err, users) {
-    res.json(users);
-  });
-});  
-
-// route to authenticate a user (POST http://localhost:8080/api/authenticate)
-router.post('/authenticate', function(req, res) {
-
-
-  // find the user
-  User1.findOne({
-    name: req.body.name
-  }, function(err, user) {
-
-    if (err) throw err;
-
-    if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
-    } else if (user) {
-
-      // check if password matches
-      if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-      } else {
-
-        // if user is found and password is right
-        // create a token
-        console.log(config);
-        var token = jwt.sign(user, config.secret, {
-          expiresInMinutes: 1440 // expires in 24 hours
-        });
-
-        // return the information including token as JSON
-        res.json({
-          success: true,
-          message: 'Enjoy your token!',
-          token: token
-        });
-      }   
-
-    }
-
-  });
-});
-
+// MIDDLEWARE - ISAUTHENTICATED
+// ==============================================
 var isAuthenticated = function (req, res, next) {
   console.log(req.body.username);
-  
 
   var profile = {
     first_name: 'John',
@@ -171,7 +95,10 @@ var isAuthenticated = function (req, res, next) {
       res.send(JSON.stringify(req.body));
 
 }
-//Handle the registering
+
+
+// REGISTER
+// ==============================================
 router.post('/register',function(req, res){
   var phone = req.body.mobile;
   var email = req.body.email;
@@ -218,6 +145,10 @@ router.get('/register', function(req, res){
   res.render('users1/register');
 
 });
+
+
+//  ENTERCODE
+// ==============================================
 router.get('/enterCode', function(req, res){
   var phone = req.query.phone;
   console.log("in enterCode",phone);
@@ -245,9 +176,9 @@ router.post('/enterCode', function(req, res){
    
 });
 
-// RESEND CODE
-// ==============================================
 
+// RESENDCODE
+// ==============================================
 router.get('/resendCode', function(req, res){
   var phone = req.query.phone;
 
@@ -291,7 +222,8 @@ router.get('/template', function(req, res){
 
 });
 
-// BOILERPLATE.ejs
+
+// BOILERPLATE
 // ==============================================
 router.get('/boilerplate', function(req, res){
 
@@ -300,8 +232,8 @@ router.get('/boilerplate', function(req, res){
 });
 
 
-/* Handle Login POST */
-//isAuthenticated
+// LOGIN
+// ==============================================
 router.post('/login',function(req, res){
 
   res.status(200).send("pong! of login");
@@ -313,7 +245,8 @@ router.get('/login', function(req, res){
 });
 
 
-// route middleware to verify a token
+// MIDDLEWARE
+// ==============================================
 router.use(function(req, res, next) {
   console.log("verifying the token");
   // check header or url parameters or post parameters for token
@@ -347,7 +280,8 @@ router.use(function(req, res, next) {
 });
 
 
-
+// PING
+// ==============================================
 router.get('/ping',isAuthenticated, function(req, res){
     res.status(200).send("pong!");
 });

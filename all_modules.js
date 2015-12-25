@@ -3,8 +3,6 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var routes = require('./controllers/index');
-var users1 = require('./controllers/users1');
 var flash = require('connect-flash');
 var session = require('express-session');
 var fs = require("fs");
@@ -14,13 +12,12 @@ var jwt = require("express-jwt");
 var unless = require('express-unless');
 var cookieParser = require('cookie-parser');
 
+
 module.exports.express = express;
 module.exports.path = path;
 module.exports.favicon = favicon;
 module.exports.logger = logger;
 module.exports.bodyParser = bodyParser;
-module.exports.routes = routes;
-module.exports.users1 = users1;
 module.exports.flash = flash;
 module.exports.session = session;
 module.exports.fs = fs;
