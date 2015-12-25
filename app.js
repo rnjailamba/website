@@ -1,9 +1,6 @@
 var modules = require("./all_modules.js");//simply loads all modules, no initialisation/creation of object of module
 var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections etc.
 var app = modules.express();
-var exportingApp = require("./controllers/setup/export_app");//export app for controllers
-console.log('expporting the app from the app.js',exportingApp);
-exportingApp.exportApp(app);
 
 // view engine setup
 app.set('views', modules.path.join(__dirname, 'views'));
@@ -40,6 +37,10 @@ app.use(modules.bodyParser.json());// get information from html forms
 app.use(modules.bodyParser.urlencoded({ extended: false }));
 app.use(modules.cookieParser());// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
+
+var exportingApp = require("./controllers/setup/export_app");//export app for controllers
+console.log('exporting the app from the app.js',exportingApp);
+exportingApp.exportApp(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,7 @@
 var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
-var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
+
+
 var config = require('../config/config'); // get our config file
 var app = modules.express();
 var session = require('express-session');
@@ -31,7 +32,7 @@ var isAuthenticated = function (req, res, next) {
   };
    
   if(!req.cookies.token || !req.cookies.uuid){
-   var token = jwt.sign(profile, config.secret, { expiresIn: 365 * 24 * 60 * 60 });
+   var token = modules.jwt.sign(profile, config.secret, { expiresIn: 365 * 24 * 60 * 60 });
    var expiryDate = new Date(Number(new Date()) + 365 * 24 * 60 * 60 * 1000); 
    if ((req.body.username === 'john.doe' && req.body.password === 'foobar')) {//make a database call here
     res.send(401, 'Wrong user or password');
@@ -100,6 +101,7 @@ var isAuthenticated = function (req, res, next) {
 // REGISTER
 // ==============================================
 router.post('/register',function(req, res){
+  console.log(req);
   var phone = req.body.mobile;
   var email = req.body.email;
   var password = req.body.password;
@@ -256,7 +258,7 @@ router.use(function(req, res, next) {
   if (token) {
 
     // verifies secret and checks exp
-    jwt.verify(token, config.secret, function(err, decoded) {      
+    modules.jwt.verify(token, config.secret, function(err, decoded) {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {
