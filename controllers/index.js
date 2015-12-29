@@ -46,6 +46,33 @@ router.get('/template', function(req, res, next) {
   res.render('basicPages/template', { title: 'Express' });
 });
 
+
+// HOME1
+// ==============================================
+router.get('/home1', function(req, res){
+
+  res.render('basicPages/home1');
+
+});
+
+
+// HOME2
+// ==============================================
+router.get('/home2', function(req, res){
+
+  res.render('basicPages/home2');
+
+});
+
+
+// HOME3
+// ==============================================
+router.get('/home3', function(req, res){
+
+  res.render('basicPages/home3');
+
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }
