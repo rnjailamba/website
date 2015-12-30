@@ -2,6 +2,9 @@ var modules = require("./all_modules.js");//simply loads all modules, no initial
 var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections etc.
 var app = modules.express();
 
+var $ = require('jquery');
+
+
 
 // VIEW ENGINE SETUP
 // ==============================================

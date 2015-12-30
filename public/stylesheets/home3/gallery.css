@@ -1,0 +1,211 @@
+
+
+/*------------------------------------------/
+/-----------------Gallery-------------------/
+/------------------------------------------*/
+
+.gallery
+{
+	padding: 100px 0px;
+}
+.gallery .all-td
+{
+	font-family: 'Raleway', sans-serif;
+	font-size: 22px;
+	font-weight: 300;
+	color: #242424;
+	text-transform: uppercase;
+	margin: 0px;
+	letter-spacing: 2px;
+}
+.gallery .alldesc h2
+{
+    color: #CB5750;
+    font-family: "Source Sans Pro",sans-serif;
+    font-size: 40px;
+    margin-top: 0px !important;
+    font-weight: 600;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+ .gallery .desc
+{
+	 font-family: "Source Sans Pro",sans-serif;
+	 font-size: 17px;
+	 font-weight: 400;
+	 color: #888;
+}
+.gallery .sorting
+{
+	background-color: rgba(0, 0, 0, 0.06);
+	margin-top: 60px;
+	color: #3ec9c3;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 600;
+	font-size: 15px;
+	margin-left: 15px;
+}
+.gallery .sorting .active
+{
+	background-color: #3EC9C3;
+	color: #fff;
+}
+.gallery .filimg
+{
+	padding: 10px 15px;
+	cursor:pointer;
+}
+.gallery .galleryimg
+{
+	margin-top: 30px;
+}
+.gallery .mix
+{
+	padding: 0px;
+}
+
+
+
+
+
+.gallery #galleryimg .mix{
+	display: none;
+}
+
+
+.gallery .grid {
+	position: relative;
+	margin: 20px auto 0px;
+	max-width: 1000px;
+	list-style: none;
+	text-align: center;
+}
+
+.gallery .grid figure {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin: 10px 1%;
+	background: #3085a3;
+	text-align: center;
+	cursor: pointer;
+}
+
+.gallery .grid figure img {
+	position: relative;
+	display: block;
+	min-height: 100%;
+	max-width: 100%;
+	opacity: 0.8;
+}
+
+.gallery .grid figure figcaption {
+	padding: 2em;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1.25em;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.gallery .grid figure figcaption::before,
+.grid figure figcaption::after {
+	pointer-events: none;
+}
+
+.gallery .grid figure figcaption,
+.grid figure figcaption > a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.gallery .grid figure figcaption > a {
+	z-index: 1000;
+	text-indent: 200%;
+	white-space: nowrap;
+	font-size: 0;
+	opacity: 0;
+}
+
+.gallery .grid figure h2 {
+	word-spacing: -0.15em;
+	font-weight: 300;
+}
+
+.gallery .grid figure h2 span {
+	font-weight: 800;
+}
+
+.gallery .grid figure h2,
+.grid figure p {
+	margin: 0;
+}
+
+.gallery .grid figure p {
+	letter-spacing: 1px;
+	font-size: 50%;
+}
+
+
+.gallery figure.effect-Beauty{
+	background-color: #17819c;
+}
+
+.gallery figure.effect-Beauty img {
+	opacity: 0.7;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale(1.15);
+	transform: scale(1.15);
+	width: 100%;
+}
+
+.gallery figure.effect-Beauty:hover img {
+	opacity: 0.5;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
+.gallery figure.effect-Beauty h2 {
+	margin-top: 20%;
+	-webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+	-webkit-transform: translate3d(0,20px,0);
+	transform: translate3d(0,20px,0);
+}
+
+.gallery figure.effect-Beauty p {
+	margin: 1em 0 0;
+	padding: 15px;
+	border: 1px solid #fff;
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(0,20px,0) scale(1.1);
+	transform: translate3d(0,20px,0) scale(1.1);
+}
+
+.gallery figure.effect-Beauty:hover h2 {
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+.gallery figure.effect-Beauty:hover p {
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0) scale(1);
+	transform: translate3d(0,0,0) scale(1);
+}
+
+.gallery  h2 {
+     font-size: 25px;
+ }
+
+ .gallery{
+    background-color:#f8f8f8;
+ }
+
+
+
