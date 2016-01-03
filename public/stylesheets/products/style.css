@@ -301,7 +301,7 @@ xgallery
     transition: width 0.3s;
   }
   .cd-gallery li {
-    width: 23%;
+    width: 31%;
   }
   .cd-gallery.filter-is-visible {
     /* reduce width when filter is visible */
