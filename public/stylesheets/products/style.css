@@ -243,7 +243,7 @@ xtab-filter
   }
   .cd-tab-filter.filter-is-visible {
     /* reduce width when filter is visible */
-    width: 80%;
+    width: 82%;
   }
 }
 
@@ -305,7 +305,7 @@ xgallery
   }
   .cd-gallery.filter-is-visible {
     /* reduce width when filter is visible */
-    width: 80%;
+    width: 82%;
   }
 }
 
@@ -387,7 +387,7 @@ xfilter
 }
 @media only screen and (min-width: 1170px) {
   .cd-filter {
-  width: 240px;
+  width: 18%;
   }
   .cd-filter form {
     padding: 70px 10%;
