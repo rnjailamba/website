@@ -114,19 +114,22 @@ $(function(){
 
 			var refElement = $(currentLink.attr("href"));
 
-			if (refElement.position().top <= scrollPosition && refElement.position().top + refElement.height() > scrollPosition) {
+			if( refElement.length ){
 
-				$('.nav li a').removeClass("active");
+                if (refElement.position().top <= scrollPosition && refElement.position().top + refElement.height() > scrollPosition) {
 
-				currentLink.addClass("active");
+                    $('.nav li a').removeClass("active");
 
-			}
+                    currentLink.addClass("active");
 
-			else{
+                }
 
-				currentLink.removeClass("active");
+                else{
 
-			}
+                    currentLink.removeClass("active");
+
+                }
+            }
 
 		});
 

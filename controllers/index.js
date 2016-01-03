@@ -73,6 +73,42 @@ router.get('/home3', function(req, res){
 
 });
 
+
+// BLOGMAIN
+// ==============================================
+router.get('/blogMain', function(req, res){
+
+  res.render('basicPages/blogMain');
+
+});
+
+
+// TEMP
+// ==============================================
+router.get('/temp', function(req, res){
+
+  res.render('basicPages/temp');
+
+});
+
+
+// PRODUCTS
+// ==============================================
+router.get('/products', function(req, res){
+
+  res.render('basicPages/products');
+
+});
+
+
+// PRODUCTFILTER
+// ==============================================
+router.get('/productFilter', function(req, res){
+
+  res.render('basicPages/productFilter');
+
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }
