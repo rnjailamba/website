@@ -109,6 +109,24 @@ router.get('/productFilter', function(req, res){
 
 });
 
+
+// GRIDDER
+// ==============================================
+router.get('/gridder', function(req, res){
+
+  res.render('basicPages/gridder');
+
+});
+
+
+// GRIDDER1
+// ==============================================
+router.get('/gridder1', function(req, res){
+
+  res.render('basicPages/gridder1');
+
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }

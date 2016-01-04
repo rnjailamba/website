@@ -162,7 +162,6 @@ $.fn.imagesLoaded = function( callback ) {
 };
 
 var Grid = (function() {
-
 		// list of items
 	var $grid = $( '#og-grid' ),
 		// the items
@@ -246,7 +245,6 @@ var Grid = (function() {
 	}
 
 	function initEvents() {
-
 		// when clicking an item, show the preview with the item´s info and large image.
 		// close the item if already expanded.
 		// also close if clicking on the item´s cross
@@ -272,10 +270,10 @@ var Grid = (function() {
 
 	function initItemsEvents( $items ) {
 		$items.on( 'click', 'span.og-close', function() {
+
 			hidePreview();
 			return false;
 		} ).children( 'a' ).on( 'click', function(e) {
-
 			var $item = $( this ).parent();
 			// check if item already opened
 			current === $item.index() ? hidePreview() : showPreview( $item );
