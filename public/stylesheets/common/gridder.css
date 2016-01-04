@@ -37,10 +37,7 @@
 
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    padding: 0px;
-    margin: 0px;
-    padding: 0 30px;
+
     padding-bottom: 1000px
 }
 
@@ -50,9 +47,6 @@ body {
     }
 }
 
-.container.container-big {
-    width: 80%
-}
 
 hr {
     margin: 40px 0;
@@ -60,10 +54,7 @@ hr {
     border-top: 1px solid #EEE
 }
 
-img {
-    width: 100%;
-    max-width: 100%
-}
+
 
 h1 {
     text-align: center
