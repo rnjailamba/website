@@ -110,6 +110,24 @@ router.get('/productFilter', function(req, res){
 });
 
 
+// PRODUCTFILTER1
+// ==============================================
+router.get('/productFilter1', function(req, res){
+
+  res.render('basicPages/productFilter1');
+
+});
+
+
+// PRODUCTFILTER2
+// ==============================================
+router.get('/productFilter2', function(req, res){
+
+  res.render('basicPages/productFilter2');
+
+});
+
+
 // GRIDDER
 // ==============================================
 router.get('/gridder', function(req, res){

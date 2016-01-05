@@ -1,12 +1,10 @@
 .gridder {
-    margin: 0px;
-    padding: 0px;
     list-style-type: none
 }
 
 .gridder-list {
     display: inline-block;
-    vertical-align: top
+    vertical-align: bottom;
 }
 
 .gridder-show {
@@ -23,17 +21,6 @@
 .gridder-list {
     width: 15.83333%
 }
-
-.gridder-list:nth-child(n) {
-    margin-bottom: 1%;
-    margin-right: 1%
-}
-
-.gridder-list:nth-of-type(6n) {
-    margin-right: 0;
-    margin-bottom: 0
-}
-
 
 
 body {
@@ -83,20 +70,12 @@ h1 {
 
 .gridder-list {
     display: inline-block;
-    position: relative;
+    position: static;
     cursor: pointer;
     width: 32.66667%
 }
 
-.gridder-list:nth-child(n) {
-    margin-bottom: 1%;
-    margin-right: 1%
-}
 
-.gridder-list:nth-of-type(3n) {
-    margin-right: 0;
-    margin-bottom: 0
-}
 
 .gridder-list .overlay {
     position: absolute;
@@ -147,7 +126,6 @@ h1 {
     top: 60px;
     left: 0px;
     right: 0px;
-    text-align: center;
     font-family: Arial, serif;
     font-weight: 300;
     font-size: 16px;
@@ -190,7 +168,6 @@ h1 {
     top: 0px;
     left: 0px;
     padding: 0px;
-    text-align: center
 }
 
 .gridder-navigation a {

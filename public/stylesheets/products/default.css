@@ -49,8 +49,7 @@ a {
 }
 
 .container > header {
-	width: 90%;
-	max-width: 1240px;
+	width: 100%;
 	margin: 0 auto;
 	position: relative;
 	padding: 0 30px 50px 30px;
@@ -62,11 +61,8 @@ a {
 }
 
 .container > header h1 {
-	font-size: 34px;
 	line-height: 38px;
 	margin: 0 auto;
-	font-weight: 700;
-	color: #333;
 }
 
 .container > header h1 span {
