@@ -13,9 +13,6 @@
     <link rel="stylesheet" type="text/css" href="/css/products/component.css" /><!-- css for the expanding tabs -->
     <link rel="stylesheet" type="text/css" href="/css/products/filter.css" /><!-- css for coexistance with filter -->
 
-
-
-
     <script src="/js/home3/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
 </head>
 <body>
@@ -152,7 +149,10 @@
         <p>Filler text by <a href="http://veggieipsum.com/">Veggie Ipsum</a></p>
         <a id="og-additems" href="#">add more</a>
     </div>
+
     <div class="cd-filter">
+        <a href="#0" class="cd-filter-trigger">Filters</a>
+
         <form>
             <div class="cd-filter-block">
                 <h4>Search</h4>
@@ -221,10 +221,11 @@
             </div> <!-- cd-filter-block -->
         </form>
 
-        <a href="#0" class="cd-close">Close</a>
     </div> <!-- cd-filter -->
 
-    <a href="#0" class="cd-filter-trigger">Filters</a>
+
+
+
 
 </div><!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -234,6 +235,8 @@
 				Grid.init();
 			});
 		</script>
+
+<script src="/js/products/main.js"></script> <!-- Resource jQuery -->
 </body>
 </html>
 
