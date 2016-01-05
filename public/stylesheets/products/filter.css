@@ -1,3 +1,8 @@
+/* --------------------------------
+
+COMMON PROPERTIES
+
+-------------------------------- */
 *, *::after, *::before {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -52,7 +57,7 @@ CDHEADER
 
 /* --------------------------------
 
-xtab-filter
+XTAB-FILTER
 
 -------------------------------- */
 
@@ -199,7 +204,7 @@ xtab-filter
 
 /* --------------------------------
 
-xfilter
+XFILTER
 
 -------------------------------- */
 
@@ -480,3 +485,6 @@ xcustom form elements
     display: none;
   }
 }
+
+
+
