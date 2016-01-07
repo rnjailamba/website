@@ -1,13 +1,13 @@
 jQuery(document).ready(function(){
-	var productCustomization = $('.cd-customization'),
-		cart = $('.cd-cart'),
+	var productCustomization = $('.ho-customization'),
+		cart = $('.ho-cart'),
 		animating = false;
 
 	initCustomization(productCustomization);
 
 	$('body').on('click', function(event){
-		//if user clicks outside the .cd-gallery list items - remove the .hover class and close the open ul.size/ul.color list elements
-		if( $(event.target).is('body') || $(event.target).is('.cd-gallery') ) {
+		//if user clicks outside the .ho-gallery list items - remove the .hover class and close the open ul.size/ul.color list elements
+		if( $(event.target).is('body') || $(event.target).is('.ho-gallery') ) {
 			deactivateCustomization();
 		}
 	});
@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
 			var actual = $(this),
 				selectOptions = actual.find('[data-type="select"]'),
 				addToCartBtn = actual.find('.add-to-cart'),
-				touchSettings = actual.next('.cd-customization-trigger');
+				touchSettings = actual.next('.ho-customization-trigger');
 
 			//detect click on ul.size/ul.color list elements
 			selectOptions.on('click', function(event) {
@@ -76,7 +76,7 @@ jQuery(document).ready(function(){
 	}
 
 	function updateSlider(actual, index) {
-		var slider = actual.parent('.cd-customization').prev('a').children('.cd-slider-wrapper'),
+		var slider = actual.parent('.ho-customization').prev('a').children('.ho-slider-wrapper'),
 			slides = slider.children('li');
 
 		slides.eq(index).removeClass('move-left').addClass('selected').prevAll().removeClass('selected').addClass('move-left').end().nextAll().removeClass('selected move-left');
@@ -85,11 +85,11 @@ jQuery(document).ready(function(){
 	function resetCustomization(selectOptions) {
 		//close ul.clor/ul.size if they were left open and user is not interacting with them anymore
 		//remove the .hover class from items if user is interacting with a different one
-		selectOptions.siblings('[data-type="select"]').removeClass('is-open').end().parents('.cd-single-item').addClass('hover').parent('li').siblings('li').find('.cd-single-item').removeClass('hover').end().find('[data-type="select"]').removeClass('is-open');
+		selectOptions.siblings('[data-type="select"]').removeClass('is-open').end().parents('.ho-single-item').addClass('hover').parent('li').siblings('li').find('.ho-single-item').removeClass('hover').end().find('[data-type="select"]').removeClass('is-open');
 	}
 
 	function deactivateCustomization() {
-		productCustomization.parent('.cd-single-item').removeClass('hover').end().find('[data-type="select"]').removeClass('is-open');
+		productCustomization.parent('.ho-single-item').removeClass('hover').end().find('[data-type="select"]').removeClass('is-open');
 	}
 
 	function updateCart() {

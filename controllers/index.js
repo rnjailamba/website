@@ -154,6 +154,15 @@ router.get('/hoverEffect', function(req, res){
 
 });
 
+
+// HOVEREXPT
+// ==============================================
+router.get('/hoverExpt', function(req, res){
+
+  res.render('basicPages/hoverExpt');
+
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }
