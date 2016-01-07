@@ -145,6 +145,15 @@ router.get('/gridder1', function(req, res){
 
 });
 
+
+// HOVEREFFECT
+// ==============================================
+router.get('/hoverEffect', function(req, res){
+
+  res.render('basicPages/hoverEffect');
+
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }
