@@ -165,7 +165,7 @@ var Grid = (function() {
 		// list of items
 	var $grid = $( '#og-grid' ),
 		// the items
-		$items = $grid.children( 'li' ),
+		$items = $grid.find( 'li' ),
 		// current expanded item's index
 		current = -1,
 		// position (top) of the expanded item
@@ -269,12 +269,12 @@ var Grid = (function() {
 	}
 
 	function initItemsEvents( $items ) {
-		$items.on( 'click', 'span.og-close', function() {
 
+		$items.on( 'click', 'span.og-close', function() {
 			hidePreview();
 			return false;
-		} ).children( 'a' ).on( 'click', function(e) {
-			var $item = $( this ).parent();
+		} ).find( 'a' ).on( 'click', function(e) {
+			var $item = $( this ).parents('li');
 			// check if item already opened
 			current === $item.index() ? hidePreview() : showPreview( $item );
 			return false;
@@ -284,6 +284,7 @@ var Grid = (function() {
 
 	function getWinSize() {
 		winsize = { width : $window.width(), height : $window.height() };
+
 	}
 
 	function showPreview( $item ) {
@@ -375,13 +376,15 @@ var Grid = (function() {
 			current = this.$item.index();
 
 			// update preview´s content
-			var $itemEl = this.$item.children( 'a' ),
+			var $itemEl = this.$item.find( 'a' ),
 				eldata = {
 					href : $itemEl.attr( 'href' ),
 					largesrc : $itemEl.data( 'largesrc' ),
 					title : $itemEl.data( 'title' ),
 					description : $itemEl.data( 'description' )
 				};
+				console.log($itemEl);
+				console.log(eldata);
 
 			this.$title.html( eldata.title );
 			this.$description.html( eldata.description );
@@ -400,7 +403,7 @@ var Grid = (function() {
 				this.$loading.show();
 				$( '<img/>' ).load( function() {
 					var $img = $( this );
-					if( $img.attr( 'src' ) === self.$item.children('a').data( 'largesrc' ) ) {
+					if( $img.attr( 'src' ) === self.$item.find('a').data( 'largesrc' ) ) {
 						self.$loading.hide();
 						self.$fullimage.find( 'img' ).remove();
 						self.$largeImg = $img.fadeIn( 350 );

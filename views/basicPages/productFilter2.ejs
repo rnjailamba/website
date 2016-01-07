@@ -46,9 +46,11 @@
     <div class="main cd-gallery" style="float:right;width:83%;">
         <ul id="og-grid" class="og-grid">
             <li>
-                <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/1.jpg" data-title="Azuki bean" data-description="Swiss chard pumpkin bunya nuts maize plantain aubergine napa cabbage soko coriander sweet pepper water spinach winter purslane shallot tigernut lentil beetroot.">
-                    <img src="/img/products/images/thumbs/1.jpg" alt="img01"/>
-                </a>
+                <div class="cd-single-item">
+                    <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/1.jpg" data-title="Azuki bean" data-description="Swiss chard pumpkin bunya nuts maize plantain aubergine napa cabbage soko coriander sweet pepper water spinach winter purslane shallot tigernut lentil beetroot.">
+                        <img src="/img/products/images/thumbs/1.jpg" alt="img01"/>
+                    </a>
+                </div>
             </li>
             <li>
                 <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/2.jpg" data-title="Veggies sunt bona vobis" data-description="Komatsuna prairie turnip wattle seed artichoke mustard horseradish taro rutabaga ricebean carrot black-eyed pea turnip greens beetroot yarrow watercress kombu.">
@@ -223,20 +225,16 @@
 
     </div> <!-- cd-filter -->
 
-
-
-
-
 </div><!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="/js/products/grid.js"></script>
+<script src="/js/home3/jquery-1.10.2.js"></script> <!-- For jquery -->
+<script src="/js/products/grid.js"></script> <!-- For the grid and expansions -->
 <script>
-			$(function() {
-				Grid.init();
-			});
-		</script>
+    $(function() {
+        Grid.init();
+    });
+</script>
 
-<script src="/js/products/main.js"></script> <!-- Resource jQuery -->
+<script src="/js/products/main.js"></script> <!-- For Filters -->
 </body>
 </html>
 
