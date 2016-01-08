@@ -57,9 +57,7 @@
                         <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/1.jpg" data-title="Azuki bean" data-description="Swiss chard pumpkin bunya nuts maize plantain aubergine napa cabbage soko coriander sweet pepper water spinach winter purslane shallot tigernut lentil beetroot.">
                             <img src="/img/products/images/thumbs/4.jpg" alt="img01"/>
                         </a>
-                        <!--<div class="heart">❤</div>-->
                         <span class="heart">❤</span >
-
                         <div class="ho-customization">
                             <button class="add-to-cart1 leftPrice">
                                 <span>100 ₹</span>
@@ -90,6 +88,8 @@
                     <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/2.jpg" data-title="Veggies sunt bona vobis" data-description="Komatsuna prairie turnip wattle seed artichoke mustard horseradish taro rutabaga ricebean carrot black-eyed pea turnip greens beetroot yarrow watercress kombu.">
                         <img src="/img/products/images/thumbs/5.jpg" alt="img02"/>
                     </a>
+                    <span class="heart">❤</span >
+
                     <div class="ho-customization">
                         <button class="add-to-cart1 leftPrice">
                             <span>100 ₹</span>
@@ -114,6 +114,8 @@
                     <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/3.jpg" data-title="Dandelion horseradish" data-description="Cabbage bamboo shoot broccoli rabe chickpea chard sea lettuce lettuce ricebean artichoke earthnut pea aubergine okra brussels sprout avocado tomato.">
                         <img src="/img/products/images/thumbs/6.jpg" alt="img03"/>
                     </a>
+                    <span class="heart">❤</span >
+
                     <div class="ho-customization">
                         <button class="leftPrice">
                             <span>100 ₹</span>
@@ -139,6 +141,8 @@
                     <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/3.jpg" data-title="Dandelion horseradish" data-description="Cabbage bamboo shoot broccoli rabe chickpea chard sea lettuce lettuce ricebean artichoke earthnut pea aubergine okra brussels sprout avocado tomato.">
                         <img src="/img/products/images/thumbs/8.jpg" alt="img03"/>
                     </a>
+                    <span class="heart">❤</span >
+
                     <div class="ho-customization">
                         <button class="leftPrice">
                             <span>100 ₹</span>
@@ -243,23 +247,11 @@
     $(function() {
         Grid.init();
     });
-    var animated = false;
-    $('.heart').click(function(){
-      console.log("heart clicked");
-
-      if(!animated){
-        $(this).addClass('happy').removeClass('broken');
-        animated = true;
-      }
-      else {
-        $(this).removeClass('happy').addClass('broken');
-        animated = false;
-      }
-    });
 </script>
 
 <script src="/js/products/filter.js"></script> <!-- For Filters -->
-<script src="/js/products/hover.js"></script> <!-- Resource jQuery -->
+<script src="/js/products/hover.js"></script> <!-- Hover and stuff appears  -->
+<script src="/js/products/heart.js"></script> <!-- Heart work-->
 
 </body>
 </html>

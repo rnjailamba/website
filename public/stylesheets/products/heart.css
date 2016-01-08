@@ -8,6 +8,7 @@
     font-size: 3em;
     cursor: pointer;
     transition: all .3s ease;
+    z-index:9;
 }
 .heart:hover {
     animation: pulse .6s linear;
@@ -29,7 +30,6 @@
 }
 .heart.broken {
     color: #aaa;
-    position: relative;
     transition: all .3s ease;
 }
 .heart.broken:before,
