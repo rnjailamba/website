@@ -44,17 +44,17 @@ jQuery(document).ready(function(){
 					//animate if not already animating
 					animating =  true;
 					resetCustomization(addToCartBtn);
-
 					addToCartBtn.addClass('is-added').find('path').eq(0).animate({
 						//draw the check icon
 						'stroke-dashoffset':0
 					}, 300, function(){
 						setTimeout(function(){
 							updateCart();
+							animating =  false;
 							addToCartBtn.removeClass('is-added').find('em').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
 								//wait for the end of the transition to reset the check icon
 								addToCartBtn.find('path').eq(0).css('stroke-dashoffset', '19.79');
-								animating =  false;
+							    animating =  false;
 							});
 
 							if( $('.no-csstransitions').length > 0 ) {

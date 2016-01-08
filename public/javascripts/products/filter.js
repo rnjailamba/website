@@ -60,9 +60,12 @@ jQuery(document).ready(function($){
 	});
 
 	function fixGallery() {
-		var offsetTop = $('.cd-main-content').offset().top,
-			scrollTop = $(window).scrollTop();
-		( scrollTop >= offsetTop ) ? $('.cd-main-content').addClass('is-fixed') : $('.cd-main-content').removeClass('is-fixed');
+		var elem = $('.cd-main-content');
+		if(elem.length){
+            var offsetTop = elem.offset().top,
+                scrollTop = $(window).scrollTop();
+            ( scrollTop >= offsetTop ) ? $('.cd-main-content').addClass('is-fixed') : $('.cd-main-content').removeClass('is-fixed');
+        }
 	}
 
 	/************************************
@@ -74,19 +77,19 @@ jQuery(document).ready(function($){
 	*************************************/
 
 	buttonFilter.init();
-	$('.cd-gallery ul').mixItUp({
-	    controls: {
-	    	enable: false
-	    },
-	    callbacks: {
-	    	onMixStart: function(){
-	    		$('.cd-fail-message').fadeOut(200);
-	    	},
-	      	onMixFail: function(){
-	      		$('.cd-fail-message').fadeIn(200);
-	    	}
-	    }
-	});
+//	$('.cd-gallery ul').mixItUp({
+//	    controls: {
+//	    	enable: false
+//	    },
+//	    callbacks: {
+//	    	onMixStart: function(){
+//	    		$('.cd-fail-message').fadeOut(200);
+//	    	},
+//	      	onMixFail: function(){
+//	      		$('.cd-fail-message').fadeIn(200);
+//	    	}
+//	    }
+//	});
 
 	//search filtering
 	//credits http://codepen.io/edprats/pen/pzAdg
