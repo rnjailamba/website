@@ -20,7 +20,7 @@
 	position: relative;
 }
 
-.og-grid li.og-expanded  a::after {
+.og-grid li.og-expanded  a:not(.pdpLink)::after {
 	top: auto;
 	border: solid transparent;
 	content: " ";
