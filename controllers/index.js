@@ -163,6 +163,15 @@ router.get('/hoverExpt', function(req, res){
 
 });
 
+
+// FLICKETY
+// ==============================================
+router.get('/flickety', function(req, res){
+
+  res.render('basicPages/flickety');
+
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }

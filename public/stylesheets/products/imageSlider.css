@@ -1,0 +1,36 @@
+/* external css: flickity.css */
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body { font-family: sans-serif; }
+
+.gallery {
+  background: #EEE;
+}
+
+.gallery-cell {
+  width: 100%;
+  height: 400px;
+  background: #8C8;
+  counter-increment: gallery-cell;
+}
+
+/* cell number */
+.gallery-cell:before {
+  display: block;
+  text-align: center;
+  content: counter(gallery-cell);
+  font-size: 80px;
+  color: white;
+}
+
+.flickity-page-dots{
+    bottom:2px;
+}
+
+.flickity-prev-next-button {
+    top: 42%;
+}

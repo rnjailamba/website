@@ -15,7 +15,11 @@
     <link rel="stylesheet" href="/css/products/hover.css"> </link><!-- css for the display of the 2 buttons at bottom -->
     <link rel="stylesheet" href="/css/products/heart.css"> </link><!-- css for the heart to break/ get made -->
     <link rel="stylesheet" href="/css/products/quickView.css"> </link><!-- css for the quick view -->
-    <link rel="stylesheet" href="/css/products/pagination.css"> </link><!-- css for the quick view -->
+    <link rel="stylesheet" href="/css/products/pagination.css"> </link><!-- css for the pagination -->
+
+    <link rel="stylesheet" href="/css/common/flickity.min.css"></link>
+
+    <link rel="stylesheet" href="/css/products/imageSlider.css"> </link><!-- css for the image Sliding in the quick view -->
 
     <script src="/js/home3/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
 </head>
@@ -54,7 +58,9 @@
             <% for(var i=0; i < 5; i++) { %>
                 <li>
                     <div class="ho-single-item effect-zoe">
-                        <a href="http://cargocollective.com/jaimemartinez/" data-largesrc="/img/products/images/1.jpg" data-title="Azuki bean" data-description="Swiss chard pumpkin bunya nuts maize plantain aubergine napa cabbage soko coriander sweet pepper water spinach winter purslane shallot tigernut lentil beetroot.">
+                        <a href="http://cargocollective.com/jaimemartinez/"
+                           data-largesrc="/img/products/images/1.jpg" data-largesrc1="/img/products/images/1.jpg" data-largesrc2="/img/products/images/1.jpg" data-largesrc3="/img/products/images/1.jpg"
+                           data-title="Azuki bean" data-description="Swiss chard pumpkin bunya nuts maize plantain aubergine napa cabbage soko coriander sweet pepper water spinach winter purslane shallot tigernut lentil beetroot.">
                             <img src="/img/products/images/thumbs/4.jpg" alt="img01"/>
                         </a>
                         <span class="heart">❤</span >
@@ -260,7 +266,8 @@
 <script src="/js/products/filter.js"></script> <!-- js for Filters -->
 <script src="/js/products/hover.js"></script> <!-- js for hover and stuff appears at the bottom - the two buttons-->
 <script src="/js/products/heart.js"></script> <!-- js for the heart work-->
-
+<script src="/js/common/flickity.pkgd.min.js"></script>
+<script src="/js/products/imageSlider.js"></script>
 </body>
 </html>
 

@@ -346,7 +346,8 @@ var Grid = (function() {
 			this.$href = $( '<a href="#">Visit website</a>' );
 			this.$details = $( '<div class="og-details"></div>' ).append( this.$title, this.$description, this.$href );
 			this.$loading = $( '<div class="og-loading"></div>' );
-			this.$fullimage = $( '<div class="og-fullimg"></div>' ).append( this.$loading );
+			this.$photos = $( '<div class="gallery-cell" style="background:#3498db"></div><div class="gallery-cell" style="background:#ea5e50"></div><div class="gallery-cell" style="background:#f1c40f"></div>' );
+			this.$fullimage = $( '<div class="og-fullimg main-gallery"></div>' ).append( this.$photos ,this.$loading);
 			this.$closePreview = $( '<span class="og-close"></span>' );
 			this.$previewInner = $( '<div class="og-expander-inner"></div>' ).append( this.$closePreview, this.$fullimage, this.$details );
 			this.$previewEl = $( '<div class="og-expander"></div>' ).append( this.$previewInner );
@@ -383,13 +384,12 @@ var Grid = (function() {
 					title : $itemEl.data( 'title' ),
 					description : $itemEl.data( 'description' )
 				};
-				console.log($itemEl);
-				console.log(eldata);
 
+            //CHANGING THE DATA GOING ON BELOW
 			this.$title.html( eldata.title );
 			this.$description.html( eldata.description );
 			this.$href.attr( 'href', eldata.href );
-
+			this.$photos.html(Math.floor(Math.random()*15));
 			var self = this;
 
 			// remove the current image in the preview
@@ -397,19 +397,30 @@ var Grid = (function() {
 				self.$largeImg.remove();
 			}
 
+
 			// preload large image and add it to the preview
 			// for smaller screens we don´t display the large image (the media query will hide the fullimage wrapper)
 			if( self.$fullimage.is( ':visible' ) ) {
 				this.$loading.show();
+                self.$loading.remove();
 				$( '<img/>' ).load( function() {
-					var $img = $( this );
-					if( $img.attr( 'src' ) === self.$item.find('a').data( 'largesrc' ) ) {
-						self.$loading.hide();
-						self.$fullimage.find( 'img' ).remove();
-						self.$largeImg = $img.fadeIn( 350 );
-						self.$fullimage.append( self.$largeImg );
-					}
+//					var $img = $( this );
+//					if( $img.attr( 'src' ) === self.$item.find('a').data( 'largesrc' ) ) {
+//						self.$loading.hide();
+//						self.$fullimage.find( 'img' ).remove();
+//						self.$largeImg = $img.fadeIn( 350 );
+//						self.$fullimage.append( self.$largeImg );
+//					}
 				} ).attr( 'src', eldata.largesrc );
+				this.$photos.parents().find('.main-gallery').flickity({
+                      // options
+                      cellAlign: 'left',
+                      contain: true,
+                      initialIndex: 0,
+                      wrapAround: true
+                    });
+                  this.$photos.parents().find('.main-gallery').flickity( 'select', 0, false, true );
+
 			}
 
 		},
