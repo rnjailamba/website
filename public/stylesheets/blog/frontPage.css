@@ -1982,6 +1982,7 @@ nav[role="navigation"] {
     margin-left: 60px;
     margin-right: 60px;
     margin-bottom: 60px;
+    border: 1px solid black;
   }
   .post-container .post-item footer {
     padding: 0 20px;

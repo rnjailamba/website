@@ -30,6 +30,13 @@ router.get('/category', function(req, res, next) {
 });
 
 
+// GALLERYPOST
+// ==============================================
+router.get('/galleryPost', function(req, res, next) {
+  res.render('blog/galleryPost', { title: 'Cementify Blog' });
+});
+
+
 var justPrintSomething = function(){
     console.log("print something");
 }
