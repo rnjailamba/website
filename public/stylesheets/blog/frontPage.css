@@ -743,7 +743,7 @@ img {
 }
 
 .header .logo img {
-  width: 30px;
+  width: 200px;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
@@ -1884,7 +1884,7 @@ nav[role="navigation"] {
     margin-right: 60px;
   }
   .header .logo img {
-    width: 72px;
+    width: 400px;
   }
   .header .nav {
     margin-top: 10px;
