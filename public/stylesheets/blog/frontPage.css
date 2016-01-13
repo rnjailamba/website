@@ -677,7 +677,7 @@ img {
   cursor: all-scroll;
 }
 
-.main_category .title {
+.main_category a div {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -688,7 +688,7 @@ img {
   width: 100%;
 }
 
-.main_category .title:hover h3 {
+.main_category a div:hover h3 {
   color: #7BEEC7;
   padding: 0px;
   cursor: pointer;
@@ -698,7 +698,7 @@ img {
   transition-duration: 0.5s;
 }
 
-.main_category .title h3 {
+.main_category a div h3 {
   font-size: 14px;
   color: #FFFFFF;
   line-height: 20px;
@@ -713,7 +713,7 @@ img {
 #browse-categories {
   width: 100%;
   margin: 0 auto;
-  height: 100%;
+  height: 320px;
   display: block;
 }
 
@@ -1701,10 +1701,10 @@ nav[role="navigation"] {
 /* =  13. responsive
 /*-------------------------------------------------*/
 @media (min-width: 25.875em) {
-  .main_category .title:hover h3 {
+  .main_category a div:hover h3 {
     padding: 40px;
   }
-  .main_category .title h3 {
+  .main_category a div h3 {
     font-size: 18px;
   }
   .pagination {
