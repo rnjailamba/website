@@ -173,6 +173,10 @@ xsigin/signup popup
 .cd-form label.cd-email {
   background-image: url("../../images/home3/login/img/cd-icon-email.svg");
 }
+
+.cd-form label.cd-phone {
+  background-image: url("../../images/home3/login/img/cd-icon-phone.svg");
+}
 .cd-form label.cd-password {
   background-image: url("../../images/home3/login/img/cd-icon-password.svg");
 }
@@ -344,10 +348,10 @@ xsigin/signup popup
   }
 }
 
-#cd-login, #cd-signup, #cd-reset-password {
+#cd-login, #cd-signup, #cd-reset-password, #cd-enter-details  {
   display: none;
 }
 
-#cd-login.is-selected, #cd-signup.is-selected, #cd-reset-password.is-selected {
+#cd-login.is-selected, #cd-signup.is-selected, #cd-reset-password.is-selected , #cd-enter-details.is-selected{
   display: block;
 }

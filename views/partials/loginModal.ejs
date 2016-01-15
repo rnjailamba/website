@@ -1,15 +1,3 @@
-<!--<header role="banner">-->
-    <!--<div id="cd-logo"><a href="#0"><img src="img/cd-logo.svg" alt="Logo"></a></div>-->
-
-    <!--<nav class="main-nav">-->
-        <!--<ul>-->
-            <!--&lt;!&ndash; inser more links here &ndash;&gt;-->
-            <!--<li><a class="cd-signin" href="#0">Sign in</a></li>-->
-            <!--<li><a class="cd-signup" href="#0">Sign up</a></li>-->
-        <!--</ul>-->
-    <!--</nav>-->
-<!--</header>-->
-
 <link rel="stylesheet" href="/css/home3/login.css"></link> <!-- Gem style -->
 
 
@@ -41,7 +29,7 @@
                 </p>
 
                 <p class="fieldset">
-                    <input class="full-width" type="submit" value="Login">
+                    <input class="full-width loginButton" type="submit" value="Login">
                 </p>
             </form>
 
@@ -50,37 +38,20 @@
         </div> <!-- cd-login -->
 
         <div id="cd-signup"> <!-- sign up form -->
+
             <form class="cd-form">
                 <p class="fieldset">
-                    <label class="image-replace cd-username" for="signup-username">Username</label>
-                    <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
-                    <span class="cd-error-message">Error message here!</span>
+                    <label class="image-replace cd-phone" for="reset-email">10 digit Mobile Number</label>
+                    <input class="full-width has-padding has-border"  type='tel' name='mobile' id='mobile' placeholder="10 digit Mobile Number">
+                    <span class="cd-error-message">Not a valid 10 digit number!</span>
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-email" for="signup-email">E-mail</label>
-                    <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
-                    <span class="cd-error-message">Error message here!</span>
-                </p>
-
-                <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-password">Password</label>
-                    <input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
-                    <a href="#0" class="hide-password">Hide</a>
-                    <span class="cd-error-message">Error message here!</span>
-                </p>
-
-                <p class="fieldset">
-                    <input type="checkbox" id="accept-terms">
-                    <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
-                </p>
-
-                <p class="fieldset">
-                    <input class="full-width has-padding" type="submit" value="Create account">
+                    <input class="full-width has-padding sendOTP" type="submit" value="Send OTP">
                 </p>
             </form>
 
-            <!-- <a href="#0" class="cd-close-form">Close</a> -->
+
         </div> <!-- cd-signup -->
 
         <div id="cd-reset-password"> <!-- reset password form -->
@@ -99,6 +70,43 @@
             </form>
 
             <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+        </div> <!-- cd-reset-password -->
+
+        <div id="cd-enter-details"> <!-- enter phone number for otp form -->
+
+            <form class="cd-form">
+
+                <p class="fieldset">
+                    <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                    <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-password" for="signup-password">Password</label>
+                    <input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
+                    <a href="#0" class="hide-password">Hide</a>
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-phone" for="signup-username">Enter OTP</label>
+                    <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Enter OTP">
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <input type="checkbox" id="accept-terms">
+                    <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                </p>
+
+                <p class="fieldset">
+                    <input class="full-width has-padding signUpButton" type="submit" value="Create account">
+                </p>
+            </form>
+            <p class="cd-form-bottom-message"><a href="#0">Resend OTP</a></p>
+
+            <!-- <a href="#0" class="cd-close-form">Close</a> -->
         </div> <!-- cd-reset-password -->
         <a href="#0" class="cd-close-form">Close</a>
     </div> <!-- cd-user-modal-container -->

@@ -3,11 +3,16 @@ jQuery(document).ready(function($){
 		formLogin = formModal.find('#cd-login'),
 		formSignup = formModal.find('#cd-signup'),
 		formForgotPassword = formModal.find('#cd-reset-password'),
+		formEnterDetailsOTP = formModal.find('#cd-enter-details'),
 		formModalTab = $('.cd-switcher'),
 		tabLogin = formModalTab.children('li').eq(0).children('a'),
 		tabSignup = formModalTab.children('li').eq(1).children('a'),
 		forgotPasswordLink = formLogin.find('.cd-form-bottom-message a'),
 		backToLoginLink = formForgotPassword.find('.cd-form-bottom-message a'),
+		sendOTPButton = formSignup.find('p .sendOTP'),
+		loginButton = formLogin.find('p .loginButton'),
+		signupButton = formEnterDetailsOTP.find('p .signUpButton'),
+		resendOTPLink = formEnterDetailsOTP.find('.cd-form-bottom-message a'),
 		mainNav = $('.main-nav');
 
 	//open modal
@@ -62,11 +67,78 @@ jQuery(document).ready(function($){
 		login_selected();
 	});
 
+    //go to enter details and OTP
+    sendOTPButton.on('click', function(event){
+        var errMessage = formSignup.find('input[type="tel"]').hasClass('has-error');
+        if(errMessage){
+            formSignup.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        event.preventDefault();
+        var phoneNumber = $('#mobile').val();
+        console.log(phoneNumber);
+        if( checkNumber(phoneNumber) ){
+            if( getlength(phoneNumber) !=10 ){
+                formSignup.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+            }
+            else{
+                enter_details();
+            }
+        }
+        else{
+            formSignup.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+    });
+
+    //click the login button
+    loginButton.on('click', function(event){
+        event.preventDefault();
+        alert("login pressed");
+        //check if email in records/no then tell message acc
+    });
+
+    //click the signup button
+    signupButton.on('click', function(event){
+        event.preventDefault();
+        alert("sginup pressed");
+        //check if valid email , otp
+        // or just check otp
+    });
+
+
+
+
+    //resend otp so go back to  enter phone
+    resendOTPLink.on('click', function(event){
+        event.preventDefault();
+        signup_selected();
+    });
+
+    function getlength(number) {
+        return number.toString().length;
+    }
+
+    function checkNumber(number)
+    {
+        var x=number;
+        if (isNaN(x))
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    function isEmail(email){
+        return /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/.test( email );
+    }
+
 	function login_selected(){
 		mainNav.children('ul').removeClass('is-visible');
 		formModal.addClass('is-visible');
 		formLogin.addClass('is-selected');
 		formSignup.removeClass('is-selected');
+	    formEnterDetailsOTP.removeClass('is-selected');
 		formForgotPassword.removeClass('is-selected');
 		tabLogin.addClass('selected');
 		tabSignup.removeClass('selected');
@@ -76,28 +148,26 @@ jQuery(document).ready(function($){
 		mainNav.children('ul').removeClass('is-visible');
 		formModal.addClass('is-visible');
 		formLogin.removeClass('is-selected');
+	    formEnterDetailsOTP.removeClass('is-selected');
 		formSignup.addClass('is-selected');
 		formForgotPassword.removeClass('is-selected');
 		tabLogin.removeClass('selected');
 		tabSignup.addClass('selected');
 	}
 
+	function enter_details(){
+        formLogin.removeClass('is-selected');
+		formSignup.removeClass('is-selected');
+		formForgotPassword.removeClass('is-selected');
+		formEnterDetailsOTP.addClass('is-selected');
+    }
+
 	function forgot_password_selected(){
 		formLogin.removeClass('is-selected');
 		formSignup.removeClass('is-selected');
+		formEnterDetailsOTP.removeClass('is-selected');
 		formForgotPassword.addClass('is-selected');
 	}
-
-	//REMOVE THIS - it's just to show error messages
-	formLogin.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
-	formSignup.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		formSignup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
-
 
 	//IE9 placeholder fallback
 	//credits http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
