@@ -37,10 +37,12 @@
     <link rel="stylesheet" href="/css/home3/mystyle.css"></link>
     <link rel="stylesheet" href="/css/home3/gallery.css"></link>
     <link rel="stylesheet" href="/css/home3/blog.css"></link>
+
     <link rel="shortcut icon" type='image/x-icon' href="/img/favicon/favicon.ico"/>
 
 
     <script src="/js/home3/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
+
 </head>
 
 <body id="home">
@@ -91,15 +93,18 @@
         </div>
 
         <div class="collapse navbar-collapse navbar-right navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav main-nav">
                 <li class="menuItem"><a href="#contact">Contact Us</a></li>
-                <li class="menuItem"><a href="#screen">Sign up</a></li>
-                <li class="menuItem"><a href="#credits">Log in</a></li>
+                <li class="menuItem cd-signup"><a href="#screen">Sign up</a></li>
+                <li class="menuItem cd-signin"><a href="#screen">Log in</a></li>
                 <li class="menuItem"><a href="#credits">Pro Log in</a></li>
+
             </ul>
         </div>
     </div>
 </nav>
+
+<% include ../partials/loginModal.ejs %>
 
 <!-- What is -->
 <div id="whatis" class="content-section-b" style="border-top: 0">
@@ -274,7 +279,7 @@
                             <figcaption>
                                 <h2>Glowing <span>Sun<span></h2>
                                 <p>Explore Projects</p>
-                                <a href="/products">View more</a>
+                                <a href="/blog/index">View more</a>
                             </figcaption>
                         </figure>
                     </div>
@@ -521,6 +526,8 @@
 
 
 <script src="/js/home3/gallery.js"></script>
+<script src="/js/home3/login.js"></script> <!-- Gem jQuery -->
+
 </body>
 
 </html>
