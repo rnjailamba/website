@@ -102,6 +102,7 @@ jQuery(document).ready(function($){
         alert("sginup pressed");
         //check if valid email , otp
         // or just check otp
+        //http://stackoverflow.com/questions/15259170/checking-if-input-value-is-not-empty-or-default
     });
 
 
