@@ -4,6 +4,9 @@
     font:inherit;
 }
 
+.mce-content-body img {
+    width:300px;
+}
 
 .mce-content-body table{
     width:85%;
