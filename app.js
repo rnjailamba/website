@@ -24,6 +24,7 @@ app.use(modules.logger('dev')); // log every request to the console
 // ==============================================
 app.use(modules.bodyParser.json());// get information from html forms
 app.use(modules.bodyParser.urlencoded({ extended: false }));
+//body parser not reccommended - http://stackoverflow.com/a/20132867/815929
 app.use(modules.cookieParser());// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
 

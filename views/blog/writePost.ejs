@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <title>Text editor to publish Articles</title>
+    <meta name="description" content="Pedesa is a free magazine HTML theme"></meta>
+    <meta name="keywords" content="html,css,web,website,webdesign,magazine,blog,free"></meta>
+    <meta name="author" content="Aristotheme"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link><!-- Bootstrap core CSS -->
+    <script src="/js/home3/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
+
+</head>
+<body>
+
+    <div class="textEditor container">
+        <h1>TinyMCE Quick Start Guide</h1>
+        <form method="post">
+            <textarea id="mytextarea">Hello, World!</textarea>
+        </form>
+    </div>
+
+<script src="/js/common/tinymce/tinymce.min.js"></script> <!-- js for the text editor -->
+<script>
+
+    tinymce.init({
+      selector: '#mytextarea',
+      height: "450px",
+      width : "80%",
+      plugins: [
+       ' autolink lists link image  preview hr anchor',
+        'searchreplace wordcount code',
+        ' save table contextmenu directionality',
+        ' paste textcolor colorpicker textpattern imagetools'
+      ],
+      removed_menuitems: 'undo, redo,visualaid, cell,row,column',
+
+        toolbar1: ' undo redo  | bold italic | alignleft aligncenter alignright | bullist numlist | link image ',
+        toolbar2: ' preview ',
+        content_css: [
+        '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+        '//www.tinymce.com/css/codepen.min.css',
+        '/css/blog/write/innerLayout.css'
+      ]
+    });
+</script>
+</body>
+<link rel="stylesheet" type="text/css" href="/css/blog/write/write.css"></link> <!-- css for the text editor and form for submission -->
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

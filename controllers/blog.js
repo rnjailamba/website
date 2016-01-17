@@ -37,6 +37,20 @@ router.get('/galleryPost', function(req, res, next) {
 });
 
 
+// WRITEPOST
+// ==============================================
+router.get('/writePost', function(req, res, next) {
+  res.render('blog/writePost', { title: 'Cementify Blog' });
+});
+
+
+app.post('/test-page', function(req, res) {
+    var name = req.body.name,
+        color = req.body.color;
+    // ...
+});
+
+
 var justPrintSomething = function(){
     console.log("print something");
 }
