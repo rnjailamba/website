@@ -16,10 +16,107 @@
 <body>
 
     <div class="textEditor container">
-        <h1>TinyMCE Quick Start Guide</h1>
-        <form method="post">
-            <textarea id="mytextarea">Hello, World!</textarea>
-        </form>
+        <section>
+            <h1 class="heading">Write your blog entry below</h1>
+            <form method="post">
+                <textarea id="mytextarea">Hello, World!</textarea>
+            </form>
+        </section>
+        <section>
+            <h1 class="heading">Enter Blog Details</h1>
+            <form class="cd-form floating-labels">
+
+
+                <fieldset>
+                    <legend>Category</legend>
+
+                    <div>
+                        <!--<h4>Budget</h4>-->
+
+                        <p class="cd-select icon">
+                            <select class="budget" required>
+                                <option value="" >Select an option</option>
+
+                                <option value="0">Select Budget</option>
+                                <option value="1">&lt; $5000</option>
+                                <option value="2">$5000 - $10000</option>
+                                <option value="3">&gt; $10000</option>
+                            </select>
+                        </p>
+                    </div>
+
+                    <legend>Subcategory</legend>
+
+                    <div>
+                        <!--<h4>Budget</h4>-->
+
+                        <p class="cd-select icon">
+                            <select class="budget" required>
+                                <option value="" >Select an option</option>
+
+                                <option value="0">Select Budget</option>
+                                <option value="1">&lt; $5000</option>
+                                <option value="2">$5000 - $10000</option>
+                                <option value="3">&gt; $10000</option>
+                            </select>
+                        </p>
+                    </div>
+                    <fieldset>
+                        <legend>Your Info</legend>
+
+                        <!--<div class="error-message">-->
+                            <!--<p>Please enter your phone number so we can send OTP</p>-->
+                        <!--</div>-->
+
+                        <div class="icon">
+                            <label class="cd-label" for="cd-name">Phone</label>
+                            <input class="user" type="text" name="cd-name" id="cd-name" required>
+                        </div>
+
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Your Info</legend>
+
+                        <!--<div class="error-message">-->
+                        <!--<p>Please enter your phone number so we can send OTP</p>-->
+                        <!--</div>-->
+
+                        <div class="icon">
+                            <label class="cd-label" for="cd-name">Phone</label>
+                            <input class="user" type="text" name="cd-name" id="cd-name" required>
+                        </div>
+
+
+                    </fieldset>
+                    <fieldset>
+                        <legend>Select Multiple images(Optional):</legend>
+
+                        <!--<div class="error-message">-->
+                        <!--<p>Please enter your phone number so we can send OTP</p>-->
+                        <!--</div>-->
+
+                        <div class="icon">
+                            <input type="file" name="img" multiple>
+                        </div>
+
+                    </fieldset>
+
+
+                    <div>
+                        <input type="submit" value="Enter OTP and Publish Blog">
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+        <section>
+
+            <form action="demo_form.asp">
+
+            </form>
+        </section>
+
     </div>
 
 <script src="/js/common/tinymce/tinymce.min.js"></script> <!-- js for the text editor -->
