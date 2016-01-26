@@ -1,9 +1,6 @@
-var modules = require("./all_modules.js");//simply loads all modules, no initialisation/creation of object of module
-var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections etc.
+var modules = require("./all_modules.js");//simply loads all modules(for app), no initialisation/creation of object of module
+var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections , twilio etc.
 var app = modules.express();
-
-var $ = require('jquery');
-
 
 
 // VIEW ENGINE SETUP
