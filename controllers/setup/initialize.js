@@ -6,6 +6,6 @@ var products = require('../products.js');
 
 exportedApp.app.use('/', basicPages);
 exportedApp.app.use('/users1', users1.router);
-exportedApp.app.use('/blog', blog);
+exportedApp.app.use('/blog', blog.router);
 exportedApp.app.use('/products', products);
 
