@@ -19,11 +19,6 @@ promise.then(function(knoxClient) {
 });
 
 
-
-
-
-
-
 // INDEX
 // ==============================================
 router.get('/', function(req, res, next) {
@@ -64,19 +59,33 @@ router.get('/galleryPost', function(req, res, next) {
 router.get('/writePost', function(req, res, next) {
 
   res.render('blog/writePost', { title: 'Cementify Blog' });
-   var object = { foo: "bar" };
-      var string = JSON.stringify(object);
-      var req = knoxClient.put('/test/obj.json', {
-          'Content-Length': Buffer.byteLength(string)
-        , 'Content-Type': 'application/json'
-      });
-      req.on('response', function(res){
-        if (200 == res.statusCode) {
-          console.log('saved to %s', req.url);
-        }
-      });
-      req.end(string);
+//   var object = { foo: "bar" };
+//      var string = JSON.stringify(object);
+//      var req = knoxClient.put('/test/obj.json', {
+//          'Content-Length': Buffer.byteLength(string)
+//        , 'Content-Type': 'application/json'
+//      });
+//      req.on('response', function(res){
+//        if (200 == res.statusCode) {
+//          console.log('saved to %s', req.url);
+//        }
+//      });
+//      req.end(string);
 
+});
+
+router.post('/writePost', function(req, res, next) {
+    console.log("in the post",req.body);
+
+    res.render('blog/blogSummary', { title: 'Cementify Blog' });
+
+
+});
+
+// BLOGSUMMARY
+// ==============================================
+router.get('/blogSummary', function(req, res, next) {
+  res.render('blog/blogSummary', { title: 'Cementify Blog' });
 });
 
 

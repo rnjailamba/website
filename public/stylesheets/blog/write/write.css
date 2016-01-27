@@ -122,7 +122,7 @@ Form
   display: block;
   width: 16px;
   height: 16px;
-  background: url("../img/cd-icon-arrow.svg") no-repeat center center;
+  background: url("../../../images/blog/writeBlog/cd-icon-arrow.svg") no-repeat center center;
   pointer-events: none;
 }
 .cd-form select {
@@ -209,11 +209,11 @@ Form
 }
 .cd-form input[type="radio"] + label::after {
   /* custom image for radio button */
-  background-image: url("../img/cd-icon-radio.svg");
+  background-image: url("../../../images/blog/writeBlog/cd-icon-radio.svg");
 }
 .cd-form input[type="checkbox"] + label::after {
   /* custom image for checkbox */
-  background-image: url("../img/cd-icon-check.svg");
+  background-image: url("../../../images/blog/writeBlog/cd-icon-check.svg");
 }
 .cd-form input[type="radio"]:focus + label::before,
 .cd-form input[type="checkbox"]:focus + label::before {
@@ -270,7 +270,7 @@ Form
   transform: scale(0.9);
 }
 .cd-form [required] {
-  background: url("../img/cd-required.svg") no-repeat top right;
+  background: url("../../../images/blog/writeBlog/cd-required.svg") no-repeat top right;
 }
 .cd-form .error-message p {
   background: #e94b35;
@@ -347,31 +347,31 @@ Custom icons
   padding-left: 54px !important;
 }
 .cd-form .user {
-  background: url("../img/cd-icon-user.svg") no-repeat 16px center;
+  background: url("../../../images/blog/writeBlog/cd-icon-user.svg") no-repeat 16px center;
 }
 .cd-form [required].user {
-  background: url("../img/cd-icon-user.svg") no-repeat 16px center, url("../img/cd-required.svg") no-repeat top right;
+  background: url("../../../images/blog/writeBlog/cd-icon-user.svg") no-repeat 16px center, url("../../../images/blog/writeBlog/cd-required.svg") no-repeat top right;
 }
 .cd-form .company {
-  background: url("../img/cd-icon-company.svg") no-repeat 16px center;
+  background: url("../../../images/blog/writeBlog/cd-icon-company.svg") no-repeat 16px center;
 }
 .cd-form [required].company {
-  background: url("../img/cd-icon-company.svg") no-repeat 16px center, url("../img/cd-required.svg") no-repeat top right;
+  background: url("../../../images/blog/writeBlog/cd-icon-company.svg") no-repeat 16px center, url("../../../images/blog/writeBlog/cd-required.svg") no-repeat top right;
 }
 .cd-form .email {
-  background: url("../img/cd-icon-email.svg") no-repeat 16px center;
+  background: url("../../../images/blog/writeBlog/cd-icon-email.svg") no-repeat 16px center;
 }
 .cd-form [required].email {
-  background: url("../img/cd-icon-email.svg") no-repeat 16px center, url("../img/cd-required.svg") no-repeat top right;
+  background: url("../../../images/blog/writeBlog/cd-icon-email.svg") no-repeat 16px center, url("../../../images/blog/writeBlog/cd-required.svg") no-repeat top right;
 }
 .cd-form .budget {
-  background: url("../img/cd-icon-budget.svg") no-repeat 16px center;
+  background: url("../../../images/blog/writeBlog/cd-icon-budget.svg") no-repeat 16px center;
 }
 .cd-form .message {
-  background: url("../img/cd-icon-message.svg") no-repeat 16px 16px;
+  background: url("../../../images/blog/writeBlog/cd-icon-message.svg") no-repeat 16px 16px;
 }
 .cd-form [required].message {
-  background: url("../img/cd-icon-message.svg") no-repeat 16px 16px, url("../img/cd-required.svg") no-repeat top right;
+  background: url("../../../images/blog/writeBlog/cd-icon-message.svg") no-repeat 16px 16px, url("../../../images/blog/writeBlog/cd-required.svg") no-repeat top right;
 }
 
 /* --------------------------------

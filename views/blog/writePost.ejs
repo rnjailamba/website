@@ -14,17 +14,16 @@
 
 </head>
 <body>
+<form method="post" action="/blog/writePost">
 
     <div class="textEditor container">
         <section>
             <h1 class="heading">Write your blog entry below</h1>
-            <form method="post">
-                <textarea id="mytextarea">Hello, World!</textarea>
-            </form>
+                <textarea id="mytextarea" name = "textArea">Hello, World!</textarea>
         </section>
         <section>
             <h1 class="heading">Enter Blog Details</h1>
-            <form class="cd-form floating-labels">
+            <div class="cd-form floating-labels">
 
 
                 <fieldset>
@@ -34,7 +33,7 @@
                         <!--<h4>Budget</h4>-->
 
                         <p class="cd-select icon">
-                            <select class="budget" required>
+                            <select class="budget" >
                                 <option value="" >Select an option</option>
 
                                 <option value="0">Select Budget</option>
@@ -51,7 +50,7 @@
                         <!--<h4>Budget</h4>-->
 
                         <p class="cd-select icon">
-                            <select class="budget" required>
+                            <select class="budget" >
                                 <option value="" >Select an option</option>
 
                                 <option value="0">Select Budget</option>
@@ -70,7 +69,7 @@
 
                         <div class="icon">
                             <label class="cd-label" for="cd-name">Phone</label>
-                            <input class="user" type="text" name="cd-name" id="cd-name" required>
+                            <input class="user" type="text" name="cd-name" id="cd-name" >
                         </div>
 
 
@@ -85,7 +84,7 @@
 
                         <div class="icon">
                             <label class="cd-label" for="cd-name">Phone</label>
-                            <input class="user" type="text" name="cd-name" id="cd-name" required>
+                            <input class="user" type="text" name="cd-name" id="cd-name" >
                         </div>
 
 
@@ -98,24 +97,27 @@
                         <!--</div>-->
 
                         <div class="icon">
-                            <input type="file" name="img" multiple>
+                            <input type="file" name="img" multiple></input>
                         </div>
 
                     </fieldset>
 
 
                     <div>
-                        <input type="submit" value="Enter OTP and Publish Blog">
+                        <input type="submit" value="Enter OTP and Publish Blog"></input>
                     </div>
                 </fieldset>
-            </form>
+
+            </div>
         </section>
+
         <section>
 
 
         </section>
 
     </div>
+</form>
 
 <script src="/js/common/tinymce/tinymce.min.js"></script> <!-- js for the text editor -->
 <script>
