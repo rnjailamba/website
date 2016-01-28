@@ -1,6 +1,8 @@
 var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
 var knoxClient;
+var config = require('../config/config.js');//require all modules that are shared by all controllers
+console.log('got the config for aws',config.amazonS3key,config.amazonS3secret);
 
 module.exports.setClient = function(inClient) { knoxClient = inClient; };
 
@@ -17,6 +19,16 @@ promise.then(function(knoxClient) {
 
 }).then(function() {
 });
+
+var AWS = require('aws-sdk');
+AWS.config.region = 'ap-southeast-1';
+var AWS_ACCESS_KEY_ID = config.amazonS3key;
+var AWS_SECRET_ACCESS_KEY = config.amazonS3secret;
+AWS.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY});
+var s3 = new AWS.S3();
+
+
+
 
 
 // INDEX
@@ -58,7 +70,14 @@ router.get('/galleryPost', function(req, res, next) {
 // ==============================================
 router.get('/writePost', function(req, res, next) {
 
-  res.render('blog/writePost', { title: 'Cementify Blog' });
+    var params = {Bucket: 'cementifyblogimages', Key: "testfromajax.txt",    ContentType: 'text/plain;charset=UTF-8', Expires: 6000000};
+    var url = s3.getSignedUrl('putObject', params);
+    console.log("The URL is", url);
+
+
+
+
+    res.render('blog/writePost', { url: url, data2: 'World'  });
 //   var object = { foo: "bar" };
 //      var string = JSON.stringify(object);
 //      var req = knoxClient.put('/test/obj.json', {
@@ -71,6 +90,8 @@ router.get('/writePost', function(req, res, next) {
 //        }
 //      });
 //      req.end(string);
+
+
 
 });
 

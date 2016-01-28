@@ -2,6 +2,8 @@
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <title>Text editor to publish Articles</title>
     <meta name="description" content="Pedesa is a free magazine HTML theme"></meta>
@@ -10,12 +12,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link><!-- Bootstrap core CSS -->
+    <script src="/js/home3/jquery-1.10.2.js"></script> <!-- js for jquery -->
+
     <script src="/js/home3/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
     <script src="/js/common/dropzone.js"></script>  <!-- js for the add files area /-->
     <script src="/js/blog1/write/imageUpload.js"></script>  <!-- js for the add files area /-->
 
 </head>
 <body>
+
+
 <form method="post" action="/blog/writePost">
 
     <div class="textEditor container">
@@ -161,6 +167,15 @@
 <br></br>
 <br></br>
 
+<h1 class="presignedurl" > <%= url %> </h1>
+
+<form method="post" id="fileinfo" name="fileinfo" ">
+<label>Select a file:</label><br>
+    <input type="file" name="file" class="file" required />
+    <a class="click">Click to upload</a>
+</form>
+
+
 
 <script src="/js/common/tinymce/tinymce.min.js"></script> <!-- js for the text editor -->
 <script>
@@ -185,6 +200,43 @@
         '/css/blog/write/innerLayout.css'
       ]
     });
+    $(document).ready(function(){
+        $(".click").click(function(){
+            <!--alert("clicked");-->
+            var uploadData = new FormData();
+            var files = $(this).siblings(".file");
+            var file = files[0];
+            console.log(file);
+            uploadData.append('file', file);
+            var url = $(".presignedurl").text();
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: 'PUT',
+                data: 'blah blah blah',
+                headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+                dataType: "text",
+                cache: false,
+                processData: false,
+                success: function(response) {
+                  console.log('S3 upload success!');
+                },
+                error: function(response) {
+                  console.log('Error with S3 upload: ' + response.statusText);
+                }
+            });
+
+        });
+
+    });
+
+     var uploadData = new FormData(),
+            files = $(this.input).prop('files'),
+            file = files[0];
+
+          uploadData.append('file', file);
+
+
 
 </script>
 

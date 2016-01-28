@@ -2,6 +2,7 @@ var modules = require('../../controllers/setup/all_modules');//require all modul
 var knox = require('knox');
 var config = require('../../config/config.js');//require all modules that are shared by all controllers
 
+
 console.log('connected to knox in helper',config.amazonS3key,config.amazonS3secret);
 
 
