@@ -109,6 +109,34 @@ router.get('/blogSummary', function(req, res, next) {
   res.render('blog/blogSummary', { title: 'Cementify Blog' });
 });
 
+// DROPZONE
+// ==============================================
+router.get('/dropzone', function(req, res, next) {
+    var params = {Bucket: 'cementifyblogimages', Key: "testdropzone.txt",    ContentType: 'text/plain;charset=UTF-8', Expires: 6000000};
+    var url = s3.getSignedUrl('putObject', params);
+    console.log("The URL is", url);
+
+
+
+
+  res.render('blog/dropzone', { url: url, data2: 'World'  });
+});
+
+
+// DROPZONE2
+// ==============================================
+router.get('/dropzone2', function(req, res, next) {
+    var params = {Bucket: 'cementifyblogimages', Key: "testfromajax.txt",    ContentType: 'text/plain;charset=UTF-8', Expires: 6000000};
+    var url = s3.getSignedUrl('putObject', params);
+    console.log("The URL is", url);
+
+
+
+
+  res.render('blog/dropzone2', { url: url, data2: 'World'  });
+});
+
+
 
 
 
