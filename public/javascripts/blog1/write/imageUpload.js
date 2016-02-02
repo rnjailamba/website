@@ -4,9 +4,26 @@ previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
 
+var time = Date.now || function() {
+  return +new Date;
+};
+
+var preSignedURL = function(){
+   var url = $(".presignedurl").text();
+   return url;
+}
+
+// REPLACEPLACEHOLDER
+// URL will be in form https://cementifyblogimages.s3-ap-southeast-1.amazonaws.com/placeholder.txt?AWSA....
+// Replace placeholder in above string by epoch
+// ==============================================
+var replacePlaceholder = function(url){
+    url = url.replace("placeholder",time()); // if you want only the first occurrence of "placeholder" to be replaced
+    return url;
+}
+
 var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-  url: "https://cementifyblogimages.s3-ap-southeast-1.amazonaws.com/testdropzone.txt?AWSAccessKeyId=AKIAJDTELPCXKB6E3LBQ&Content-Type=text%2Fplain%3Bcharset%3DUTF-8&Expires=1460047721&Signature=oMYqfWg0Q%2FOi3kX%2BcDfaRdokvA8%3D",
-  thumbnailWidth: 80,
+  url: "fdfd",
   thumbnailHeight: 80,
   parallelUploads: 20,
   previewTemplate: previewTemplate,
@@ -16,6 +33,13 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
 //  acceptedMimeTypes: "image/bmp,image/gif,image/jpg,image/jpeg,image/png",
   headers: {'Content-Type': 'text/plain;charset=UTF-8'},
   method: 'put',
+  init: function() {
+      this.on("processing", function(file) {
+            console.log("new url here");
+//            this.options.url = replacePlaceholder(preSignedURL());
+            this.options.url = (preSignedURL());
+      });
+  },
   sending: function(file, xhr) {
     var _send = xhr.send;
     xhr.send = function() {
@@ -24,6 +48,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
   },
   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
 });
+
 
 myDropzone.on("addedfile", function(file) {
   // Hookup the start button
