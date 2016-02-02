@@ -4,23 +4,11 @@ previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
 
-var time = Date.now || function() {
-  return +new Date;
-};
-
 var preSignedURL = function(){
    var url = $(".presignedurl").text();
    return url;
 }
 
-// REPLACEPLACEHOLDER
-// URL will be in form https://cementifyblogimages.s3-ap-southeast-1.amazonaws.com/placeholder.txt?AWSA....
-// Replace placeholder in above string by epoch
-// ==============================================
-var replacePlaceholder = function(url){
-    url = url.replace("placeholder",time()); // if you want only the first occurrence of "placeholder" to be replaced
-    return url;
-}
 
 var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
   url: "fdfd",
@@ -29,15 +17,33 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
   previewTemplate: previewTemplate,
   autoQueue: false, // Make sure the files aren't queued until manually added
   previewsContainer: "#previews", // Define the container to display the previews
-  acceptedMimeTypes: "text/plain",
-//  acceptedMimeTypes: "image/bmp,image/gif,image/jpg,image/jpeg,image/png",
-  headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+  acceptedMimeTypes: "image/bmp,image/gif,image/jpg,image/jpeg,image/png",
+  headers: {'Content-Type': 'image;charset=UTF-8'},
   method: 'put',
   init: function() {
       this.on("processing", function(file) {
             console.log("new url here");
 //            this.options.url = replacePlaceholder(preSignedURL());
-            this.options.url = (preSignedURL());
+//            this.options.url = (preSignedURL());
+              $.ajax({
+                  url:"/imageUploadAPI/getImageURL",
+                  type: 'POST',
+                  async: false,
+                  data: '',
+                  dataType: "text",
+                  context: this,
+                  cache: false,
+                  processData: false,
+                  success: function(response) {
+                    console.log('S3 url retrieval successs!',response);
+                        this.options.url = response;
+                  },
+                  error: function(response) {
+                    console.log('Error with S3 upload: ' + response.statusText);
+                  }
+              });
+
+
       });
   },
   sending: function(file, xhr) {
@@ -47,6 +53,12 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
     };
   },
   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+//    ,success: function(response) {
+//    console.log('S3 upload success!');
+//    },
+//    error: function(response) {
+//    console.log('Error with S3 upload: ' + response.statusText);
+//    }
 });
 
 
@@ -61,7 +73,7 @@ myDropzone.on("totaluploadprogress", function(progress) {
 });
 
 myDropzone.on("sending", function(file) {
-
+  console.log("here");
   // Show the total progress bar when upload starts
   document.querySelector("#total-progress").style.opacity = "1";
   // And disable the start button

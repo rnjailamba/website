@@ -1,5 +1,4 @@
 var modules = require("./all_modules.js");//simply loads all modules(for app), no initialisation/creation of object of module
-var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections , twilio etc.
 var app = modules.express();
 
 
@@ -30,6 +29,8 @@ app.use(modules.express.static(modules.path.join(__dirname, 'public')));
 // ==============================================
 var exportingApp = require("./controllers/setup/export_app");
 exportingApp.exportApp(app);
+var initHelper = require("./helpers/initializeHelpers.js");//initialize database connections , twilio etc.
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

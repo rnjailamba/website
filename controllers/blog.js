@@ -2,7 +2,7 @@ var modules = require('./setup/all_modules');//require all modules that are shar
 var router = modules.express.Router();
 var knoxClient;
 var config = require('../config/config.js');//require all modules that are shared by all controllers
-console.log('got the config for aws',config.amazonS3key,config.amazonS3secret);
+//console.log('got the config for aws',config.amazonS3key,config.amazonS3secret);
 
 module.exports.setClient = function(inClient) { knoxClient = inClient; };
 
@@ -112,7 +112,7 @@ router.get('/blogSummary', function(req, res, next) {
 // DROPZONE
 // ==============================================
 router.get('/dropzone', function(req, res, next) {
-    var params = {Bucket: 'cementifyblogimages', Key: "placeholder.txt",    ContentType: 'text/plain;charset=UTF-8', Expires: 6000000};
+    var params = {Bucket: 'cementifyblogimages', Key: "placeholder2.jpg",    ContentType: 'image;charset=UTF-8', Expires: 6000000};
     var url = s3.getSignedUrl('putObject', params);
     console.log("The URL is", url);
     res.render('blog/dropzone', { url: url, data2: 'World'  });
