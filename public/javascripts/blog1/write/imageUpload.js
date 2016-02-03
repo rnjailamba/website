@@ -15,7 +15,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
   thumbnailHeight: 80,
   parallelUploads: 20,
   previewTemplate: previewTemplate,
-  autoQueue: false, // Make sure the files aren't queued until manually added
+  autoQueue: true, // Make sure the files aren't queued until manually added
   previewsContainer: "#previews", // Define the container to display the previews
   acceptedMimeTypes: "image/bmp,image/gif,image/jpg,image/jpeg,image/png",
   headers: {'Content-Type': 'image;charset=UTF-8'},
@@ -23,8 +23,6 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
   init: function() {
       this.on("processing", function(file) {
             console.log("new url here");
-//            this.options.url = replacePlaceholder(preSignedURL());
-//            this.options.url = (preSignedURL());
               $.ajax({
                   url:"/imageUploadAPI/getImageURL",
                   type: 'POST',
@@ -42,8 +40,11 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
                     console.log('Error with S3 upload: ' + response.statusText);
                   }
               });
+      });
+      this.on("queuecomplete", function (file) {
+//          console.log(myDropzone.getFilesWithStatus(Dropzone.ADDED));
 
-
+//        alert("All files have uploaded ");
       });
   },
   sending: function(file, xhr) {
@@ -51,14 +52,14 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
     xhr.send = function() {
       _send.call(xhr, file);
     };
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+//            alert(xhr.responseURL);
+        }
+    }
   },
   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-//    ,success: function(response) {
-//    console.log('S3 upload success!');
-//    },
-//    error: function(response) {
-//    console.log('Error with S3 upload: ' + response.statusText);
-//    }
+
 });
 
 
@@ -73,25 +74,11 @@ myDropzone.on("totaluploadprogress", function(progress) {
 });
 
 myDropzone.on("sending", function(file) {
-  console.log("here");
   // Show the total progress bar when upload starts
   document.querySelector("#total-progress").style.opacity = "1";
   // And disable the start button
   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
-//  $.ajax({
-//      type: 'PUT',
-//      data: 'blah blah blah',
-//      headers: {'Content-Type': 'text/plain;charset=UTF-8'},
-//      dataType: "text",
-//      cache: false,
-//      processData: false,
-//      success: function(response) {
-//        console.log('S3 upload success!');
-//      },
-//      error: function(response) {
-//        console.log('Error with S3 upload: ' + response.statusText);
-//      }
-//  });
+
 
 
 });
@@ -99,6 +86,12 @@ myDropzone.on("sending", function(file) {
 // Hide the total progress bar when nothing's uploading anymore
 myDropzone.on("queuecomplete", function(progress) {
   document.querySelector("#total-progress").style.opacity = "0";
+  var text = "";
+  var i;
+  for (i = 0; i < myDropzone.files.length; i++) {
+      text += myDropzone.files[i].xhr.responseURL;
+  }
+  alert(text);
 });
 
 // Setup the buttons for all transfers
