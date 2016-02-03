@@ -69,30 +69,7 @@ router.get('/galleryPost', function(req, res, next) {
 // WRITEPOST
 // ==============================================
 router.get('/writePost', function(req, res, next) {
-
-    var params = {Bucket: 'cementifyblogimages', Key: "testfromajax.txt",    ContentType: 'text/plain;charset=UTF-8', Expires: 6000000};
-    var url = s3.getSignedUrl('putObject', params);
-    console.log("The URL is", url);
-
-
-
-
-    res.render('blog/writePost', { url: url, data2: 'World'  });
-//   var object = { foo: "bar" };
-//      var string = JSON.stringify(object);
-//      var req = knoxClient.put('/test/obj.json', {
-//          'Content-Length': Buffer.byteLength(string)
-//        , 'Content-Type': 'application/json'
-//      });
-//      req.on('response', function(res){
-//        if (200 == res.statusCode) {
-//          console.log('saved to %s', req.url);
-//        }
-//      });
-//      req.end(string);
-
-
-
+    res.render('blog/writePost');
 });
 
 router.post('/writePost', function(req, res, next) {
@@ -112,24 +89,9 @@ router.get('/blogSummary', function(req, res, next) {
 // DROPZONE
 // ==============================================
 router.get('/dropzone', function(req, res, next) {
-    var params = {Bucket: 'cementifyblogimages', Key: "placeholder2.jpg",    ContentType: 'image;charset=UTF-8', Expires: 6000000};
-    var url = s3.getSignedUrl('putObject', params);
-    console.log("The URL is", url);
-    res.render('blog/dropzone', { url: url, data2: 'World'  });
+
+    res.render('blog/dropzone');
 });
-
-
-// DROPZONE2
-// ==============================================
-router.get('/dropzone2', function(req, res, next) {
-    var params = {Bucket: 'cementifyblogimages', Key: "testfromajax.txt",    ContentType: 'text/plain;charset=UTF-8', Expires: 6000000};
-    var url = s3.getSignedUrl('putObject', params);
-    console.log("The URL is", url);
-    res.render('blog/dropzone2', { url: url, data2: 'World'  });
-});
-
-
-
 
 
 var justPrintSomething = function(){

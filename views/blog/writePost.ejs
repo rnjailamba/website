@@ -21,12 +21,12 @@
 </head>
 <body>
 
-
 <form method="post" action="/blog/writePost">
 
     <div class="textEditor container">
         <section>
             <h1 class="heading">Write your blog entry below</h1>
+            <br/>
                 <textarea id="mytextarea" name = "textArea">Hello, World!</textarea>
         </section>
         <section>
@@ -94,29 +94,24 @@
                             <label class="cd-label" for="cd-name">Phone</label>
                             <input class="user" type="text" name="cd-name" id="cd-name" >
                         </div>
-
-
                     </fieldset>
-                    <fieldset>
-                        <legend>Select Multiple images(Optional):</legend>
-
-                        <!--<div class="error-message">-->
-                        <!--<p>Please enter your phone number so we can send OTP</p>-->
-                        <!--</div>-->
-
-                        <div class="icon">
-                            <input type="file" name="img" multiple></input>
-                        </div>
-
-                    </fieldset>
-
-
-                    <div>
-                        <input type="submit" value="Enter OTP and Publish Blog"></input>
-                    </div>
                 </fieldset>
+            </div>
+            <div class = "imageUpload">
+                <fieldset>
+                    <legend>Select Multiple Images ( Optional ):</legend>
 
+                    <!--<div class="icon">-->
+                    <!--<input type="file" name="img" multiple></input>-->
+                    <!--</div>-->
+                    <%- include ../partials/blogImageUpload.ejs %>
+                </fieldset>
+            </div>
 
+            <div class="cd-form floating-labels" >
+                <div>
+                    <input type="submit" value="Enter OTP and Publish Blog"></input>
+                </div>
             </div>
         </section>
 
@@ -127,54 +122,13 @@
 
     </div>
 </form>
-<form id="my-awesome-dropzone" action="/target" class="dropzone"></form>
- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/
-<div class="table table-striped" class="files" id="previews">
 
-    <div id="template" class="file-row">
-        <!-- This is used as the file preview template -->
-        <div>
-            <span class="preview"><img data-dz-thumbnail /></span>
-        </div>
-        <div>
-            <p class="name" data-dz-name></p>
-            <strong class="error text-danger" data-dz-errormessage></strong>
-        </div>
-        <div>
-            <p class="size" data-dz-size></p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-            </div>
-        </div>
-        <div>
-            <button class="btn btn-primary start">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start</span>
-            </button>
-            <button data-dz-remove class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-            </button>
-            <button data-dz-remove class="btn btn-danger delete">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-            </button>
-        </div>
-    </div>
 
-</div>
+
+
 
 <br></br>
 <br></br>
-
-<h1 class="presignedurl" hidden> <%= url %> </h1>
-
-<form method="post" id="fileinfo" name="fileinfo" ">
-<label>Select a file:</label><br>
-    <input type="file" name="file" class="file" required />
-    <a class="click">Click to upload</a>
-</form>
-
 
 
 <script src="/js/common/tinymce/tinymce.min.js"></script> <!-- js for the text editor -->
@@ -235,8 +189,6 @@
             file = files[0];
 
           uploadData.append('file', file);
-
-
 
 </script>
 

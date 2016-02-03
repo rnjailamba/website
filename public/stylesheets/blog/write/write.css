@@ -42,6 +42,7 @@ Form
   width: 90%;
   max-width: 600px;
   margin: 4em auto;
+  margin-bottom: 0px;
 }
 .cd-form::after {
   clear: both;
@@ -410,3 +411,28 @@ FLoating labels
     top: 20px;
   }
 }
+
+/* --------------------------------
+
+Image upload area
+
+-------------------------------- */
+
+.imageUpload legend {
+    border-bottom: 1px solid #ecf0f1;
+    line-height: inherit;
+    color: #333;
+    display: block;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+
+
