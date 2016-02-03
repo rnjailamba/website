@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
+
+    <!--&lt;!&ndash; Optional theme &ndash;&gt;-->
+    <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">-->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link><!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/blog/write/dropzoneCustom.css"></link><!-- Bootstrap core CSS -->
+
+
+    <!--<script src="/js/blog1/write/dropzoneBootstrap.js"></script>-->
+    <script src="/js/common/dropzone.js"></script>  <!-- js for the add files area /-->
+
+    <script>
+    var Dropzone;
+    <!--var Dropzone = require("enyo-dropzone");-->
+    <!--Dropzone.autoDiscover = false;-->
+
+    </script>
+
+</head>
+<body>
+
+<div class="container" id="container">
+    <h1>Dropzone.js</h1>
+    <h2 class="lead">Configuration Demo</h2>
+
+    <ul class="nav nav-tabs">
+        <li><a href="http://www.dropzonejs.com">Back to www.dropzonejs.com</a></li>
+        <li class="active"><a href="#">Bootstrap theme</a></li>
+    </ul>
+
+    <br>
+
+    <blockquote>
+        <p>
+            This is a bootstrap theme of Dropzone.js with a completely different user experience.<br/>
+            It is a demonstration of the powerful configuration possibilities of <a href="http://www.dropzonejs.com">Dropzone.js</a>.
+            You can make Dropzone.js look exactly how you want it to look and it's very easy to do so.
+        </p>
+    </blockquote>
+
+    <br>
+    <div id="actions" class="row">
+
+        <div class="col-lg-7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+        <span class="btn btn-success fileinput-button">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Add files...</span>
+        </span>
+            <button type="submit" class="btn btn-primary start">
+                <i class="glyphicon glyphicon-upload"></i>
+                <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-warning cancel">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Cancel upload</span>
+            </button>
+        </div>
+
+        <div class="col-lg-5">
+            <!-- The global file processing state -->
+        <span class="fileupload-process">
+          <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0"
+               aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+          </div>
+        </span>
+        </div>
+
+    </div>
+
+
+    <div class="table table-striped files" id="previews">
+
+        <div id="template" class="file-row">
+            <!-- This is used as the file preview template -->
+            <div>
+                <span class="preview"><img data-dz-thumbnail/></span>
+            </div>
+            <div>
+                <p class="name" data-dz-name></p>
+                <strong class="error text-danger" data-dz-errormessage></strong>
+            </div>
+            <div>
+                <p class="size" data-dz-size></p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                     aria-valuenow="0">
+                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+                <button data-dz-remove class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+                <button data-dz-remove class="btn btn-danger delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <script src="/js/home3/jquery-1.10.2.js"></script> <!-- js for jquery -->
+
+    <script>
+        // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        var previewNode = document.querySelector("#template");
+        previewNode.id = "";
+        var previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
+
+        var preSignedURL = function(){
+           var url = $(".presignedurl").text();
+           return url;
+        }
+
+
+        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+          url: "fdfd",
+          thumbnailHeight: 80,
+          parallelUploads: 20,
+          previewTemplate: previewTemplate,
+          autoQueue: true, // Make sure the files aren't queued until manually added
+          previewsContainer: "#previews", // Define the container to display the previews
+          acceptedMimeTypes: "image/bmp,image/gif,image/jpg,image/jpeg,image/png",
+          headers: {'Content-Type': 'image;charset=UTF-8'},
+          method: 'put',
+          init: function() {
+              this.on("processing", function(file) {
+                    console.log("new url here");
+                      $.ajax({
+                          url:"/imageUploadAPI/getImageURL",
+                          type: 'POST',
+                          async: false,
+                          data: '',
+                          dataType: "text",
+                          context: this,
+                          cache: false,
+                          processData: false,
+                          success: function(response) {
+                            console.log('S3 url retrieval successs!',response);
+                                this.options.url = response;
+                          },
+                          error: function(response) {
+                            console.log('Error with S3 upload: ' + response.statusText);
+                          }
+                      });
+              });
+              this.on("queuecomplete", function (file) {
+        //          console.log(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+
+        //        alert("All files have uploaded ");
+              });
+          },
+          sending: function(file, xhr) {
+            var _send = xhr.send;
+            xhr.send = function() {
+              _send.call(xhr, file);
+            };
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+        //            alert(xhr.responseURL);
+                }
+            }
+          },
+          clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+
+        });
+
+
+        myDropzone.on("addedfile", function(file) {
+          // Hookup the start button
+          file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+        });
+
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function(progress) {
+          document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+        });
+
+        myDropzone.on("sending", function(file) {
+          // Show the total progress bar when upload starts
+          document.querySelector("#total-progress").style.opacity = "1";
+          // And disable the start button
+          file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+
+
+
+        });
+
+        // Hide the total progress bar when nothing's uploading anymore
+        myDropzone.on("queuecomplete", function(progress) {
+          document.querySelector("#total-progress").style.opacity = "0";
+          var text = "";
+          var i;
+          for (i = 0; i < myDropzone.files.length; i++) {
+              text += myDropzone.files[i].xhr.responseURL;
+          }
+          alert(text);
+        });
+
+        // Setup the buttons for all transfers
+        // The "add files" button doesn't need to be setup because the config
+        // `clickable` has already been specified.
+        document.querySelector("#actions .start").onclick = function() {
+          myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+        };
+        document.querySelector("#actions .cancel").onclick = function() {
+          myDropzone.removeAllFiles(true);
+        };
+    </script>  <!-- js for the add files area /-->
+
+
+
+
+</div>
+
+</body>
+</html>
