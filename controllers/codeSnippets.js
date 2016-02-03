@@ -10,7 +10,6 @@ router.get('/fileUpload', function(req, res, next) {
 });
 
 
-
 var justPrintSomething = function(){
     console.log("print something");
 }

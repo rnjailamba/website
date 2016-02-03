@@ -11,7 +11,7 @@ var preSignedURL = function(){
 
 
 var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-  url: "fdfd",
+  url: "will_be_set_dynamically",
   thumbnailHeight: 80,
   parallelUploads: 20,
   previewTemplate: previewTemplate,
@@ -20,6 +20,9 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
   acceptedMimeTypes: "image/bmp,image/gif,image/jpg,image/jpeg,image/png",
   headers: {'Content-Type': 'image;charset=UTF-8'},
   method: 'put',
+  maxFilesize: 2,
+        maxFiles: 3,
+
   init: function() {
       this.on("processing", function(file) {
             console.log("new url here");
@@ -45,6 +48,11 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
 //          console.log(myDropzone.getFilesWithStatus(Dropzone.ADDED));
 
 //        alert("All files have uploaded ");
+      });
+      //Max size exceeded so automatically remove
+      this.on("error", function(file, message) {
+             alert(message);
+             this.removeFile(file);
       });
   },
   sending: function(file, xhr) {
@@ -86,6 +94,7 @@ myDropzone.on("sending", function(file) {
 // Hide the total progress bar when nothing's uploading anymore
 myDropzone.on("queuecomplete", function(progress) {
   document.querySelector("#total-progress").style.opacity = "0";
+  console.log(myDropzone.files);
   var text = "";
   var i;
   for (i = 0; i < myDropzone.files.length; i++) {
