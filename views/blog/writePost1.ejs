@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <title>Text editor to publish Articles</title>
+    <meta name="description" content="Pedesa is a free magazine HTML theme"></meta>
+    <meta name="keywords" content="html,css,web,website,webdesign,magazine,blog,free"></meta>
+    <meta name="author" content="Aristotheme"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link><!-- Bootstrap core CSS -->
+    <script src="/js/home3/jquery-1.10.2.js"></script> <!-- js for jquery -->
+
+    <script src="/js/home3/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
+    <script src="/js/common/dropzone.js"></script>  <!-- js for the add files area /-->
+    <script src="/js/blog1/write/imageUpload.js"></script>  <!-- js for the add files area /-->
+
+</head>
+<body>
+
+<form method="post" action="/blog/writePost">
+
+    <div class="textEditor container">
+        <section>
+            <h1 class="heading">Write your blog entry below</h1>
+            <br/>
+            <textarea id="mytextarea" name = "textArea">Hello, World!</textarea>
+        </section>
+        <section>
+            <h1 class="heading">Enter Blog Details</h1>
+            <div class="cd-form floating-labels">
+
+
+                <fieldset>
+                    <legend>Category</legend>
+
+                    <div>
+                        <!--<h4>Budget</h4>-->
+
+                        <p class="cd-select icon">
+                            <select class="budget" >
+                                <option value="" >Select an option</option>
+
+                                <option value="0">Select Budget</option>
+                                <option value="1">&lt; $5000</option>
+                                <option value="2">$5000 - $10000</option>
+                                <option value="3">&gt; $10000</option>
+                            </select>
+                        </p>
+                    </div>
+
+                    <legend>Subcategory</legend>
+
+                    <div>
+                        <!--<h4>Budget</h4>-->
+
+                        <p class="cd-select icon">
+                            <select class="budget" >
+                                <option value="" >Select an option</option>
+
+                                <option value="0">Select Budget</option>
+                                <option value="1">&lt; $5000</option>
+                                <option value="2">$5000 - $10000</option>
+                                <option value="3">&gt; $10000</option>
+                            </select>
+                        </p>
+                    </div>
+                    <fieldset>
+                        <legend>Your Info</legend>
+
+                        <!--<div class="error-message">-->
+                        <!--<p>Please enter your phone number so we can send OTP</p>-->
+                        <!--</div>-->
+
+                        <div class="icon">
+                            <label class="cd-label" for="cd-name">Phone</label>
+                            <input class="user" type="text" name="cd-name" id="cd-name" >
+                        </div>
+
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Your Info</legend>
+
+                        <!--<div class="error-message">-->
+                        <!--<p>Please enter your phone number so we can send OTP</p>-->
+                        <!--</div>-->
+
+                        <div class="icon">
+                            <label class="cd-label" for="cd-name">Phone</label>
+                            <input class="user" type="text" name="cd-name" id="cd-name" >
+                        </div>
+                    </fieldset>
+                </fieldset>
+            </div>
+            <div class = "imageUpload">
+                <fieldset>
+                    <legend>Select Multiple Images ( Optional ):</legend>
+
+                    <!--<div class="icon">-->
+                    <!--<input type="file" name="img" multiple></input>-->
+                    <!--</div>-->
+                    <%- include ../partials/blogImageUpload.ejs %>
+                </fieldset>
+            </div>
+
+            <div class="cd-form floating-labels" >
+                <div>
+                    <input type="submit" value="Enter OTP and Publish Blog"></input>
+                </div>
+            </div>
+        </section>
+
+        <section>
+
+
+        </section>
+
+    </div>
+</form>
+
+
+
+
+
+<br></br>
+<br></br>
+
+
+<script src="/js/common/tinymce/tinymce.min.js"></script> <!-- js for the text editor -->
+<script>
+
+    tinymce.init({
+      selector: '#mytextarea',
+      height: "450px",
+      width : "80%",
+      plugins: [
+       ' autolink lists link image  preview hr anchor',
+        'searchreplace wordcount code',
+        ' save table contextmenu directionality',
+        ' paste textcolor colorpicker textpattern imagetools'
+      ],
+      removed_menuitems: 'undo, redo,visualaid, cell,row,column',
+
+        toolbar1: ' undo redo  | bold italic | alignleft aligncenter alignright | bullist numlist | link image ',
+        toolbar2: ' preview ',
+        content_css: [
+        '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+        '//www.tinymce.com/css/codepen.min.css',
+        '/css/blog/write/innerLayout.css'
+      ]
+    });
+    $(document).ready(function(){
+        $(".click").click(function(){
+            <!--alert("clicked");-->
+            var uploadData = new FormData();
+            var files = $(this).siblings(".file");
+            var file = files[0];
+            console.log(file);
+            uploadData.append('file', file);
+            var url = $(".presignedurl").text();
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: 'PUT',
+                data: 'blah blah blah',
+                headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+                dataType: "text",
+                cache: false,
+                processData: false,
+                success: function(response) {
+                  console.log('S3 upload success!');
+                },
+                error: function(response) {
+                  console.log('Error with S3 upload: ' + response.statusText);
+                }
+            });
+
+        });
+
+    });
+
+     var uploadData = new FormData(),
+            files = $(this.input).prop('files'),
+            file = files[0];
+
+          uploadData.append('file', file);
+
+</script>
+
+</body>
+<link rel="stylesheet" type="text/css" href="/css/blog/write/write.css"></link> <!-- css for the text editor and form for submission -->
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

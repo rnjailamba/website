@@ -10,6 +10,13 @@ router.get('/fileUpload', function(req, res, next) {
 });
 
 
+// ADDELEMENTJQUERY
+// ==============================================
+router.get('/addElementJquery', function(req, res, next) {
+  res.render('codeSnippets/addElementJquery', { title: 'Cementify Blog' });
+});
+
+
 var justPrintSomething = function(){
     console.log("print something");
 }
