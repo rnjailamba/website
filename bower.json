@@ -1,0 +1,9 @@
+{
+  "name": "your-project",
+  "dependencies": {
+    "sir-trevor-js": "0.4.3"
+  },
+  "resolutions": {
+    "jquery": "~1.9.1"
+  }
+}
