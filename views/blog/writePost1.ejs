@@ -20,20 +20,32 @@
 
 </head>
 <body>
-<form>
+<form method="post" action="/blog/writePost1">
     <textarea class="js-st-instance"></textarea>
-    <button type="submit">Submit button</button>
-
+    <input type="submit" value="Submit">
 </form>
 
 <script>
-
-
 $(document).ready(function () {
     <!--alert("here");-->
     new SirTrevor.Editor( {
         el: $('.js-st-instance'),
         defaultType: "Text",
+        blockTypes: [
+            "Text",
+            "Heading",
+            "Image",
+            "List",
+            "Quote",
+            "Columns"
+          ],
+        required: [
+            "Heading",
+            "Text"
+          ],
+        onEditorRender: function() {
+            <!--alert('Do something');-->
+        }
     }
     );
 }
