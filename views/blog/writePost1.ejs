@@ -11,49 +11,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
     <script src="/js/home3/jquery-1.10.2.js"></script> <!-- js for jquery -->
-    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
     <script src="/bower/sir-trevor-js/sir-trevor.js"></script>  <!-- js for sir trevor /-->
+    <script src="/js/blog1/write1/sir-trevor-custom.js"></script> <!-- js for customizing sir trevor -->
+
     <link rel="stylesheet" type="text/css" href="/bower/sir-trevor-js/sir-trevor.css"></link><!-- css for sir trevor -->
     <link rel="stylesheet" type="text/css" href="/bower/sir-trevor-js/sir-trevor-icons.css"></link><!-- css for sir trevor icons -->
-
+    <link rel="stylesheet" type="text/css" href="/css/blog/write1/sir-trevor-custom.css"></link><!-- css for sir trevor customization -->
 
 
 </head>
 <body>
-<form method="post" action="/blog/writePost1">
-    <textarea class="js-st-instance"></textarea>
-    <input type="submit" value="Submit">
-</form>
-
-<script>
-$(document).ready(function () {
-    <!--alert("here");-->
-    new SirTrevor.Editor( {
-        el: $('.js-st-instance'),
-        defaultType: "Text",
-        blockTypes: [
-            "Text",
-            "Heading",
-            "Image",
-            "List",
-            "Quote",
-            "Columns"
-          ],
-        required: [
-            "Heading",
-            "Text"
-          ],
-        onEditorRender: function() {
-            <!--alert('Do something');-->
-        }
-    }
-    );
-}
-);
-</script>
-
-
-
+    <form method="post" action="/blog/writePost1">
+        <textarea class="js-st-instance"></textarea>
+        <input type="submit" value="Submit">
+    </form>
 
 </body>
 <link rel="stylesheet" type="text/css" href="/css/blog/write/write.css"></link> <!-- css for the text editor and form for submission -->
