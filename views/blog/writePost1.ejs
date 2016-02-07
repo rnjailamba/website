@@ -10,22 +10,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <!--<script src="/js/home3/modernizr-2.6.2.min.js"></script>  &lt;!&ndash; Modernizr /&ndash;&gt;-->
-    <script src="/bower/sir-trevor-js/sir-trevor.js"></script>  <!-- js for the add files area /-->
-    <link rel="stylesheet" type="text/css" href="/bower/sir-trevor-js/sir-trevor.css"></link><!-- Bootstrap core CSS -->
+    <script src="/js/home3/jquery-1.10.2.js"></script> <!-- js for jquery -->
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+    <script src="/bower/sir-trevor-js/sir-trevor.js"></script>  <!-- js for sir trevor /-->
+    <link rel="stylesheet" type="text/css" href="/bower/sir-trevor-js/sir-trevor.css"></link><!-- css for sir trevor -->
+    <link rel="stylesheet" type="text/css" href="/bower/sir-trevor-js/sir-trevor-icons.css"></link><!-- css for sir trevor icons -->
 
 
 
 </head>
 <body>
-<form>
+<form method="post" action="/blog/writePost1">
     <textarea class="js-st-instance"></textarea>
+    <input type="submit" value="Submit">
 </form>
 
 <script>
-  new SirTrevor.Editor({ el: $('.js-st-instance') });
+$(document).ready(function () {
+    <!--alert("here");-->
+    new SirTrevor.Editor( {
+        el: $('.js-st-instance'),
+        defaultType: "Text",
+        blockTypes: [
+            "Text",
+            "Heading",
+            "Image",
+            "List",
+            "Quote",
+            "Columns"
+          ],
+        required: [
+            "Heading",
+            "Text"
+          ],
+        onEditorRender: function() {
+            <!--alert('Do something');-->
+        }
+    }
+    );
+}
+);
 </script>
 
 
