@@ -13845,6 +13845,7 @@ module.exports = function(block, file, success, error) {
     }
   };
 
+//  console.log(config.defaults.uploadUrl);
   var xhr = $.ajax({
     url: config.defaults.uploadUrl,
     data: data,
@@ -13852,7 +13853,7 @@ module.exports = function(block, file, success, error) {
     contentType: false,
     processData: false,
     dataType: 'json',
-    type: 'POST'
+    type: 'PUT'
   });
 
   block.addQueuedItem(uid, xhr);

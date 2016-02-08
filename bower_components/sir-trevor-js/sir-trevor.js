@@ -3754,6 +3754,7 @@ module.exports = Block.extend({
   loadData: function(data){
     // Create our image tag
     this.$editor.html($('<img>', { src: data.file.url }));
+
   },
 
   onBlockRender: function(){
@@ -4639,9 +4640,8 @@ module.exports = function(block, file, success, error) {
   var uid  = [block.blockID, (new Date()).getTime(), 'raw'].join('-');
   var data = new FormData();
 
-  data.append('attachment[name]', file.name);
   data.append('attachment[file]', file);
-  data.append('attachment[uid]', uid);
+  console.log(data);
 
   block.resetMessages();
 
@@ -4655,6 +4655,8 @@ module.exports = function(block, file, success, error) {
   };
 
   var callbackError = function(jqXHR, status, errorThrown) {
+    console.log("in call back error of image upload",status,errorThrown);
+    console.log(config.defaults.uploadUrl);
     utils.log('Upload callback error called');
     EventBus.trigger('onUploadStop');
 
@@ -4665,12 +4667,13 @@ module.exports = function(block, file, success, error) {
 
   var xhr = $.ajax({
     url: config.defaults.uploadUrl,
-    data: data,
+    data: file,
     cache: false,
-    contentType: false,
+    contentType: 'image;charset=UTF-8',
+    headers: {'Content-Type': 'image;charset=UTF-8'},
     processData: false,
     dataType: 'json',
-    type: 'POST'
+    type: 'PUT'
   });
 
   block.addQueuedItem(uid, xhr);
