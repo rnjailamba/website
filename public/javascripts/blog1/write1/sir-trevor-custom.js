@@ -20,7 +20,6 @@ $(document).ready(function () {
                        "List",
                        "Quote",
                        "Tweet",
-                       "ImageExtended",
                        "Video",
                        "OrderedList",
                        "CaptionedImage"
