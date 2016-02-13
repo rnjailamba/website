@@ -10,6 +10,8 @@ $(document).ready(function () {
 //          ],
          onEditorRender : function() {
               this.block_manager.createBlock("OrderedList");
+              this.block_manager.createBlock("CaptionedImage");
+
             },
            blockTypes: [
                        "Text",
@@ -20,7 +22,8 @@ $(document).ready(function () {
                        "Tweet",
                        "ImageExtended",
                        "Video",
-                       "OrderedList"
+                       "OrderedList",
+                       "CaptionedImage"
                      ],
         onFormSubmit: function(){
             alert("form submitted");
@@ -54,62 +57,6 @@ $(document).ready(function () {
     });
 
 
-   /*
-     Ordered List
-   */
-
-   SirTrevor.Blocks.OrderedList = (function() {
-
-     var template = '<div class="st-text-block" contenteditable="true"><ol><li></li></ol></div>';
-
-     return SirTrevor.Block.extend({
-
-       type: "ordered_list",
-
-       icon_name: 'list',
-
-       editorHTML: function() {
-         return _.template(template, this);
-       },
-
-       loadData: function(data){
-         this.getTextBlock().html("<ol>" + SirTrevor.toHTML(data.text, this.type) + "<ol>");
-       },
-
-       onBlockRender: function() {
-         this.checkForList = _.bind(this.checkForList, this);
-         this.getTextBlock().on('click keyup', this.checkForList);
-       },
-
-       checkForList: function() {
-         if (this.$('ol').length === 0) {
-           document.execCommand("insertOrderedList", false, false);
-         }
-       },
-
-       toMarkdown: function(markdown) {
-         return markdown.replace(/<\/li>/mg,"\n")
-                        .replace(/<\/?[^>]+(>|$)/g, "")
-                        .replace(/^(.+)$/mg," 1. $1");
-       },
-
-       toHTML: function(html) {
-         html = html.replace(/^ 1. (.+)$/mg,"<li>$1</li>")
-                    .replace(/\n/mg, "");
-
-         return html;
-       },
-
-       onContentPasted: function(event, target) {
-         var replace = this.pastedMarkdownToHTML(target[0].innerHTML),
-             list = this.$('ol').html(replace);
-
-         this.getTextBlock().caretToEnd();
-       }
-
-     });
-
-   })();
 
    /*
     * Extended Image Block
@@ -118,60 +65,60 @@ $(document).ready(function () {
     */
 
 
-   SirTrevor.Blocks.ImageExtended = SirTrevor.Blocks.Image.extend({
-
-     type: "image_extended",
-     title: function() { return i18n.t('blocks:image:title'); },
-
-     droppable: true,
-     uploadable: true,
-
-     icon_name: 'image',
-
-     loadData: function(data){
-       // Create our image tag
-       this.$editor.html($('<img>', { src: function () { if (!data.file[0]) { return data.file.url } else { return data.file[0].url } }})).show();
-       this.$editor.append($('<input>', {type: 'text', class: 'st-input-string js-caption-input', name: 'caption', placeholder: 'Caption', style: 'width: 100%; margin-top:10px; text-align: center;', value: data.caption}));
-       this.$editor.append($('<input>', {type: 'text', class: 'st-input-string js-source-input', name: 'source', placeholder: 'Source', style: 'width: 100%; margin-top:10px; text-align: center;', value: data.source}));
-       this.$editor.append($('<label for="js-lightbox-input">Lightbox?</label>'));
-//       this.$editor.append($('<input>', {type: 'checkbox', class: 'st-input-boolean js-lightbox-input', name: 'lightbox', style: '', value: data.lightboxchecked: function(){if(data.lightbox=='on'){return true}else{return false}}})))}));
-//       this.$editor.append($('<label for="js-stretch-input">Stretch?</label>'));
-//       this.$editor.append($('<input>', {type: 'checkbox', class: 'st-input-boolean js-stretch-input', name: 'stretch', style: '', value: data.stretchchecked: function(){if(data.stretch=='on'){return true}else{return false}}})))}));
-     },
-
-     onBlockRender: function(){
-       /* Setup the upload button */
-       this.$inputs.find('button').bind('click', function(ev){ ev.preventDefault(); });
-       this.$inputs.find('input').on('change', _.bind(function(ev){
-         this.onDrop(ev.currentTarget);
-       }, this)).prop('accept','image/*');
-     },
-
-   	onDrop: function(transferData){
-   	  var file = transferData.files[0],
-   	      urlAPI = (typeof URL !== "undefined") ? URL : (typeof webkitURL !== "undefined") ? webkitURL : null;
-
-   	  // Handle one upload at a time
-   	  if (/image/.test(file.type)) {
-   	    this.loading();
-   	    // Show this image on here
-   	    this.$inputs.hide();
-   	    this.loadData({file: {url: urlAPI.createObjectURL(file)}});
-
-   	    this.uploader(
-   	      file,
-   	      function(data) {
-   	        this.setData(data);
-   	        this.ready();
-   	      },
-   	      function(error){
-   	        this.addMessage(i18n.t('blocks:image:upload_error'));
-   	        this.ready();
-   	      }
-   	    );
-   	  }
-   	}
-
-   });
+//   SirTrevor.Blocks.ImageExtended = SirTrevor.Blocks.Image.extend({
+//
+//     type: "image_extended",
+//     title: function() { return i18n.t('blocks:image:title'); },
+//
+//     droppable: true,
+//     uploadable: true,
+//
+//     icon_name: 'image',
+//
+//     loadData: function(data){
+//       // Create our image tag
+//       this.$editor.html($('<img>', { src: function () { if (!data.file[0]) { return data.file.url } else { return data.file[0].url } }})).show();
+//       this.$editor.append($('<input>', {type: 'text', class: 'st-input-string js-caption-input', name: 'caption', placeholder: 'Caption', style: 'width: 100%; margin-top:10px; text-align: center;', value: data.caption}));
+//       this.$editor.append($('<input>', {type: 'text', class: 'st-input-string js-source-input', name: 'source', placeholder: 'Source', style: 'width: 100%; margin-top:10px; text-align: center;', value: data.source}));
+//       this.$editor.append($('<label for="js-lightbox-input">Lightbox?</label>'));
+////       this.$editor.append($('<input>', {type: 'checkbox', class: 'st-input-boolean js-lightbox-input', name: 'lightbox', style: '', value: data.lightboxchecked: function(){if(data.lightbox=='on'){return true}else{return false}}})))}));
+////       this.$editor.append($('<label for="js-stretch-input">Stretch?</label>'));
+////       this.$editor.append($('<input>', {type: 'checkbox', class: 'st-input-boolean js-stretch-input', name: 'stretch', style: '', value: data.stretchchecked: function(){if(data.stretch=='on'){return true}else{return false}}})))}));
+//     },
+//
+//     onBlockRender: function(){
+//       /* Setup the upload button */
+//       this.$inputs.find('button').bind('click', function(ev){ ev.preventDefault(); });
+//       this.$inputs.find('input').on('change', _.bind(function(ev){
+//         this.onDrop(ev.currentTarget);
+//       }, this)).prop('accept','image/*');
+//     },
+//
+//   	onDrop: function(transferData){
+//   	  var file = transferData.files[0],
+//   	      urlAPI = (typeof URL !== "undefined") ? URL : (typeof webkitURL !== "undefined") ? webkitURL : null;
+//
+//   	  // Handle one upload at a time
+//   	  if (/image/.test(file.type)) {
+//   	    this.loading();
+//   	    // Show this image on here
+//   	    this.$inputs.hide();
+//   	    this.loadData({file: {url: urlAPI.createObjectURL(file)}});
+//
+//   	    this.uploader(
+//   	      file,
+//   	      function(data) {
+//   	        this.setData(data);
+//   	        this.ready();
+//   	      },
+//   	      function(error){
+//   	        this.addMessage(i18n.t('blocks:image:upload_error'));
+//   	        this.ready();
+//   	      }
+//   	    );
+//   	  }
+//   	}
+//
+//   });
 
 });
