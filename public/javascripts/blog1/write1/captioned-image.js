@@ -4,7 +4,6 @@ SirTrevor.Blocks.CaptionedImage = SirTrevor.Block.extend({
 
     type: "captioned_image",
 
-
     droppable: true,
 
     uploadable: true,
