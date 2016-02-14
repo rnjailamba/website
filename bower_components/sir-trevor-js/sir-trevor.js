@@ -3496,6 +3496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EventBus = __webpack_require__(62);
 
 	module.exports = function(block, file, success, error) {
+	console.log("in the uploader");
 
 	  EventBus.trigger('onUploadStart');
 
