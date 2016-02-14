@@ -3503,6 +3503,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var uid  = [block.blockID, (new Date()).getTime(), 'raw'].join('-');
 	  var data = new FormData();
 
+	  console.log(file);
+
 	  data.append('attachment[name]', file.name);
 	  data.append('attachment[file]', file);
 	  data.append('attachment[uid]', uid);
@@ -3528,24 +3530,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  var url = block.uploadUrl || config.defaults.uploadUrl;
+	  console.log(url);
 
-	  var xhr = $.ajax({
-	    url: url,
-	    data: data,
-	    cache: false,
-	    contentType: false,
-	    processData: false,
-	    dataType: 'json',
-	    type: 'POST'
+	  $.ajax({
+	    url:"/imageUploadAPI/getImageURL",
+         type: 'POST',
+         async: false,
+         data: '',
+         dataType: "text",
+         context: this,
+         cache: false,
+         processData: false,
+         success: function(response) {
+           console.log('S3 url retrieval successs!',response);
+           var returnedURL = response;
+             var xhr;
+             xhr = $.ajax({
+               url: returnedURL,
+               contentType: 'image;charset=UTF-8',
+               crossDomain: true,
+               data: file,
+               processData: false,
+               headers: {'Content-Type': 'image;charset=UTF-8'},
+               type: "PUT",
+                success: function(response) {
+                console.log("yeahhh",response);
+                }
+
+             });
+             block.addQueuedItem(uid, xhr);
+             xhr.done(callbackSuccess).fail(callbackError).always(_.bind(block.removeQueuedItem, block, uid));
+             console.log(xhr);
+             return xhr;
+         },
+         error: function(response) {
+           console.log('Error with S3 upload: ' + response.statusText);
+         }
 	  });
 
-	  block.addQueuedItem(uid, xhr);
-
-	  xhr.done(callbackSuccess)
-	     .fail(callbackError)
-	     .always(block.removeQueuedItem.bind(block, uid));
-
-	  return xhr;
+	 
 	};
 
 
