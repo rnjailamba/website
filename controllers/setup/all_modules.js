@@ -3,6 +3,8 @@ var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../../config/config'); // get our config file
 var uuid = require('node-uuid'); // needed to generate uuids along with the token generation
 var Promise = require("bluebird"); // needed to simulate promises
+var winston = require('winston'); // used for logging
+
 //var $ = require('jquery');
 
 
@@ -11,3 +13,4 @@ module.exports.jwt = jwt;
 module.exports.config = config;
 module.exports.uuid = uuid;
 module.exports.Promise = Promise;
+module.exports.winston = winston;

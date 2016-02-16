@@ -27,6 +27,9 @@ var AWS_SECRET_ACCESS_KEY = config.amazonS3secret;
 AWS.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY});
 var s3 = new AWS.S3();
 
+modules.winston.level = 'debug';
+modules.winston.log('debug', 'Hello distributed log files!');
+
 
 
 
