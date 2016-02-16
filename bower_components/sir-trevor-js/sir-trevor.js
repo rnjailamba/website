@@ -3512,7 +3512,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  block.resetMessages();
 
 	  var callbackSuccess = function(data) {
-	    utils.log('Upload callback called');
+	    console.log('Upload callback called',data);
 	    EventBus.trigger('onUploadStop', data);
 
 	    if (!_.isUndefined(success) && _.isFunction(success)) {
@@ -3531,7 +3531,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  var url = block.uploadUrl || config.defaults.uploadUrl;
 	  console.log(url);
-
+             var xhr;
+             debugger;
 	  $.ajax({
 	    url:"/imageUploadAPI/getImageURL",
          type: 'POST',
@@ -3544,7 +3545,7 @@ return /******/ (function(modules) { // webpackBootstrap
          success: function(response) {
            console.log('S3 url retrieval successs!',response);
            var returnedURL = response;
-             var xhr;
+
              xhr = $.ajax({
                url: returnedURL,
                contentType: 'image;charset=UTF-8',
@@ -3553,22 +3554,22 @@ return /******/ (function(modules) { // webpackBootstrap
                processData: false,
                headers: {'Content-Type': 'image;charset=UTF-8'},
                type: "PUT",
-                success: function(response) {
-                console.log("yeahhh",response);
-                }
-
+//               success:callbackSuccess,
+               success: callbackSuccess
              });
-             block.addQueuedItem(uid, xhr);
-             xhr.done(callbackSuccess).fail(callbackError).always(_.bind(block.removeQueuedItem, block, uid));
-             console.log(xhr);
-             return xhr;
+
          },
          error: function(response) {
            console.log('Error with S3 upload: ' + response.statusText);
          }
 	  });
+	  block.addQueuedItem(uid, xhr);
+	  console.log(xhr,uid);
+       xhr.done(callbackSuccess).fail(callbackError).always(block.removeQueuedItem(uid));
+       console.log("dfdf");
+       return "{ file: { url: '/xyz/abc.jpg' } }";
 
-	 
+
 	};
 
 
