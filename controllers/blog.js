@@ -103,32 +103,12 @@ router.post('/writePost1', function(req, res, next) {
 });
 
 
-// WRITEPOST2
-// ==============================================
-router.get('/writePost2', function(req, res, next) {
-    res.render('blog/writePost2');
-});
-
-router.post('/writePost2', function(req, res, next) {
-    console.log("in the post",req.body);
-
-    res.render('blog/blogSummary', { title: 'Cementify Blog' });
-
-
-});
-
 // BLOGSUMMARY
 // ==============================================
 router.get('/blogSummary', function(req, res, next) {
   res.render('blog/blogSummary', { title: 'Cementify Blog' });
 });
 
-// DROPZONE
-// ==============================================
-router.get('/dropzone', function(req, res, next) {
-
-    res.render('blog/dropzone');
-});
 
 
 var justPrintSomething = function(){

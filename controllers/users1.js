@@ -6,6 +6,7 @@ module.exports.setTwilioClient = function(inClient) { twilioClient = inClient; }
 var redisClient;
 module.exports.setClient = function(inClient) { redisClient = inClient; };
 
+
 // MIDDLEWARE - ISAUTHENTICATED
 // ==============================================
 var isAuthenticated = function (req, res, next) {
@@ -167,23 +168,6 @@ router.get('/resendCode', function(req, res){
 
 });
 
-
-// TEMPLATE
-// ==============================================
-router.get('/template', function(req, res){
-
-  res.render('users1/template');
-
-});
-
-
-// BOILERPLATE
-// ==============================================
-router.get('/boilerplate', function(req, res){
-
-  res.render('users1/boilerplate');
-
-});
 
 
 // LOGIN
