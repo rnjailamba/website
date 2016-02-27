@@ -5,6 +5,6 @@ module.exports.exportApp = function(inApp) {
     module.exports.app = app;
     var initializeControllers = require("./initialize");
 
-    };
+};
 
 
