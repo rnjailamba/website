@@ -17,6 +17,40 @@ router.get('/addElementJquery', function(req, res, next) {
 });
 
 
+
+// GRIDDER1
+// ==============================================
+router.get('/gridder1', function(req, res){
+
+  res.render('codeSnippets/gridder1');
+
+});
+
+
+// HOME1
+// ==============================================
+router.get('/home1', function(req, res){
+
+  res.render('codeSnippets/home1');
+
+});
+
+
+// HOME2
+// ==============================================
+router.get('/home2', function(req, res){
+
+  res.render('codeSnippets/home2');
+
+});
+
+
+// TEMPLATE
+// ==============================================
+router.get('/template', function(req, res, next) {
+  res.render('codeSnippets/template', { title: 'Express' });
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }

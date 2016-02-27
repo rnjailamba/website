@@ -38,6 +38,15 @@ router.get('/productConfirmation', function(req, res, next) {
 
 
 
+// PRODUCTFILTER2
+// ==============================================
+router.get('/productFilter2', function(req, res){
+
+  res.render('products/productFilter2');
+
+});
+
+
 var justPrintSomething = function(){
     console.log("print something");
 }

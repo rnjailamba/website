@@ -30,6 +30,10 @@ var s3 = new AWS.S3();
 modules.winston.level = 'debug';
 modules.winston.log('debug', 'Hello distributed log files!');
 
+modules.winston.add(modules.winston.transports.File, { filename: 'somefile.log' });
+modules.winston.remove(modules.winston.transports.Console);
+
+modules.winston.log('debug', 'Hello again distributed log files!');
 
 
 
