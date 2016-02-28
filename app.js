@@ -16,15 +16,26 @@ app.use('/img', modules.express.static(__dirname + '/public/images/'));
 app.use(modules.flash()); // use connect-flash for flash messages stored in session
 app.set('superSecret', modules.config.secret); // secret variable
 app.use(modules.logger('dev')); // log every request to the console
+app.set('trust proxy', 1) // trust first proxy
 
 
 // USE BODY PARSER SO WE CAN GET INFO FROM POST AND/OR URL PARAMETERS
 // ==============================================
-app.use(modules.bodyParser.json());// get information from html forms
+app.use(modules.bodyParser.json());// get information from html forms // // parses json, x-www-form-urlencoded, and multipart/form-data
 app.use(modules.bodyParser.urlencoded({ extended: false }));
 //body parser not reccommended - http://stackoverflow.com/a/20132867/815929
 app.use(modules.cookieParser());// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
+app.use(modules.cookieSession({
+  name: 'session',
+  keys: ['mysecretty'],
+  maxAge : 365 * 24 * 60 * 60 * 1000,
+}))
+app.use(function(req, res, next) {
+    req.session.foo = 'bar'; // for cookie session to start working
+    res.cookie('fooo','bar');
+  next();
+});
 
 
 //THIS IS NOT DONE IN STARTING AS APP DIDNT HAVE REQUIRED PROPERTIES THEN

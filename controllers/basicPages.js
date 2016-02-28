@@ -44,7 +44,7 @@ router.get('/about', function(req, res, next) {
 // HOME3
 // ==============================================
 router.get('/home3', function(req, res){
-
+//  console.log(req.cookies.fooo," printing the cookie");
   res.render('basicPages/home3');
 
 });
