@@ -44,7 +44,16 @@ router.get('/about', function(req, res, next) {
 // HOME3
 // ==============================================
 router.get('/home3', function(req, res){
-//  console.log(req.cookies.fooo," printing the cookie");
+  console.log(req.cookies.fooo," printing the cookie");
+  console.log(req.signedCookies.name ," printing the cookie");
+  res.clearCookie('name');
+  if(!req.signedCookies.name){
+    console.log("cleared the cookie name");
+  }
+  else{
+    console.log("un cleared the cookie name");
+
+  }
   res.render('basicPages/home3');
 
 });

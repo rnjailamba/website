@@ -24,16 +24,12 @@ app.set('trust proxy', 1) // trust first proxy
 app.use(modules.bodyParser.json());// get information from html forms // // parses json, x-www-form-urlencoded, and multipart/form-data
 app.use(modules.bodyParser.urlencoded({ extended: false }));
 //body parser not reccommended - http://stackoverflow.com/a/20132867/815929
-app.use(modules.cookieParser());// read cookies (needed for auth)
+app.use(modules.cookieParser("optional super secret"));// read cookies (needed for auth)
 app.use(modules.express.static(modules.path.join(__dirname, 'public')));
-app.use(modules.cookieSession({
-  name: 'session',
-  keys: ['mysecretty'],
-  maxAge : 365 * 24 * 60 * 60 * 1000,
-}))
+
 app.use(function(req, res, next) {
-    req.session.foo = 'bar'; // for cookie session to start working
-    res.cookie('fooo','bar');
+  res.cookie('fooo','bar');
+  res.cookie('name','foo',{signed:true});
   next();
 });
 
