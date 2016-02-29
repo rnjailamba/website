@@ -4,7 +4,9 @@
 **EXPRESS SET UP**
 
 https://www.quora.com/What-are-the-biggest-websites-built-with-Node-js-on-the-server-side
-
+ - To get it running  DEBUG=myapp:* npm start
+ - After git clone - git remote add origin git@github.com:foo/bar.git
+                     git push origin master
 
 1-Node.js was installed at
 
