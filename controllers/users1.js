@@ -10,14 +10,15 @@ var appConfig = require('../config/appConfig'); // configure service api urls in
 var mappings = appConfig();
 
 // PING
-// ==============================================
-
-
+// ============================================== 
 router.get('/ping', function(req, res){
-  console.log(mappings['userService.ping']);
-    res.send(mappings);
-
+  modules.request(mappings['userService.ping'], function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.send(body);
+    }
+  })
 });
+
 
 
 // MIDDLEWARE - ISAUTHENTICATED
@@ -72,6 +73,50 @@ var isAuthenticated = function (req, res, next) {
   res.send(JSON.stringify(req.body));
 }
 
+
+
+// SEND OTP
+// ==============================================
+router.post('/sendOTP',function(req, res){
+
+    console.log('body: ' + JSON.stringify(req.body.phoneNumber));
+    var phoneNumber = req.body.phoneNumber;
+    var min = 1000;
+    var max = 9999;
+    var token = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    twilioClient.messages.create({
+        to: "+91" + phoneNumber,
+        from: "+12027914038",
+        body: "please enter this token to register successfully "+token,
+
+        }, function(err, message) {
+
+        console.log(message.sid);
+        });
+        // put in redis for 10 mins the token
+        redisClient.select(1, function(err,res){
+
+        redisClient.set(phoneNumber, token, function(err, reply) {
+          console.log("have set",reply);
+        });
+        redisClient.expire(phoneNumber, 30*60);//expires in 180 seconds
+
+        redisClient.get(phoneNumber, function(err, reply) {
+            console.log("am getting",reply);
+
+        });
+    });
+
+    res.send("done");
+
+
+});
+router.get('/register', function(req, res){
+
+  res.render('users1/register');
+
+});
 
 // REGISTER
 // ==============================================

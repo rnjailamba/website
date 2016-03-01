@@ -10,12 +10,9 @@ module.exports = function(){
             userServiceURL = "http://localhost:9000/userService/";
             break;
 
-
         case 'production':
             userServiceURL = "http://"
             break;
-
-
 
         default:
 
