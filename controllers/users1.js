@@ -6,6 +6,19 @@ module.exports.setTwilioClient = function(inClient) { twilioClient = inClient; }
 var redisClient;
 module.exports.setClient = function(inClient) { redisClient = inClient; };
 
+var appConfig = require('../config/appConfig'); // configure service api urls in dev/prod/beta
+var mappings = appConfig();
+
+// PING
+// ==============================================
+
+
+router.get('/ping', function(req, res){
+  console.log(mappings['userService.ping']);
+    res.send(mappings);
+
+});
+
 
 // MIDDLEWARE - ISAUTHENTICATED
 // ==============================================

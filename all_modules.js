@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
@@ -15,9 +14,9 @@ var cookieParser = require('cookie-parser');
 
 
 
+
 module.exports.express = express;
 module.exports.path = path;
-module.exports.favicon = favicon;
 module.exports.logger = logger;
 module.exports.bodyParser = bodyParser;
 module.exports.flash = flash;
