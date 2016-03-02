@@ -21,6 +21,7 @@ jQuery(document).ready(function($){
 		signupButton = formEnterDetailsOTP.find('p .signUpButton'),
 
 		loginButton = formLogin.find('p .loginButton'),
+		loginButtonWithDetails = formEnterLoginDetailsToSignUp.find('p .loginButtonWithDetails'),
 
 		resetPasswordButton = formForgotPassword.find('p .resetButton'),
 		resetPasswordButtonDetails = formForgotPasswordDetails.find('p .resetButtonDetails'),
@@ -180,7 +181,6 @@ jQuery(document).ready(function($){
         }
         if( !isCheckAgreeTerms ){
             var x = formEnterDetailsOTP.find('input[type="checkbox"]');
-            console.log(x);
             formEnterDetailsOTP.find('input[type="checkbox"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
 
@@ -190,11 +190,69 @@ jQuery(document).ready(function($){
     //CLICK THE LOGIN BUTTON
     // ==============================================
     loginButton.on('click', function(event){
+
         event.preventDefault();
+        var errMessagePhone = formLogin.find('input[type="tel"]').hasClass('has-error');
+        var errMessagePassword = formLogin.find('input[type="password"]').hasClass('has-error');
+
+        if( errMessagePhone ){
+            formLogin.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        if( errMessagePassword ){
+            formLogin.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible');
+        }
+
+        var loginPhone = $('#login-mobile').val();
+        var loginPassword = $('#login-password').val();
+
+        var isCheckRememberMe = $('#' + 'remember-me').is(":checked");
+        var isValidPhone = (checkNumber(loginPhone) && getlength(loginPhone) == 10);
+        var isPasswordEmpty = (loginPassword.length == 0);
+        var isPasswordASCII = isASCII(loginPassword);
+
+        if( !isValidPhone ){
+            formLogin.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        if( isPasswordEmpty ){
+            formLogin.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible');
+        }
+
         if( true ){
             loginEnterDetails();
         }
         //check if email in records/no then tell message acc
+    });
+
+
+    //CLICK THE LOGIN BUTTON WITH DETAILS BUTTON
+    // ==============================================
+    loginButtonWithDetails.on('click', function(event){
+
+        event.preventDefault();
+        var errMessageEmail = formEnterLoginDetailsToSignUp.find('input[type="email"]').hasClass('has-error');
+        var errMessageIncorrectOTP = formEnterLoginDetailsToSignUp.find('input[type="text"]').hasClass('has-error');
+
+        if( errMessageEmail ){
+            formEnterLoginDetailsToSignUp.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        if( errMessageIncorrectOTP ){
+            formEnterLoginDetailsToSignUp.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+
+        var loginEmail = $('#login-email').val();
+        var loginOTP = $('#login-otp').val();
+
+        var isValidEmail = isEmail(loginEmail); // Checks for ascii already
+        var isOTPASCII = isASCII(loginOTP);
+//        var isOTPCorrect = isOTPCorrect(signupOTP);
+
+        if( !isValidEmail ){
+            formEnterLoginDetailsToSignUp.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        if( !isOTPASCII ){
+            formEnterLoginDetailsToSignUp.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+
     });
 
 
