@@ -40,6 +40,32 @@
         </div> <!-- cd-login -->
 
 
+        <!-- log in form2 - In case user actually wanted to sign up-->
+        <div id="cd-login-enter-details">
+            <p class="cd-form-message">Please enter your email address and the OTP sent to your mobile.</p>
+
+            <form class="cd-form">
+                <p class="fieldset">
+                    <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                    <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+                    <span class="cd-error-message">Please Enter Correct Email</span>
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-phone" for="signup-username">Enter OTP</label>
+                    <input class="full-width has-padding has-border" id="signin-otp" type="text" placeholder="Enter OTP">
+                    <span class="cd-error-message">Please Enter Correct OTP</span>
+                </p>
+
+                <p class="fieldset">
+                    <input class="full-width loginButtonWithDetails" type="submit" value="Enter Now">
+                </p>
+            </form>
+
+            <p class="cd-form-bottom-message"><a href="#0">Resend OTP</a></p>
+        </div> <!-- cd-login -->
+
+
         <!-- sign up form 1-->
         <div id="cd-signup">
 
@@ -96,7 +122,6 @@
             </form>
             <p class="cd-form-bottom-message"><a href="#0">Resend OTP</a></p>
 
-            <!-- <a href="#0" class="cd-close-form">Close</a> -->
         </div> <!-- sign up form 2-->
 
 
@@ -126,22 +151,22 @@
             <form class="cd-form">
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-password">Password</label>
-                    <input class="full-width has-padding has-border" id="signup-password" type="password"  placeholder="Password">
+                    <label class="image-replace cd-password" for="reset-password">Password</label>
+                    <input class="full-width has-padding has-border" id="reset-password" type="password"  placeholder="Password">
                     <a href="#0" class="hide-password">Show</a>
                     <span class="cd-error-message">Please Enter a Password</span>
 
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-phone" for="signup-username">Enter OTP</label>
-                    <input class="full-width has-padding has-border" id="signup-otp" type="text" placeholder="Enter OTP">
+                    <label class="image-replace cd-phone" for="reset-otp">Enter OTP</label>
+                    <input class="full-width has-padding has-border" id="reset-otp" type="text" placeholder="Enter OTP">
                     <span class="cd-error-message">Please Enter Correct OTP</span>
                 </p>
 
 
                 <p class="fieldset">
-                    <input class="full-width has-padding signUpButton" type="submit" value="Update your details">
+                    <input class="full-width has-padding resetButtonDetails" type="submit" value="Update your details">
                 </p>
             </form>
 
