@@ -65,7 +65,7 @@ router.post('/sendOTPandSetCookie',function(req, res){
 
         // console.log(message.sid);
         });
-        console.log(rString);
+        // console.log(rString);
 
         // put in redis for 10 mins the token
         redisClient.select(1, function(err,res){
@@ -96,18 +96,17 @@ router.post('/sendOTPandSetCookie',function(req, res){
 // ==============================================
 router.post('/checkOTP',function(req, res){
     
-    console.log(req.cookies.phone,"here to check otp"); 
+    // console.log(req.cookies.phone,"here to check otp"); 
     var rString = req.cookies.phone;
     var enteredOTP = req.body.otp;
     redisClient.get(rString, function(err, reply) {
-      console.log("have set otpo",reply);
+      // console.log("have set otpo",reply);
       if( enteredOTP == reply){
-        console.log("otp matched");
+        // console.log("otp matched");
         res.status(200).send("done");
       }
       else{
         res.status(404).send("notdone");
-
       }
     }); 
 });
@@ -132,7 +131,10 @@ router.post('/registerUser',function(req, res){
       },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          res.status(200).send(body);
+          // console.log(body.customerId);
+          res.cookie('customerId',body.customerId); // set cookie for customer id
+          res.cookie('ruid',body.ruid); // set cookie for customer id
+          res.status(200).send("done");
         }
       });
       

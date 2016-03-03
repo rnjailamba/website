@@ -77,7 +77,7 @@ jQuery(document).ready(function($){
 	$('.hide-password').on('click', function(){
 		var togglePass= $(this),
 			passwordField = togglePass.prev('input');
-	    console.log("in hide",togglePass,passwordField);
+	    // console.log("in hide",togglePass,passwordField);
 
 
 		( 'password' == passwordField.attr('type') ) ? passwordField.attr('type', 'text') : passwordField.attr('type', 'password');
@@ -120,7 +120,7 @@ jQuery(document).ready(function($){
         }
         event.preventDefault();
         var phoneNumber = $('#mobile').val();
-        console.log(phoneNumber);
+        // console.log(phoneNumber);
         if( checkNumber(phoneNumber) ){
             if( getlength(phoneNumber) !=10 ){
                 formSignup.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
@@ -167,7 +167,6 @@ jQuery(document).ready(function($){
         var isPasswordEmpty = (signupPassword.length == 0);
         var isPasswordASCII = isASCII(signupPassword);
         var isOTPASCII = isASCII(signupOTP);
-        console.log("here1");
          if( !isValidEmail ){
             formEnterDetailsOTP.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
@@ -189,8 +188,8 @@ jQuery(document).ready(function($){
     });
 
     function otpCorrect(response,signupEmail,signupPassword) {
-        console.log('OTP verified succesfully',response,signupEmail,signupPassword);
-        console.log("all details ok");
+        // console.log('OTP verified succesfully',response,signupEmail,signupPassword);
+        // console.log("all details ok");
         ajaxCallForRegisterUser(signupEmail,signupPassword);
     }
 
@@ -202,7 +201,7 @@ jQuery(document).ready(function($){
     //IS OTP CORRECT
     // ==============================================
     function isOTPCorrect(otp,otpCorrect,otpInorrect,signupEmail,signupPassword){
-        console.log("checking otop ",otp);
+        // console.log("checking otop ",otp);
         var data = {};
         data.otp = otp;
 
@@ -231,6 +230,7 @@ jQuery(document).ready(function($){
           .always(function() {
 
           });
+          return;
     }
 
 
@@ -253,6 +253,7 @@ jQuery(document).ready(function($){
             processData: false,
             success: function(response) {
                 console.log('Register succesfully',response);
+                location.reload();
             },
             error: function(response) {
                 console.log('Error with register ' + response.statusText);
@@ -382,7 +383,7 @@ jQuery(document).ready(function($){
         event.preventDefault();
 
         var phoneNumber = $('#mobileForgot').val();
-        console.log(phoneNumber);
+        // console.log(phoneNumber);
         if( checkNumber(phoneNumber) ){
             if( getlength(phoneNumber) !=10 ){
                 formForgotPassword.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
