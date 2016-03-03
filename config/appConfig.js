@@ -22,9 +22,9 @@ module.exports = function(){
 
        'userService.ping': userServiceURL+'ping',
        'userService.create': userServiceURL+'create',
+       'userService.login': userServiceURL+'login',
        'userService.createCustomer': userServiceURL+'createCustomer',
        'userService.resetPassword': userServiceURL+'resetPassword',
-       'userService.login': userServiceURL+'login',
        'userService.updateCustomerData': userServiceURL+'updateCustomerData',
        'userService.logout': userServiceURL+'logout',
        'userService.findByMobile': userServiceURL+'findByMobile',

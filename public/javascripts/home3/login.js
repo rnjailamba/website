@@ -27,6 +27,7 @@ jQuery(document).ready(function($){
 		resetPasswordButtonDetails = formForgotPasswordDetails.find('p .resetButtonDetails'),
 
 		mainNav = $('.main-nav');
+    var minPasswordLength = 8;
 
 
 	//OPEN MODAL
@@ -164,43 +165,52 @@ jQuery(document).ready(function($){
 
         var isCheckAgreeTerms = $('#' + 'accept-terms').is(":checked");
         var isValidEmail = isEmail(signupEmail); // Checks for ascii already
-        var isPasswordEmpty = (signupPassword.length == 0);
+        var isPasswordEmpty = ( typeof signupPassword === 'undefined')?true:(signupPassword.length < minPasswordLength);
         var isPasswordASCII = isASCII(signupPassword);
-        var isOTPASCII = isASCII(signupOTP);
          if( !isValidEmail ){
             formEnterDetailsOTP.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
         if( isPasswordEmpty ){
             formEnterDetailsOTP.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible');
         }
-        if( !isOTPASCII ){
-            formEnterDetailsOTP.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-        }
         if( !isCheckAgreeTerms ){
             var x = formEnterDetailsOTP.find('input[type="checkbox"]');
             formEnterDetailsOTP.find('input[type="checkbox"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
 
-        if( isValidEmail && !isPasswordEmpty && isOTPASCII && isCheckAgreeTerms ){
-            isOTPCorrect(signupOTP,otpCorrect,otpInorrect,signupEmail,signupPassword);
+        if( isValidEmail && !isPasswordEmpty && isCheckAgreeTerms ){
+            isOTPCorrect(signupOTP,1,otpInorrect,signupEmail,signupPassword);
+        }
+        else{
+            isOTPCorrect(signupOTP,2,otpInorrect,signupEmail,signupPassword);
         }
 
     });
 
     function otpCorrect(response,signupEmail,signupPassword) {
-        // console.log('OTP verified succesfully',response,signupEmail,signupPassword);
-        // console.log("all details ok");
+        console.log('OTP verified succesfully',response,signupEmail,signupPassword);
+        console.log("all details ok");
         ajaxCallForRegisterUser(signupEmail,signupPassword);
+        return;
     }
 
     function otpInorrect(response) {
+        formEnterDetailsOTP.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         console.log('Error with verifying OTP ' + response.statusText);
+        return;
+
+    }
+
+    function otpCorrect1(response,signupEmail,signupPassword) {
+        console.log('OTP verified succesfully',response,signupEmail,signupPassword);
+        return;
+
     }
 
 
     //IS OTP CORRECT
     // ==============================================
-    function isOTPCorrect(otp,otpCorrect,otpInorrect,signupEmail,signupPassword){
+    function isOTPCorrect(otp,correctCallback,otpInorrect,signupEmail,signupPassword){
         // console.log("checking otop ",otp);
         var data = {};
         data.otp = otp;
@@ -215,16 +225,15 @@ jQuery(document).ready(function($){
             cache: false,
             processData: false,
             success: function(response){
-                otpCorrect(response,signupEmail,signupPassword);
+                if( correctCallback == 1) otpCorrect(response,signupEmail,signupPassword);
+                else otpCorrect1(response,signupEmail,signupPassword);
             },
             error: otpInorrect
         })
           .done(function() {
-            // alert( "success" );
             return true;
           })
           .fail(function() {
-            // alert( "error" );
             return false;
           })
           .always(function() {
@@ -307,7 +316,7 @@ jQuery(document).ready(function($){
 
         var isCheckRememberMe = $('#' + 'remember-me').is(":checked");
         var isValidPhone = (checkNumber(loginPhone) && getlength(loginPhone) == 10);
-        var isPasswordEmpty = (loginPassword.length == 0);
+        var isPasswordEmpty = (loginPassword.length >= minPasswordLength);
         var isPasswordASCII = isASCII(loginPassword);
 
         if( !isValidPhone ){
@@ -417,7 +426,7 @@ jQuery(document).ready(function($){
         var resetPassword = $('#reset-password').val();
         var resetOTP = $('#reset-otp').val();
 
-        var isPasswordEmpty = (resetPassword.length == 0);
+        var isPasswordEmpty = (loginPassword.length >= minPasswordLength);
         var isPasswordASCII = isASCII(resetPassword);
         var isOTPASCII = isASCII(resetOTP);
 //        var isOTPCorrect = isOTPCorrect(resetOTP);

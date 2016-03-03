@@ -21,24 +21,49 @@ router.get('/ping', function(req, res){
 
             console.log("pring returned body1",body);
           }
+          else{
+            
+          }
      });
+
+   // var data = {};
+   //  data.mobile = '7838185123';
+   //  data.password = '434343343';
+   //  data.email = 'rnjai@gmail.com';
+
+
+   // modules.request({
+   //      url:mappings['userService.create'], 
+   //      method: 'POST',
+   //      json: data
+   //    },
+   //      function (error, response, body) {
+   //        if (!error && response.statusCode == 200) {
+   //                bodyRet = body;
+
+   //          console.log("pring returned body");
+   //          res.status(200).send(body);
+   //        }
+   //   });
 
    var data = {};
     data.mobile = '7838185123';
-    data.password = '565888656';
+    data.password = '434343343';
 
 
    modules.request({
-        url:mappings['userService.create'], 
+        url:mappings['userService.login'], 
         method: 'POST',
         json: data
       },
         function (error, response, body) {
           if (!error && response.statusCode == 200) {
-                  bodyRet = body;
 
             console.log("pring returned body");
             res.status(200).send(body);
+          }
+          else{
+            res.status(404).send(body);
           }
      });
 
