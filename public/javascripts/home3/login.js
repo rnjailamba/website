@@ -111,7 +111,7 @@ jQuery(document).ready(function($){
     });
 
 
-    //GO TO ENTER DETAILS AND OTP
+    //GO TO ENTER DETAILS AND OTP FOR SIGN UP
     // ==============================================
     sendOTPButton.on('click', function(event){
         var errMessage = formSignup.find('input[type="tel"]').hasClass('has-error');
@@ -167,10 +167,8 @@ jQuery(document).ready(function($){
         var isPasswordEmpty = (signupPassword.length == 0);
         var isPasswordASCII = isASCII(signupPassword);
         var isOTPASCII = isASCII(signupOTP);
-//        var isOTPCorrect = isOTPCorrect(signupOTP);
-
-
-        if( !isValidEmail ){
+        console.log("here1");
+         if( !isValidEmail ){
             formEnterDetailsOTP.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
         if( isPasswordEmpty ){
@@ -184,7 +182,108 @@ jQuery(document).ready(function($){
             formEnterDetailsOTP.find('input[type="checkbox"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
 
+        if( isValidEmail && !isPasswordEmpty && isOTPASCII && isCheckAgreeTerms ){
+            isOTPCorrect(signupOTP,otpCorrect,otpInorrect,signupEmail,signupPassword);
+        }
+
     });
+
+    function otpCorrect(response,signupEmail,signupPassword) {
+        console.log('OTP verified succesfully',response,signupEmail,signupPassword);
+        console.log("all details ok");
+        ajaxCallForRegisterUser(signupEmail,signupPassword);
+    }
+
+    function otpInorrect(response) {
+        console.log('Error with verifying OTP ' + response.statusText);
+    }
+
+
+    //IS OTP CORRECT
+    // ==============================================
+    function isOTPCorrect(otp,otpCorrect,otpInorrect,signupEmail,signupPassword){
+        console.log("checking otop ",otp);
+        var data = {};
+        data.otp = otp;
+
+        var x = $.ajax({
+            url:"/users1/checkOTP",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response){
+                otpCorrect(response,signupEmail,signupPassword);
+            },
+            error: otpInorrect
+        })
+          .done(function() {
+            // alert( "success" );
+            return true;
+          })
+          .fail(function() {
+            // alert( "error" );
+            return false;
+          })
+          .always(function() {
+
+          });
+    }
+
+
+    //AJAX CALL RE
+    // ==============================================
+    function ajaxCallForRegisterUser(signupEmail,signupPassword){
+        // console.log("in sign up ",signupEmail,signupPassword);
+        var data = {};
+        data.signupEmail = signupEmail;
+        data.signupPassword = signupPassword;
+
+        $.ajax({
+            url:"/users1/registerUser",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log('Register succesfully',response);
+            },
+            error: function(response) {
+                console.log('Error with register ' + response.statusText);
+            }
+        });
+    }
+
+
+    //AJAX CALL FOR OTP - SENDS OTP TO USER AND SETS COOKIE WITH PHONE NUMBER
+    // ==============================================
+    function ajaxCallForOTP(phoneNumber){
+        var data = {};
+        data.phoneNumber = phoneNumber;
+
+        $.ajax({
+            url:"/users1/sendOTPandSetCookie",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log('OTP sent succesfully',response);
+            },
+            error: function(response) {
+                console.log('Error with sending OTP ' + response.statusText);
+            }
+        });
+    }
 
 
     //CLICK THE LOGIN BUTTON
@@ -331,6 +430,9 @@ jQuery(document).ready(function($){
 
     });
 
+
+
+
     //GET LENGTH
     // ==============================================
     function getlength(phoneNumber) {
@@ -367,6 +469,8 @@ jQuery(document).ready(function($){
          var regex = /^[\x20-\x7E]+$/;
          return regex.test(text);
     }
+
+
 
 
 
@@ -455,32 +559,6 @@ jQuery(document).ready(function($){
         formEnterDetailsOTP.removeClass('is-selected');
         formEnterLoginDetailsToSignUp.addClass('is-selected');
     }
-
-
-    //AJAX CALL FOR OTP
-    // ==============================================
-	function ajaxCallForOTP(phoneNumber){
-        console.log("in new function",phoneNumber);
-        var data = {};
-        data.phoneNumber = phoneNumber;
-
-        $.ajax({
-            url:"/users1/sendOTP",
-            type: 'POST',
-            async: true,
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            context: this,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                console.log('OTP sent succesfully',response);
-            },
-            error: function(response) {
-                console.log('Error with sending OTP ' + response.statusText);
-            }
-        });
-	}
 
 
 	//IE9 placeholder fallback

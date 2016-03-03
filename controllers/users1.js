@@ -12,11 +12,133 @@ var mappings = appConfig();
 // PING
 // ============================================== 
 router.get('/ping', function(req, res){
-  modules.request(mappings['userService.ping'], function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.send(body);
-    }
-  })
+  var bodyRet;
+  modules.request(
+        {url:mappings['userService.ping']}, 
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+                  bodyRet = body;
+
+            console.log("pring returned body1",body);
+          }
+     });
+
+   var data = {};
+    data.mobile = '7838185123';
+    data.password = '565888656';
+
+
+   modules.request({
+        url:mappings['userService.create'], 
+        method: 'POST',
+        json: data
+      },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+                  bodyRet = body;
+
+            console.log("pring returned body");
+            res.status(200).send(body);
+          }
+     });
+
+});
+
+
+// SEND OTP AND SET COOKIE
+// ==============================================
+router.post('/sendOTPandSetCookie',function(req, res){
+
+    // console.log('body: ' + JSON.stringify(req.body.phoneNumber));
+    var phoneNumber = req.body.phoneNumber;
+    var min = 1000;
+    var max = 9999;
+    var token = Math.floor(Math.random() * (max - min + 1)) + min;
+    var rString = randomString(32);
+
+    twilioClient.messages.create({
+        to: "+91" + phoneNumber,
+        from: "+12027914038",
+        body: "please enter this token to register successfully "+token,
+
+        }, function(err, message) {
+
+        // console.log(message.sid);
+        });
+        console.log(rString);
+
+        // put in redis for 10 mins the token
+        redisClient.select(1, function(err,res){
+
+        redisClient.set(rString, token, function(err, reply) {
+          // console.log("have set",reply);
+        });
+        redisClient.set(rString+"phone", phoneNumber, function(err, reply) {
+          // console.log("have set",reply);
+        });
+
+        redisClient.expire(rString, 30*60);//expires in 180 seconds
+        redisClient.get(rString, function(err, reply) {
+            // console.log("am getting",reply);
+
+        });
+    });
+
+    res.clearCookie('phone');
+    res.cookie('phone',rString); // rString is taking place of phone
+    res.status(200).send("done");
+
+});
+
+
+
+// CHECK OTP
+// ==============================================
+router.post('/checkOTP',function(req, res){
+    
+    console.log(req.cookies.phone,"here to check otp"); 
+    var rString = req.cookies.phone;
+    var enteredOTP = req.body.otp;
+    redisClient.get(rString, function(err, reply) {
+      console.log("have set otpo",reply);
+      if( enteredOTP == reply){
+        console.log("otp matched");
+        res.status(200).send("done");
+      }
+      else{
+        res.status(404).send("notdone");
+
+      }
+    }); 
+});
+
+
+// REGISTER
+// ==============================================
+router.post('/registerUser',function(req, res){
+    console.log('register user: ' + JSON.stringify(req.body));
+    var signupEmail = req.body.signupEmail;
+    var signupPassword = req.body.signupPassword;
+    var rString = req.cookies.phone;
+    redisClient.get(rString+"phone", function(err, reply) {
+      var data = {};
+      data.mobile = reply;
+      data.password = signupPassword;
+      data.email = signupEmail;
+      modules.request({
+        url:mappings['userService.create'], 
+        method: 'POST',
+        json: data
+      },
+      function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          res.status(200).send(body);
+        }
+      });
+      
+    }); 
+
+    
 });
 
 
@@ -75,92 +197,13 @@ var isAuthenticated = function (req, res, next) {
 
 
 
-// SEND OTP
-// ==============================================
-router.post('/sendOTP',function(req, res){
 
-    console.log('body: ' + JSON.stringify(req.body.phoneNumber));
-    var phoneNumber = req.body.phoneNumber;
-    var min = 1000;
-    var max = 9999;
-    var token = Math.floor(Math.random() * (max - min + 1)) + min;
-
-    twilioClient.messages.create({
-        to: "+91" + phoneNumber,
-        from: "+12027914038",
-        body: "please enter this token to register successfully "+token,
-
-        }, function(err, message) {
-
-        console.log(message.sid);
-        });
-        // put in redis for 10 mins the token
-        redisClient.select(1, function(err,res){
-
-        redisClient.set(phoneNumber, token, function(err, reply) {
-          console.log("have set",reply);
-        });
-        redisClient.expire(phoneNumber, 30*60);//expires in 180 seconds
-
-        redisClient.get(phoneNumber, function(err, reply) {
-            console.log("am getting",reply);
-
-        });
-    });
-
-    res.send("done");
-
-
-});
 router.get('/register', function(req, res){
 
   res.render('users1/register');
 
 });
 
-// REGISTER
-// ==============================================
-router.post('/register',function(req, res){
-  var phone = req.body.mobile;
-  var email = req.body.email;
-  var password = req.body.password;
-  var min = 1000;
-  var max = 9999;
-  var token = Math.floor(Math.random() * (max - min + 1)) + min;
-  //check if phone unique
-  //not required actually
-
-  console.log("before the twilio appi");
-  twilioClient.messages.create({
-   to: "+91"+phone, 
-   from: "+12027914038", 
-   body: "please enter this token to register successfully "+token,   
-  }, function(err, message) { 
-
-   console.log(message.sid); 
-  });
-  // put in redis for 10 mins the token
-   redisClient.select(1, function(err,res){
-
-    redisClient.set(phone, token, function(err, reply) {
-      console.log(reply);
-    });
-    redisClient.expire(phone, 3*60);//expires in 180 seconds
-
-    redisClient.get(phone, function(err, reply) {
-        console.log(reply);
-    });
-  });
-
-  console.log("phone is ",phone);
-  res.redirect('/users1/enterCode?phone='+phone);
-
-});
-router.get('/register', function(req, res){
-
-  res.render('users1/register');
-
-});
 
 
 //  ENTERCODE
@@ -282,5 +325,13 @@ router.get('/ping',isAuthenticated, function(req, res){
     res.status(200).send("pong!");
 
 });
+
+
+function randomString(length) {
+    var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
 
 module.exports.router = router;
