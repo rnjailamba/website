@@ -171,6 +171,21 @@ router.post('/registerUser',function(req, res){
 });
 
 
+// LOGOUT
+// ==============================================
+router.post('/logout',function(req, res){
+    var ruid = req.cookies.ruid;
+    var customerId = req.cookies.customerId;
+    console.log('logging out user',ruid,customerId);
+
+    res.clearCookie('ruid');
+    res.clearCookie('customerId');
+
+    res.status(200).send("done");
+    
+});
+
+
 
 // MIDDLEWARE - ISAUTHENTICATED
 // ==============================================

@@ -12,7 +12,7 @@ module.exports = {
     var ruid = req.cookies.ruid;
     redisClient.get(ruid, function(err, reply) {
       // console.log("have set otpo",reply);
-      if( customerId == reply){
+      if( customerId == reply && reply != null && typeof customerId != 'undefined'){
         console.log("logged in",customerId,reply);
           res.render(pageToDisplay, {
               isLoggedIn : true

@@ -23,10 +23,13 @@ jQuery(document).ready(function($){
 		loginButton = formLogin.find('p .loginButton'),
 		loginButtonWithDetails = formEnterLoginDetailsToSignUp.find('p .loginButtonWithDetails'),
 
+        logoutButton = $('.cd-signout');
+
 		resetPasswordButton = formForgotPassword.find('p .resetButton'),
 		resetPasswordButtonDetails = formForgotPasswordDetails.find('p .resetButtonDetails'),
 
 		mainNav = $('.main-nav');
+
     var minPasswordLength = 8;
 
 
@@ -109,6 +112,14 @@ jQuery(document).ready(function($){
     backToLoginLinkResetPasswordEnterDetails.on('click', function(event){
         event.preventDefault();
         loginSelected();
+    });
+
+
+    //LOGOUT BUTTON
+    // ==============================================
+    logoutButton.click(function(event){ 
+        event.preventDefault(); 
+        ajaxCallForLogout();
     });
 
 
@@ -291,6 +302,28 @@ jQuery(document).ready(function($){
             },
             error: function(response) {
                 console.log('Error with sending OTP ' + response.statusText);
+            }
+        });
+    }
+
+
+    //AJAX CALL FOR LOGOUT
+    // ==============================================
+    function ajaxCallForLogout(){
+
+        $.ajax({
+            url:"/users1/logout",
+            type: 'POST',
+            async: true,
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log('Logged out succesfully',response);
+                location.reload();
+            },
+            error: function(response) {
+                console.log('Error with logging out' + response.statusText);
             }
         });
     }

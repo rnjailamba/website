@@ -28,6 +28,15 @@ router.get('/', function(req, res, next) {
 });
 
 
+// HOME3
+// ==============================================
+router.get('/home3', function(req, res){
+
+  loginMiddleWare.isLoggedIn(req,res,redisClient,'basicPages/home3',null);
+
+});
+
+
 // INDEX
 // ==============================================
 router.get('/index', function(req, res, next) {
@@ -41,21 +50,6 @@ router.get('/index', function(req, res, next) {
 router.get('/about', function(req, res, next) {
   res.render('basicPages/about', { title: 'Express' });
 });
-
-
-
-// HOME3
-// ==============================================
-router.get('/home3', function(req, res){
-
-  loginMiddleWare.isLoggedIn(req,res,redisClient,'basicPages/home3',null);
-
-
-
-});
-
-
-
 
 
 var justPrintSomething = function(){
