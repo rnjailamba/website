@@ -198,6 +198,7 @@ jQuery(document).ready(function($){
 
     });
 
+
     function otpCorrect(response,signupEmail,signupPassword) {
         console.log('OTP verified succesfully',response,signupEmail,signupPassword);
         console.log("all details ok");
@@ -219,7 +220,7 @@ jQuery(document).ready(function($){
     }
 
 
-    //IS OTP CORRECT
+    //IS OTP CORRECT SIGN UP
     // ==============================================
     function isOTPCorrect(otp,correctCallback,otpInorrect,signupEmail,signupPassword){
         // console.log("checking otop ",otp);
@@ -349,21 +350,63 @@ jQuery(document).ready(function($){
 
         var isCheckRememberMe = $('#' + 'remember-me').is(":checked");
         var isValidPhone = (checkNumber(loginPhone) && getlength(loginPhone) == 10);
-        var isPasswordEmpty = (loginPassword.length >= minPasswordLength);
+        var isPasswordEmpty = ( typeof loginPassword === 'undefined')?true:(loginPassword.length < minPasswordLength);
         var isPasswordASCII = isASCII(loginPassword);
 
         if( !isValidPhone ){
             formLogin.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
         if( isPasswordEmpty ){
-            formLogin.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible');
+            formLogin.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible').html("Password length must be greater than equal to 8");
+        }
+        if( isValidPhone && !isPasswordEmpty ){
+            ajaxCallForLogin(loginPhone,loginPassword);
         }
 
-        if( true ){
-            loginEnterDetails();
-        }
-        //check if email in records/no then tell message acc
     });
+
+
+    //AJAX CALL FOR LOGIN
+    // ==============================================
+    function ajaxCallForLogin(phoneNumber,signinPassword){
+        var data = {};
+        data.phoneNumber = phoneNumber;
+        data.signinPassword = signinPassword;
+
+        $.ajax({
+            url:"/users1/login",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log('Login succesfully',response);
+                location.reload();
+            },
+            error: function(response) {
+                console.log('Error with logging in' + response.status);
+                if( response.status == 404){
+                    loginFailedNoAccount(phoneNumber,signinPassword);
+                }
+                else if( response.status == 401 ){
+                    loginFailedNoMatch();// password and mobile do not match
+                }
+
+            }
+        });
+    }
+
+    function loginFailedNoAccount(phoneNumber,signinPassword){
+        loginEnterDetails(phoneNumber,signinPassword);
+        ajaxCallForOTP(phoneNumber);
+    }
+
+    function loginFailedNoMatch(){
+        formLogin.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible').html("Incorrect Password");
+    }
 
 
     //CLICK THE LOGIN BUTTON WITH DETAILS BUTTON
@@ -385,17 +428,74 @@ jQuery(document).ready(function($){
         var loginOTP = $('#login-otp').val();
 
         var isValidEmail = isEmail(loginEmail); // Checks for ascii already
-        var isOTPASCII = isASCII(loginOTP);
-//        var isOTPCorrect = isOTPCorrect(signupOTP);
 
         if( !isValidEmail ){
             formEnterLoginDetailsToSignUp.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
         }
-        if( !isOTPASCII ){
-            formEnterLoginDetailsToSignUp.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+
+        if(isValidEmail ){
+            isOTPCorrectLogin(loginOTP,loginEmail,1);
+        }
+        else{
+            isOTPCorrectLogin(loginOTP,loginEmail,2);
         }
 
     });
+
+    function otpCorrectForLogin(response,signupEmail,signupPassword) {
+        console.log('OTP verified succesfully for login',response,signupEmail,signupPassword);
+        console.log("all details ok for login");
+        ajaxCallForRegisterUser(signupEmail,signupPassword);
+        return;
+    }
+
+    function otpInorrectForLogin(response) {
+        formEnterLoginDetailsToSignUp.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        console.log('Error with verifying OTP for login ' + response.statusText);
+        return;
+
+    }
+
+    function otpCorrectForLogin1(response,signupEmail,signupPassword) {
+        console.log('OTP verified succesfully for login',response,signupEmail,signupPassword);
+        return;
+
+    }
+
+
+    //IS OTP CORRECT SIGN IN
+    // ==============================================
+    function isOTPCorrectLogin(loginOTP,loginEmail,correctCallback){
+        // console.log("checking otop ",otp);
+        var data = {};
+        data.otp = loginOTP;
+
+        var x = $.ajax({
+            url:"/users1/checkOTP",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response){
+                if( correctCallback == 1) otpCorrectForLogin(response,loginEmail,"7838185123");
+                else otpCorrectForLogin1(response,loginEmail,"7838185123");
+            },
+            error: otpInorrectForLogin
+        })
+          .done(function() {
+            return true;
+          })
+          .fail(function() {
+            return false;
+          })
+          .always(function() {
+
+          });
+          return;
+    }
 
 
     //RESEND OTP SO GO BACK TO ENTER PHONE
@@ -459,7 +559,7 @@ jQuery(document).ready(function($){
         var resetPassword = $('#reset-password').val();
         var resetOTP = $('#reset-otp').val();
 
-        var isPasswordEmpty = (loginPassword.length >= minPasswordLength);
+        var isPasswordEmpty = ( typeof resetPassword === 'undefined')?true:(resetPassword.length < minPasswordLength);
         var isPasswordASCII = isASCII(resetPassword);
         var isOTPASCII = isASCII(resetOTP);
 //        var isOTPCorrect = isOTPCorrect(resetOTP);

@@ -28,7 +28,7 @@ router.get('/ping', function(req, res){
 
    // var data = {};
    //  data.mobile = '7838185123';
-   //  data.password = '434343343';
+   //  data.password = '7838185123';
    //  data.email = 'rnjai@gmail.com';
 
 
@@ -39,16 +39,19 @@ router.get('/ping', function(req, res){
    //    },
    //      function (error, response, body) {
    //        if (!error && response.statusCode == 200) {
-   //                bodyRet = body;
+   //                bodyRet = body; 
 
-   //          console.log("pring returned body");
+   //          console.log("pring returned bodyyy");
    //          res.status(200).send(body);
+   //        }
+   //        else{
+   //          console.log("not signed up successfully");
    //        }
    //   });
 
    var data = {};
-    data.mobile = '7838185123';
-    data.password = '434343343';
+    data.mobile = '783818123';
+    data.password = '783818123';
 
 
    modules.request({
@@ -63,7 +66,7 @@ router.get('/ping', function(req, res){
             res.status(200).send(body);
           }
           else{
-            res.status(404).send(body);
+            res.status(404).send( body);
           }
      });
 
@@ -79,6 +82,7 @@ router.post('/sendOTPandSetCookie',function(req, res){
     var min = 1000;
     var max = 9999;
     var token = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.log(token,"token");
     var rString = randomString(32);
 
     twilioClient.messages.create({
@@ -183,6 +187,41 @@ router.post('/logout',function(req, res){
 
     res.status(200).send("done");
     
+});
+
+
+// LOGIN
+// ==============================================
+router.post('/login',function(req, res){
+    console.log('loggin in the user: ' + JSON.stringify(req.body));
+    var phoneNumber = req.body.phoneNumber;
+    var signinPassword = req.body.signinPassword;
+    var rString = req.cookies.phone;
+    var data = {};
+    data.mobile = phoneNumber;
+    data.password = signinPassword;
+    modules.request({
+      url:mappings['userService.login'], 
+      method: 'POST',
+      json: data
+    },
+    function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        res.cookie('customerId',body.customerId); // set cookie for customer id
+        res.cookie('ruid',body.ruid); // set cookie for customer id
+        redisClient.set(body.ruid, body.customerId, function(err, reply) {
+          // console.log("have set",reply);
+        });
+        redisClient.expire(body.ruid, 300*60);//expires in 180 seconds
+        res.status(200).send("done");
+      }
+      else if(response.statusCode == 401){ // user is found with this mobile but password is wrong
+        res.status(401).send("not done");
+      }
+      else if(response.statusCode == 404){ // user is not found with this mobile
+        res.status(404).send("not done");
+      }
+    });
 });
 
 
@@ -313,20 +352,6 @@ router.get('/resendCode', function(req, res){
 
 });
 
-
-
-// LOGIN
-// ==============================================
-router.post('/login',function(req, res){
-
-  res.status(200).send("pong! of login");
-
-});
-router.get('/login', function(req, res){
-
-   res.render('users1/login');
-
-});
 
 
 // MIDDLEWARE
