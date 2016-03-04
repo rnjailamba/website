@@ -6,7 +6,7 @@ var products = require('../products.js');
 var codeSnippets = require('../codeSnippets.js');
 var partials = require('../partials.js');
 
-exportedApp.app.use('/', basicPages);
+exportedApp.app.use('/', basicPages.router);
 exportedApp.app.use('/users1', users1.router);
 exportedApp.app.use('/blog', blog.router);
 exportedApp.app.use('/products', products);

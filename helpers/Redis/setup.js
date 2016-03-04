@@ -4,5 +4,7 @@ var redisClient = redis.createClient().on('connect', function() {
  }); //creates a new client
 
 var users1 = require('../../controllers/users1.js');
-
 users1.setClient(redisClient);
+
+var basicPages = require('../../controllers/basicPages.js');
+basicPages.setClient(redisClient);

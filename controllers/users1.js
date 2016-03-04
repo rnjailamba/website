@@ -22,7 +22,7 @@ router.get('/ping', function(req, res){
             console.log("pring returned body1",body);
           }
           else{
-            
+
           }
      });
 
@@ -103,6 +103,7 @@ router.post('/sendOTPandSetCookie',function(req, res){
         });
 
         redisClient.expire(rString, 30*60);//expires in 180 seconds
+        redisClient.expire(rString+"phone", 30*60);//expires in 180 seconds
         redisClient.get(rString, function(err, reply) {
             // console.log("am getting",reply);
 
@@ -159,13 +160,14 @@ router.post('/registerUser',function(req, res){
           // console.log(body.customerId);
           res.cookie('customerId',body.customerId); // set cookie for customer id
           res.cookie('ruid',body.ruid); // set cookie for customer id
+          redisClient.set(body.ruid, body.customerId, function(err, reply) {
+            // console.log("have set",reply);
+          });
+          redisClient.expire(body.ruid, 300*60);//expires in 180 seconds
           res.status(200).send("done");
         }
       });
-      
     }); 
-
-    
 });
 
 
