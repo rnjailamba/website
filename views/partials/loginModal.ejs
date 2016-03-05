@@ -127,7 +127,7 @@
 
         <!-- reset password form1 -->
         <div id="cd-reset-password">
-            <p class="cd-form-message">Lost your password? Please enter your phone number. You will get an OTP to create new password and login agaoin.</p>
+            <p class="cd-form-message">Lost your password? Please enter your phone number. You will get an OTP to create new password and login again.</p>
 
             <form class="cd-form">
                 <p class="fieldset">
@@ -147,6 +147,7 @@
 
         <!-- reset password form2 -->
         <div id="cd-reset-password-enter-details">
+            <p class="cd-form-message">Please enter a new password and OTP to login.</p>
 
             <form class="cd-form">
 
@@ -170,10 +171,49 @@
                 </p>
             </form>
 
-            <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+            <p class="cd-form-bottom-message"><a href="#0">Resend OTP</a></p>
         </div> <!-- cd-reset-password -->
 
 
+        <!-- reset password form3 -->
+        <div id="cd-reset-password-enter-details-signup">
+            <p class="cd-form-message">Please enter your email , password and OTP to login.</p>
+
+            <form class="cd-form">
+
+                <p class="fieldset">
+                    <label class="image-replace cd-email" for="email">E-mail</label>
+                    <input class="full-width has-padding has-border" id="reset-email-signup" type="email" placeholder="E-mail">
+                    <span class="cd-error-message">Please Enter Correct Email</span>
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-password" for="reset-password">Password</label>
+                    <input class="full-width has-padding has-border" id="reset-password-signup" type="password"  placeholder="Password">
+                    <a href="#0" class="hide-password">Show</a>
+                    <span class="cd-error-message">Password length must be greater than equal to 8</span>
+
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-phone" for="reset-otp">Enter OTP</label>
+                    <input class="full-width has-padding has-border" id="reset-otp-signup" type="text" placeholder="Enter OTP">
+                    <span class="cd-error-message">Please Enter Correct OTP</span>
+                </p>
+
+                <p class="fieldset">
+                    <input type="checkbox" id="accept-terms-reset-password-signup">
+                    <span class="cd-error-message">Please Agree to Terms</span>
+                    <label for="accept-terms-reset-password-signup">I agree to the <a href="#0">Terms</a></label>
+                </p>                
+
+                <p class="fieldset">
+                    <input class="full-width has-padding resetButtonDetails" type="submit" value="Update your Details And Login">
+                </p>
+            </form>
+
+            <p class="cd-form-bottom-message"><a href="#0">Resend OTP</a></p>
+        </div> <!-- cd-reset-password -->
 
         <a href="#0" class="cd-close-form">Close</a>
     </div> <!-- cd-user-modal-container -->

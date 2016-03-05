@@ -93,7 +93,7 @@ router.post('/sendOTPandSetCookie',function(req, res){
 
         }, function(err, message) {
 
-        // console.log(message.sid);
+        console.log(message.sid);
         });
         // console.log(rString);
 
@@ -140,7 +140,7 @@ router.post('/checkOTP',function(req, res){
         res.status(404).send("notdone");
       }
       else{
-        res.status(400).send("server side problem");
+        res.status(400).send("notdone");
       }
     }); 
 });
@@ -344,7 +344,8 @@ router.get('/resendCode', function(req, res){
      body: "please enter this token to register successfully "+token,
     }, function(err, message) {
 
-     console.log(message.sid);
+          if( !err ) console.log(message.sid);
+          else console.log("Twilio error",err);
     });
       // put in redis for 10 mins the token
        redisClient.select(1, function(err,res){

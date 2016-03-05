@@ -3,7 +3,8 @@ jQuery(document).ready(function($){
 		formLogin = formModal.find('#cd-login'),
 		formSignup = formModal.find('#cd-signup'),
 		formForgotPassword = formModal.find('#cd-reset-password'),
-		formForgotPasswordDetails = formModal.find('#cd-reset-password-enter-details'),
+        formForgotPasswordDetails = formModal.find('#cd-reset-password-enter-details'),
+		formForgotPasswordDetailsSignup = formModal.find('#cd-reset-password-enter-details-signup'),
 		formEnterDetailsOTP = formModal.find('#cd-enter-details'),
 		formEnterLoginDetailsToSignUp = formModal.find('#cd-login-enter-details'),
 
@@ -13,7 +14,8 @@ jQuery(document).ready(function($){
 
 		forgotPasswordLink = formLogin.find('.cd-form-bottom-message a'),
 		backToLoginLink = formForgotPassword.find('.cd-form-bottom-message a'),
-		backToLoginLinkResetPasswordEnterDetails = formForgotPasswordDetails.find('.cd-form-bottom-message a'),
+        backToForgetPasswordLinkResetPasswordEnterDetails = formForgotPasswordDetails.find('.cd-form-bottom-message a'),
+        backToForgetPasswordLinkResetPasswordEnterDetailsSignup = formForgotPasswordDetailsSignup.find('.cd-form-bottom-message a'),
 		resendOTPLink = formEnterDetailsOTP.find('.cd-form-bottom-message a'),
 		resendOTPLinkAtLogin = formEnterLoginDetailsToSignUp.find('.cd-form-bottom-message a'),
 
@@ -26,7 +28,8 @@ jQuery(document).ready(function($){
         logoutButton = $('.cd-signout');
 
 		resetPasswordButton = formForgotPassword.find('p .resetButton'),
-		resetPasswordButtonDetails = formForgotPasswordDetails.find('p .resetButtonDetails'),
+        resetPasswordButtonDetails = formForgotPasswordDetails.find('p .resetButtonDetails'),
+        resetPasswordButtonDetailsSignup = formForgotPasswordDetailsSignup.find('p .resetButtonDetails'),
 
 		mainNav = $('.main-nav');
 
@@ -107,12 +110,21 @@ jQuery(document).ready(function($){
 	});
 
 
-    //BACK TO LOGIN FROM THE FORGOT-PASSWORD ENTER DETAILS FORM
+    //BACK TO FORGOT PASSWORD FROM THE FORGOT-PASSWORD ENTER DETAILS FORM
     // ==============================================
-    backToLoginLinkResetPasswordEnterDetails.on('click', function(event){
+    backToForgetPasswordLinkResetPasswordEnterDetails.on('click', function(event){
         event.preventDefault();
-        loginSelected();
+        forgotPasswordSelected();
     });
+
+
+    //BACK TO FORGOT PASSWORD FROM THE FORGOT-PASSWORD ENTER DETAILS FORM SIMULATING SIGNUP
+    // ==============================================
+    backToForgetPasswordLinkResetPasswordEnterDetailsSignup.on('click', function(event){
+        event.preventDefault();
+        forgotPasswordSelected();
+    });
+
 
 
     //LOGOUT BUTTON
@@ -255,7 +267,7 @@ jQuery(document).ready(function($){
     }
 
 
-    //AJAX CALL RE
+    //AJAX CALL FOR REGISTERING USER
     // ==============================================
     function ajaxCallForRegisterUser(signupEmail,signupPassword){
         // console.log("in sign up ",signupEmail,signupPassword);
@@ -542,7 +554,8 @@ jQuery(document).ready(function($){
                 formForgotPassword.find('input[type="tel"]').toggleClass('has-error').next('span').toggleClass('is-visible');
             }
             else{
-                forgotPasswordEnterDetails();
+                // forgotPasswordEnterDetails();
+                forgotPasswordEnterDetailsSignup();
                 ajaxCallForOTP(phoneNumber);
             }
         }
@@ -585,6 +598,117 @@ jQuery(document).ready(function($){
     });
 
 
+    //CLICK THE RESET BUTTON DETAILS SIMULATE SIGNUP
+    // ==============================================
+    resetPasswordButtonDetailsSignup.on('click', function(event){
+
+        event.preventDefault();
+        var errMessageEmail = formForgotPasswordDetailsSignup.find('input[type="email"]').hasClass('has-error');
+        var errMessagePassword = formForgotPasswordDetailsSignup.find('input[type="password"]').hasClass('has-error');
+        var errMessageIncorrectOTP = formForgotPasswordDetailsSignup.find('input[type="text"]').hasClass('has-error');
+        var errMessageAgreeTerms = formForgotPasswordDetailsSignup.find('input[type="checkbox"]').hasClass('has-error');
+
+        if( errMessageEmail ){
+            formForgotPasswordDetailsSignup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        if( errMessagePassword ){
+            formForgotPasswordDetailsSignup.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible');
+        }
+        if( errMessageIncorrectOTP ){
+            formForgotPasswordDetailsSignup.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        if( errMessageAgreeTerms ){
+            formForgotPasswordDetailsSignup.find('input[type="checkbox"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+
+        var resetEmail = $('#reset-email-signup').val();
+        var resetPassword = $('#reset-password-signup').val();
+        var resetOTP = $('#reset-otp-signup').val();
+
+        var isCheckAgreeTerms = $('#' + 'accept-terms-reset-password-signup').is(":checked");
+        var isValidEmail = isEmail(resetEmail); // Checks for ascii already
+        var isPasswordEmpty = ( typeof resetPassword === 'undefined')?true:(resetPassword.length < minPasswordLength);
+        var isPasswordASCII = isASCII(resetPassword);
+                console.log(isCheckAgreeTerms);
+
+         if( !isValidEmail ){
+            formForgotPasswordDetailsSignup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+        if( isPasswordEmpty ){
+            formForgotPasswordDetailsSignup.find('input[type="password"]').toggleClass('has-error').siblings('.cd-error-message').toggleClass('is-visible');
+        }
+        if( !isCheckAgreeTerms ){
+            var x = formForgotPasswordDetailsSignup.find('input[type="checkbox"]');
+            formForgotPasswordDetailsSignup.find('input[type="checkbox"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        }
+
+        signupOTP = resetOTP;
+        signupEmail = resetEmail;
+        signupPassword = resetPassword;
+        if( isValidEmail && !isPasswordEmpty && isCheckAgreeTerms ){
+            isOTPCorrectResetPasswordSignup(signupOTP,1,signupEmail,signupPassword);
+        }
+        else{
+            isOTPCorrectResetPasswordSignup(signupOTP,2,signupEmail,signupPassword);
+        }
+
+    });
+
+
+    function otpCorrectResetPasswordSignup(response,signupEmail,signupPassword) {
+        console.log('OTP verified succesfully for reset signup',response,signupEmail,signupPassword);
+        console.log("all details ok");
+        ajaxCallForRegisterUser(signupEmail,signupPassword);
+        return;
+    }
+
+    function otpInorrectResetPasswordSignup(response) {
+        formForgotPasswordDetailsSignup.find('input[type="text"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        console.log('Error with verifying OTP for reset as signup' + response.statusText);
+        return;
+
+    }
+
+    function otpCorrectResetPasswordSignup1(response,signupEmail,signupPassword) {
+        console.log('OTP verified succesfully',response,signupEmail,signupPassword);
+        return;
+
+    }
+
+
+    //IS OTP CORRECT SIGN UP
+    // ==============================================
+    function isOTPCorrectResetPasswordSignup(otp,correctCallback,signupEmail,signupPassword){
+        // console.log("checking otop ",otp);
+        var data = {};
+        data.otp = otp;
+
+        var x = $.ajax({
+            url:"/users1/checkOTP",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response){
+                if( correctCallback == 1) otpCorrectResetPasswordSignup(response,signupEmail,signupPassword);
+                else otpCorrectResetPasswordSignup1(response,signupEmail,signupPassword);
+            },
+            error: otpInorrectResetPasswordSignup
+        })
+          .done(function() {
+            return true;
+          })
+          .fail(function() {
+            return false;
+          })
+          .always(function() {
+
+          });
+          return;
+    }
 
 
     //GET LENGTH
@@ -625,11 +749,6 @@ jQuery(document).ready(function($){
     }
 
 
-
-
-
-
-
     //LOGIN SELECTED
     // ==============================================
 	function loginSelected(){
@@ -641,7 +760,8 @@ jQuery(document).ready(function($){
 		formForgotPassword.removeClass('is-selected');
 		tabLogin.addClass('selected');
 		tabSignup.removeClass('selected');
-		formForgotPasswordDetails.removeClass('is-selected');
+        formForgotPasswordDetails.removeClass('is-selected');
+		formForgotPasswordDetailsSignup.removeClass('is-selected');
 		formEnterLoginDetailsToSignUp.removeClass('is-selected');
         $('.cd-switcher').find('.selected').html("Sign in");
 
@@ -657,6 +777,7 @@ jQuery(document).ready(function($){
 		formLogin.removeClass('is-selected');
 	    formEnterDetailsOTP.removeClass('is-selected');
 		formForgotPasswordDetails.removeClass('is-selected');
+        formForgotPasswordDetailsSignup.removeClass('is-selected');        
 		formSignup.addClass('is-selected');
 		formForgotPassword.removeClass('is-selected');
 		tabLogin.removeClass('selected');
@@ -673,6 +794,7 @@ jQuery(document).ready(function($){
 		formSignup.removeClass('is-selected');
 		formForgotPassword.removeClass('is-selected');
 	    formForgotPasswordDetails.removeClass('is-selected');
+        formForgotPasswordDetailsSignup.removeClass('is-selected');        
 		formEnterLoginDetailsToSignUp.removeClass('is-selected');
 		formEnterDetailsOTP.addClass('is-selected');
     }
@@ -685,6 +807,7 @@ jQuery(document).ready(function($){
 		formSignup.removeClass('is-selected');
 		formEnterDetailsOTP.removeClass('is-selected');
 		formForgotPasswordDetails.removeClass('is-selected');
+        formForgotPasswordDetailsSignup.removeClass('is-selected');
 	    formEnterLoginDetailsToSignUp.removeClass('is-selected');
 		formForgotPassword.addClass('is-selected');
         $('.cd-switcher').find('.selected').html("Forgot Password");
@@ -698,8 +821,22 @@ jQuery(document).ready(function($){
         formSignup.removeClass('is-selected');
         formForgotPassword.removeClass('is-selected');
         formForgotPasswordDetails.addClass('is-selected');
+        formForgotPasswordDetailsSignup.removeClass('is-selected');        
         formEnterDetailsOTP.removeClass('is-selected');
 		formEnterLoginDetailsToSignUp.removeClass('is-selected');
+        $('.cd-switcher').find('.selected').html("Forgot Password");
+    }
+
+    //ENTER DETAILS FOR FORGOT PASSWORD SIMULATES SIGNUP
+    // ==============================================
+    function forgotPasswordEnterDetailsSignup(){
+        formLogin.removeClass('is-selected');
+        formSignup.removeClass('is-selected');
+        formForgotPassword.removeClass('is-selected');
+        formForgotPasswordDetails.removeClass('is-selected');
+        formForgotPasswordDetailsSignup.addClass('is-selected');        
+        formEnterDetailsOTP.removeClass('is-selected');
+        formEnterLoginDetailsToSignUp.removeClass('is-selected');
         $('.cd-switcher').find('.selected').html("Forgot Password");
     }
 
@@ -710,6 +847,7 @@ jQuery(document).ready(function($){
         formSignup.removeClass('is-selected');
         formForgotPassword.removeClass('is-selected');
         formForgotPasswordDetails.removeClass('is-selected');
+        formForgotPasswordDetailsSignup.removeClass('is-selected');
         formEnterDetailsOTP.removeClass('is-selected');
         formEnterLoginDetailsToSignUp.addClass('is-selected');
     }
