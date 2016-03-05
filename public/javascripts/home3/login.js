@@ -278,6 +278,7 @@ jQuery(document).ready(function($){
             },
             error: function(response) {
                 console.log('Error with register ' + response.statusText);
+                console.log("error page");
             }
         });
     }
@@ -394,7 +395,9 @@ jQuery(document).ready(function($){
                 else if( response.status == 401 ){
                     loginFailedNoMatch();// password and mobile do not match
                 }
-
+                else if( response.status == 400 ){
+                    console.log("error page");
+                }
             }
         });
     }
@@ -426,6 +429,7 @@ jQuery(document).ready(function($){
 
         var loginEmail = $('#login-email').val();
         var loginOTP = $('#login-otp').val();
+        var loginPassword = $('#login-password').val();
 
         var isValidEmail = isEmail(loginEmail); // Checks for ascii already
 
@@ -434,10 +438,10 @@ jQuery(document).ready(function($){
         }
 
         if(isValidEmail ){
-            isOTPCorrectLogin(loginOTP,loginEmail,1);
+            isOTPCorrectLogin(loginOTP,loginEmail,loginPassword,1);
         }
         else{
-            isOTPCorrectLogin(loginOTP,loginEmail,2);
+            isOTPCorrectLogin(loginOTP,loginEmail,loginPassword,2);
         }
 
     });
@@ -465,7 +469,7 @@ jQuery(document).ready(function($){
 
     //IS OTP CORRECT SIGN IN
     // ==============================================
-    function isOTPCorrectLogin(loginOTP,loginEmail,correctCallback){
+    function isOTPCorrectLogin(loginOTP,loginEmail,loginPassword,correctCallback){
         // console.log("checking otop ",otp);
         var data = {};
         data.otp = loginOTP;
@@ -480,10 +484,17 @@ jQuery(document).ready(function($){
             cache: false,
             processData: false,
             success: function(response){
-                if( correctCallback == 1) otpCorrectForLogin(response,loginEmail,"7838185123");
-                else otpCorrectForLogin1(response,loginEmail,"7838185123");
+                if( correctCallback == 1) otpCorrectForLogin(response,loginEmail,loginPassword);
+                else otpCorrectForLogin1(response,loginEmail,loginPassword);
             },
-            error: otpInorrectForLogin
+            error: function(response){
+                if( response.status == 404){
+                    otpInorrectForLogin(response);
+                }
+                else if( response.status == 400 ){
+                    console.log("error page");
+                }
+            }
         })
           .done(function() {
             return true;

@@ -68,6 +68,7 @@ router.get('/ping', function(req, res){
           else{
             res.status(404).send( body);
           }
+
      });
 
 });
@@ -131,12 +132,15 @@ router.post('/checkOTP',function(req, res){
     var enteredOTP = req.body.otp;
     redisClient.get(rString, function(err, reply) {
       // console.log("have set otpo",reply);
-      if( enteredOTP == reply){
+      if( reply != null && enteredOTP == reply){
         // console.log("otp matched");
         res.status(200).send("done");
       }
-      else{
+      else if( reply != null ){
         res.status(404).send("notdone");
+      }
+      else{
+        res.status(400).send("server side problem");
       }
     }); 
 });
@@ -169,6 +173,10 @@ router.post('/registerUser',function(req, res){
           });
           redisClient.expire(body.ruid, 300*60);//expires in 180 seconds
           res.status(200).send("done");
+        }
+        else{
+          res.status(400).send("server side problem");
+
         }
       });
     }); 
@@ -215,11 +223,14 @@ router.post('/login',function(req, res){
         redisClient.expire(body.ruid, 300*60);//expires in 180 seconds
         res.status(200).send("done");
       }
-      else if(response.statusCode == 401){ // user is found with this mobile but password is wrong
+      else if(response != null && response.statusCode == 401){ // user is found with this mobile but password is wrong
         res.status(401).send("not done");
       }
-      else if(response.statusCode == 404){ // user is not found with this mobile
+      else if(response != null &&response.statusCode == 404){ // user is not found with this mobile
         res.status(404).send("not done");
+      }
+      else{
+        res.status(400).send("server side problem");
       }
     });
 });
