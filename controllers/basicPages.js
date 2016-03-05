@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
+var router = modules.express.Router();
 var loginMiddleWare = require("../middleware/login.js");
 
 var redisClient;

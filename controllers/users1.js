@@ -12,19 +12,19 @@ var mappings = appConfig();
 // PING
 // ============================================== 
 router.get('/ping', function(req, res){
-  var bodyRet;
-  modules.request(
-        {url:mappings['userService.ping']}, 
-        function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-                  bodyRet = body;
+  // var bodyRet;
+  // modules.request(
+  //       {url:mappings['userService.ping']}, 
+  //       function (error, response, body) {
+  //         if (!error && response.statusCode == 200) {
+  //                 bodyRet = body;
 
-            console.log("pring returned body1",body);
-          }
-          else{
+  //           console.log("pring returned body1",body);
+  //         }
+  //         else{
 
-          }
-     });
+  //         }
+  //    });
 
    // var data = {};
    //  data.mobile = '7838185123';
@@ -49,27 +49,66 @@ router.get('/ping', function(req, res){
    //        }
    //   });
 
-   var data = {};
-    data.mobile = '783818123';
-    data.password = '783818123';
+   // var data = {};
+   //  data.mobile = '7838185123';
+   //  data.password = '7838185123';
+   //  data.email = '';
 
 
-   modules.request({
-        url:mappings['userService.login'], 
-        method: 'POST',
-        json: data
-      },
-        function (error, response, body) {
-          if (!error && response.statusCode == 200) {
+   // modules.request({
+   //      url:mappings['userService.resetPassword'], 
+   //      method: 'POST',
+   //      json: data
+   //    },
+   //      function (error, response, body) {
+   //        if (!error && response.statusCode == 200) {
 
-            console.log("pring returned body");
-            res.status(200).send(body);
-          }
-          else{
-            res.status(404).send( body);
-          }
+   //          console.log("pring returned body");
+   //          res.status(200).send(body);
+   //        }
+   //        else{
+   //          res.status(404).send( body);
+   //        }
 
-     });
+   //   });
+
+
+
+   // var baseURL = "www.google.com";
+   // var parameters = {};
+   // parameters.mobile = '7838185123';
+   // parameters.shit = 'xxx';
+   // var result = createURLwithParameters(baseURL,JSON.stringify(parameters));
+   // res.status(200).send(result);
+
+
+   // var data = {};
+   //  data.mobile = '7838185123';
+   //  console.log(mappings['userService.findByMobile'].concat('?mobile=',data.mobile));
+
+  var createURLwithParameters = modules.urlgenerator.createURLwithParameters;
+  var baseURL = "www.google.com";
+  var parameters = {};
+  parameters.mobile = '7838185123';
+  parameters.shit = 'xxx';
+  var finalURL = createURLwithParameters(baseURL,parameters);
+  console.log("final URL is " , finalURL);
+  res.status(200).send(finalURL);
+
+   // modules.request({
+   //      url:mappings['userService.findByMobile'].concat('?mobile=',data.mobile)
+   //    },
+   //      function (error, response, body) {
+   //        if (!error && response.statusCode == 200) {
+
+   //          console.log("pring returned body");
+   //          res.status(200).send(body);
+   //        }
+   //        else{
+   //          res.status(404).send( body);
+   //        }
+
+     // });
 
 });
 
@@ -156,10 +195,53 @@ router.post('/registerUser',function(req, res){
     redisClient.get(rString+"phone", function(err, reply) {
       var data = {};
       data.mobile = reply;
+      if( !isBlank(signupEmail)){
+        data.email = signupEmail;
+      }
+      else console.log("email is empty ");
       data.password = signupPassword;
-      data.email = signupEmail;
       modules.request({
         url:mappings['userService.create'], 
+        method: 'POST',
+        json: data
+      },
+      function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          // console.log(body.customerId);
+          res.cookie('customerId',body.customerId); // set cookie for customer id
+          res.cookie('ruid',body.ruid); // set cookie for customer id
+          redisClient.set(body.ruid, body.customerId, function(err, reply) {
+            // console.log("have set",reply);
+          });
+          redisClient.expire(body.ruid, 300*60);//expires in 180 seconds
+          res.status(200).send("done");
+        }
+        else{
+          res.status(400).send("server side problem");
+
+        }
+      });
+    }); 
+});
+
+
+// RESET/UPDATE PASSWORD
+// ==============================================
+router.post('/resetPassword',function(req, res){
+    // console.log('resetting password user: ' + JSON.stringify(req.body));
+    var resetEmail = req.body.resetEmail;
+    var resetPassword = req.body.resetPassword;
+    var rString = req.cookies.phone;
+    redisClient.get(rString+"phone", function(err, reply) {
+      var data = {};
+      data.mobile = reply;
+      if( !isBlank(resetEmail)){
+        data.email = resetEmail;
+      }
+      else console.log("email is empty ");
+      data.password = resetPassword;
+      modules.request({
+        url:mappings['userService.resetPassword'], 
         method: 'POST',
         json: data
       },
@@ -224,10 +306,10 @@ router.post('/login',function(req, res){
         res.status(200).send("done");
       }
       else if(response != null && response.statusCode == 401){ // user is found with this mobile but password is wrong
-        res.status(401).send("not done");
+        res.status(401).send("notdone");
       }
       else if(response != null &&response.statusCode == 404){ // user is not found with this mobile
-        res.status(404).send("not done");
+        res.status(404).send("notdone");
       }
       else{
         res.status(400).send("server side problem");
@@ -413,6 +495,29 @@ function randomString(length) {
     var result = '';
     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
+}
+
+function createURLwithParameters(baseURL,parameters){
+  if(!isEmpty(JSON.parse(parameters))){
+     var obj = JSON.parse(parameters);
+     var cnt = 0;
+    for (var prop in obj) {
+        if( cnt == 0 ) 
+          baseURL = baseURL.concat('?',prop,'=',obj[prop]);
+        else
+          baseURL = baseURL.concat('&',prop,'=',obj[prop]); 
+        cnt++;         
+    }
+  }
+  return baseURL;
+}
+
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
+
+function isEmpty(obj){
+  return (Object.keys(obj).length === 0 && JSON.stringify(obj) === JSON.stringify({}));
 }
 
 module.exports.router = router;

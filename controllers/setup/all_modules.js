@@ -5,6 +5,7 @@ var uuid = require('node-uuid'); // needed to generate uuids along with the toke
 var Promise = require("bluebird"); // needed to simulate promises
 var winston = require('winston'); // used for logging
 var request = require('request'); // used to make http requests
+var urlgenerator = require('urlgenerator'); // used to generate url from base url and parameters
 
 
 //var $ = require('jquery');
@@ -17,3 +18,4 @@ module.exports.uuid = uuid;
 module.exports.Promise = Promise;
 module.exports.winston = winston;
 module.exports.request = request;
+module.exports.urlgenerator = urlgenerator;
