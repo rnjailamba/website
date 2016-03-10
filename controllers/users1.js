@@ -86,14 +86,14 @@ router.get('/ping', function(req, res){
    //  data.mobile = '7838185123';
    //  console.log(mappings['userService.findByMobile'].concat('?mobile=',data.mobile));
 
-  var createURLwithParameters = modules.urlgenerator.createURLwithParameters;
-  var baseURL = "www.google.com";
-  var parameters = {};
-  parameters.mobile = '7838185123';
-  parameters.shit = 'xxx';
-  var finalURL = createURLwithParameters(baseURL,parameters);
-  console.log("final URL is " , finalURL);
-  res.status(200).send(finalURL);
+  // var createURLwithParameters = modules.urlgenerator.createURLwithParameters;
+  // var baseURL = "www.google.com";
+  // var parameters = {};
+  // parameters.mobile = '7838185123';
+  // parameters.shit = 'xxx';
+  // var finalURL = createURLwithParameters(baseURL,parameters);
+  // console.log("final URL is " , finalURL);
+  // res.status(200).send(finalURL);
 
    // modules.request({
    //      url:mappings['userService.findByMobile'].concat('?mobile=',data.mobile)
@@ -109,6 +109,12 @@ router.get('/ping', function(req, res){
    //        }
 
      // });
+
+
+    var osType = modules.os.type(); // 'Windows_NT' 
+    var osPlatform = modules.os.platform(); // 'win32'
+    var osArch = modules.os.arch(); // 'x64'
+    res.status(200).send(osType.concat(osPlatform,osArch));
 
 });
 
