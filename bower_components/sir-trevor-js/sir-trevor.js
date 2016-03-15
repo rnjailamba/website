@@ -3488,6 +3488,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	*   Generic Upload implementation that can be extended for blocks
 	*/
 
+
 	var _ = __webpack_require__(2);
 	var $ = __webpack_require__(56);
 	var config = __webpack_require__(58);
@@ -3496,15 +3497,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EventBus = __webpack_require__(62);
 
 	module.exports = function(block, file, success, error) {
-	console.log("in the uploader");
 
 	  EventBus.trigger('onUploadStart');
 
 	  var uid  = [block.blockID, (new Date()).getTime(), 'raw'].join('-');
 	  var data = new FormData();
-
-	  console.log(file);
-
 	  data.append('attachment[name]', file.name);
 	  data.append('attachment[file]', file);
 	  data.append('attachment[uid]', uid);
@@ -3512,12 +3509,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  block.resetMessages();
 
 	  var callbackSuccess = function(data) {
-	    console.log('Upload callback called',data);
+	  	var z = {url: data};
+		var x = {};
+		x.file = z
+		data = x;
 	    EventBus.trigger('onUploadStop', data);
-
-	    if (!_.isUndefined(success) && _.isFunction(success)) {
+	    if (true) {
+	      arguments[0] = data;
 	      success.apply(block, arguments, data);
 	    }
+
 	  };
 
 	  var callbackError = function(jqXHR, status, errorThrown) {
@@ -3529,10 +3530,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 
-	  var url = block.uploadUrl || config.defaults.uploadUrl;
-	  console.log(url);
-             var xhr;
-             debugger;
+	  // var url = block.uploadUrl || config.defaults.uploadUrl;
+	  // console.log(url);
+	  var xhr;
+	  var returnedURL;
 	  $.ajax({
 	    url:"/imageUploadAPI/getImageURL",
          type: 'POST',
@@ -3544,7 +3545,7 @@ return /******/ (function(modules) { // webpackBootstrap
          processData: false,
          success: function(response) {
            console.log('S3 url retrieval successs!',response);
-           var returnedURL = response;
+           returnedURL = response;
 
              xhr = $.ajax({
                url: returnedURL,
@@ -3554,8 +3555,7 @@ return /******/ (function(modules) { // webpackBootstrap
                processData: false,
                headers: {'Content-Type': 'image;charset=UTF-8'},
                type: "PUT",
-//               success:callbackSuccess,
-               success: callbackSuccess
+
              });
 
          },
@@ -3564,12 +3564,7 @@ return /******/ (function(modules) { // webpackBootstrap
          }
 	  });
 	  block.addQueuedItem(uid, xhr);
-	  console.log(xhr,uid);
-       xhr.done(callbackSuccess).fail(callbackError).always(block.removeQueuedItem(uid));
-       console.log("dfdf");
-       return "{ file: { url: '/xyz/abc.jpg' } }";
-
-
+      xhr.done(callbackSuccess(returnedURL)).fail(callbackError).always(block.removeQueuedItem(uid));
 	};
 
 
