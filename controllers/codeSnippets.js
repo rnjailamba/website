@@ -3,10 +3,24 @@ var router = modules.express.Router();
 var config = require('../config/config.js');//require all modules that are shared by all controllers
 
 
-// INDEX
+// FILEUPLOAD
 // ==============================================
 router.get('/fileUpload', function(req, res, next) {
   res.render('codeSnippets/fileUpload', { title: 'Cementify Blog' });
+});
+
+
+// FORM
+// ==============================================
+router.get('/form', function(req, res, next) {
+  res.render('codeSnippets/form', { title: 'Express' });
+});
+
+
+// MODALFORM
+// ==============================================
+router.get('/modalForm', function(req, res, next) {
+  res.render('codeSnippets/modalForm', { title: 'Express' });
 });
 
 
