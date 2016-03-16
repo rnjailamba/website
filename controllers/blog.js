@@ -118,6 +118,21 @@ router.post('/editPost', function(req, res, next) {
 });
 
 
+// EDITPOST1
+// ==============================================
+router.get('/editPost1', function(req, res, next) {
+    res.render('blog/editPost1');
+});
+
+router.post('/editPost1', function(req, res, next) {
+    console.log("in the post",req.body);
+
+    res.render('blog/blogSummary', { title: 'Cementify Blog' });
+
+
+});
+
+
 // BLOGSUMMARY
 // ==============================================
 router.get('/blogSummary', function(req, res, next) {
