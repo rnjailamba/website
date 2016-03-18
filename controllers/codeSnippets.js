@@ -65,6 +65,13 @@ router.get('/template', function(req, res, next) {
   res.render('codeSnippets/template', { title: 'Express' });
 });
 
+
+// SOCIALSHARING
+// ==============================================
+router.get('/socialSharing', function(req, res, next) {
+  res.render('codeSnippets/socialSharing', { title: 'Express' });
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }
