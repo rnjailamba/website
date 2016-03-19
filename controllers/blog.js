@@ -52,10 +52,52 @@ router.get('/index', function(req, res, next) {
 });
 
 
+// INDEX1
+// ==============================================
+router.get('/index1', function(req, res, next) {
+  res.render('blog/index1', { title: 'Cementify Blog' });
+});
+
+
+// INDEX2
+// ==============================================
+router.get('/index2', function(req, res, next) {
+  res.render('blog/index2', { title: 'Cementify Blog' });
+});
+
+
 // ARTICLE
 // ==============================================
 router.get('/article', function(req, res, next) {
   res.render('blog/article', { title: 'Cementify Blog' });
+});
+
+
+// ARTICLE1
+// ==============================================
+router.get('/article1', function(req, res, next) {
+  res.render('blog/article1', { title: 'Cementify Blog' });
+});
+
+
+// ARTICLE2
+// ==============================================
+router.get('/article2', function(req, res, next) {
+  res.render('blog/article2', { title: 'Cementify Blog' });
+});
+
+
+// ARTICLE11
+// ==============================================
+router.get('/article11', function(req, res, next) {
+  res.render('blog/article11', { title: 'Cementify Blog' });
+});
+
+
+// ARTICLE22
+// ==============================================
+router.get('/article22', function(req, res, next) {
+  res.render('blog/article22', { title: 'Cementify Blog' });
 });
 
 
