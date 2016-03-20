@@ -7,6 +7,7 @@ https://www.quora.com/What-are-the-biggest-websites-built-with-Node-js-on-the-se
  - To get it running  DEBUG=myapp:* npm start
  - After git clone - git remote add origin git@github.com:foo/bar.git
                      git push origin master
+# Awesome chrome-devtools [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/rnjailamba/website)
 
 1-Node.js was installed at
 
