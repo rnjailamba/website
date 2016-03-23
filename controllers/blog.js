@@ -51,27 +51,48 @@ router.get('/', function(req, res, next) {
 // INDEX
 // ==============================================
 router.get('/index', function(req, res, next) {
-    solrClient.add({ id : 13 },function(err,obj){
-       if(err){
-          console.log(err);
-       }else{
-          console.log('Solr response:', obj);
-       }
-    });
-    solrClient.commit(function(err,res){
-       if(err) console.log(err);
-       if(res) console.log(res);
-    });
+    // solrClient.add({ id : 13 },function(err,obj){
+    //    if(err){
+    //       console.log(err);
+    //    }else{
+    //       console.log('Solr response:', obj);
+    //    }
+    // });
+
+    // var docs = [];
+    // for(var i = 0; i <= 10 ; i++){
+    //    var doc = {
+    //        id : 12345 + i,
+    //        title_t : "Title "+ i,
+    //        description_t : "Text"+ i + "Alice"
+    //    }
+    //    docs.push(doc);
+    // }
+
+    // // Add documents
+    // solrClient.add(docs,function(err,obj){
+    //   if(err){
+    //     console.log(err);
+    //   }else{
+    //     console.log(obj);
+    //   }
+    // });
 
 
-//   var query = 'q=id:UTF8TEST&mlt.fl=manu,cat&mlt.mindf=1&mlt.mintf=1';
-// client.get('mlt', query, function(err, obj){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     console.log(obj);
-//   }
-// });
+    // solrClient.commit(function(err,res){
+    //    if(err) console.log(err);
+    //    if(res) console.log(res);
+    // });
+
+
+    var query = 'q=*:*';
+    solrClient.get('select', query, function(err, obj){
+      if(err){
+        console.log(err);
+      }else{
+        console.log(obj.response.docs);
+      }
+    });
   res.render('blog/index', { title: 'Cementify Blog' });
 });
 
