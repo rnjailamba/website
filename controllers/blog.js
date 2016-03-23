@@ -1,10 +1,13 @@
 var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
-var knoxClient;
 var config = require('../config/config.js');//require all modules that are shared by all controllers
-//console.log('got the config for aws',config.amazonS3key,config.amazonS3secret);
 
+var solrClient;
+module.exports.setSolrClient = function(inClient) { solrClient = inClient; };
+
+var knoxClient;
 module.exports.setClient = function(inClient) { knoxClient = inClient; };
+
 
 var promise = new modules.Promise(function(resolve, reject) {
 //  console.log("created the promise2",knoxClient);
@@ -48,6 +51,27 @@ router.get('/', function(req, res, next) {
 // INDEX
 // ==============================================
 router.get('/index', function(req, res, next) {
+    solrClient.add({ id : 13 },function(err,obj){
+       if(err){
+          console.log(err);
+       }else{
+          console.log('Solr response:', obj);
+       }
+    });
+    solrClient.commit(function(err,res){
+       if(err) console.log(err);
+       if(res) console.log(res);
+    });
+
+
+//   var query = 'q=id:UTF8TEST&mlt.fl=manu,cat&mlt.mindf=1&mlt.mintf=1';
+// client.get('mlt', query, function(err, obj){
+//   if(err){
+//     console.log(err);
+//   }else{
+//     console.log(obj);
+//   }
+// });
   res.render('blog/index', { title: 'Cementify Blog' });
 });
 

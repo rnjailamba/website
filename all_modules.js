@@ -14,7 +14,6 @@ var cookieParser = require('cookie-parser');
 
 
 
-
 module.exports.express = express;
 module.exports.path = path;
 module.exports.logger = logger;
@@ -24,8 +23,7 @@ module.exports.session = session;
 module.exports.cookieSession = cookieSession;
 module.exports.fs = fs;
 module.exports.jwt = jwt;
+module.exports.config = config;
 module.exports.unless = unless;
 module.exports.cookieParser = cookieParser;
-module.exports.flash = flash;
-module.exports.config = config;
 
