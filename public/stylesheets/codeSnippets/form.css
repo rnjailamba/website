@@ -4,7 +4,7 @@ Tooltip Stuff
 
 -------------------------------- */
 
-#myfield_description{
+#cd-phone-description,#cd-name-description,#myfield_description{
   display: none;
 }
 

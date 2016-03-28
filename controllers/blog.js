@@ -39,6 +39,34 @@ modules.winston.remove(modules.winston.transports.Console);
 modules.winston.log('debug', 'Hello again distributed log files!');
 
 
+// WRITEPOST
+// ==============================================
+router.get('/writePost', function(req, res, next) {
+    res.render('blog/writePost');
+});
+
+router.post('/writePost', function(req, res, next) {
+    console.log("in the post",req.body);
+
+    res.render('blog/blogSummary', { title: 'Cementify Blog' });
+
+
+});
+
+
+// WRITEPOST1
+// ==============================================
+router.get('/writePost1', function(req, res, next) {
+    res.render('blog/writePost1');
+});
+
+router.post('/writePost1', function(req, res, next) {
+    console.log("in the post",req.body);
+
+    res.render('blog/blogSummary', { title: 'Cementify Blog' });
+
+
+});
 
 
 // INDEX
@@ -51,48 +79,6 @@ router.get('/', function(req, res, next) {
 // INDEX
 // ==============================================
 router.get('/index', function(req, res, next) {
-    // solrClient.add({ id : 13 },function(err,obj){
-    //    if(err){
-    //       console.log(err);
-    //    }else{
-    //       console.log('Solr response:', obj);
-    //    }
-    // });
-
-    // var docs = [];
-    // for(var i = 0; i <= 10 ; i++){
-    //    var doc = {
-    //        id : 12345 + i,
-    //        title_t : "Title "+ i,
-    //        description_t : "Text"+ i + "Alice"
-    //    }
-    //    docs.push(doc);
-    // }
-
-    // // Add documents
-    // solrClient.add(docs,function(err,obj){
-    //   if(err){
-    //     console.log(err);
-    //   }else{
-    //     console.log(obj);
-    //   }
-    // });
-
-
-    // solrClient.commit(function(err,res){
-    //    if(err) console.log(err);
-    //    if(res) console.log(res);
-    // });
-
-
-    var query = 'q=*:*';
-    solrClient.get('select', query, function(err, obj){
-      if(err){
-        console.log(err);
-      }else{
-        console.log(obj.response.docs);
-      }
-    });
   res.render('blog/index', { title: 'Cementify Blog' });
 });
 
@@ -160,36 +146,6 @@ router.get('/galleryPost', function(req, res, next) {
 });
 
 
-// WRITEPOST
-// ==============================================
-router.get('/writePost', function(req, res, next) {
-    res.render('blog/writePost');
-});
-
-router.post('/writePost', function(req, res, next) {
-    console.log("in the post",req.body);
-
-    res.render('blog/blogSummary', { title: 'Cementify Blog' });
-
-
-});
-
-
-// WRITEPOST1
-// ==============================================
-router.get('/writePost1', function(req, res, next) {
-    res.render('blog/writePost1');
-});
-
-router.post('/writePost1', function(req, res, next) {
-    console.log("in the post",req.body);
-
-    res.render('blog/blogSummary', { title: 'Cementify Blog' });
-
-
-});
-
-
 // EDITPOST
 // ==============================================
 router.get('/editPost', function(req, res, next) {
@@ -224,6 +180,56 @@ router.post('/editPost1', function(req, res, next) {
 // ==============================================
 router.get('/blogSummary', function(req, res, next) {
   res.render('blog/blogSummary', { title: 'Cementify Blog' });
+});
+
+
+// PING
+// ==============================================
+router.get('/ping', function(req, res, next) {
+    solrClient.add({ id : 13 },function(err,obj){
+       if(err){
+          console.log(err);
+       }else{
+          console.log('Solr response:', obj);
+       }
+    });
+
+    var docs = [];
+    for(var i = 0; i <= 10 ; i++){
+       var doc = {
+           id : 12345 + i,
+           title_t : "Title "+ i,
+           description_t : "Text"+ i + "Alice"
+       }
+       docs.push(doc);
+    }
+
+    // Add documents
+    solrClient.add(docs,function(err,obj){
+      if(err){
+        console.log(err);
+      }else{
+        console.log(obj);
+      }
+    });
+
+
+    solrClient.commit(function(err,res){
+       if(err) console.log(err);
+       if(res) console.log(res);
+    });
+
+
+    var query = 'q=*:*';
+    solrClient.get('select', query, function(err, obj){
+      if(err){
+        console.log(err);
+      }else{
+        console.log(obj.response.docs);
+      }
+    });
+    res.send(200, 'All good');
+
 });
 
 

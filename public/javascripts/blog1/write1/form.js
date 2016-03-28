@@ -17,23 +17,32 @@ jQuery(document).ready(function($){
 		( inputField.val() == '' ) ? inputField.prev('.cd-label').removeClass('float') : inputField.prev('.cd-label').addClass('float');
 	}
 
+	function checkInputField(element,e){
+		var myfield = $(element).val();
+		alert($(element));
+
+		if(myfield.length == 0){
+			e.preventDefault();
+			console.log($(element));
+			$(element).tooltipster({
+				autoClose:false,
+				trigger:'custom',
+				position: 'right',
+			    functionInit: function(){
+			        return $(element).siblings('#myfield_description').html();
+			    }
+
+			});
+			$(element).tooltipster('show');
+		}
+
+	}
+
 
 	$(document).ready(function(){
 		$('.cd-form input[type="submit"]').click(function(e){
-			alert("helllo");
-			var myfield = $('.myfield').val();
-			if(myfield.length == 0){
-				e.preventDefault();
-				$('.myfield').tooltipster({
-					autoClose:false,
-					trigger:'custom',
-				    functionInit: function(){
-				        return $('#myfield_description').html();
-				    }
-
-				});
-				$('.myfield').tooltipster('show');
-			}
+			checkInputField('.myfield-name',e);
+			checkInputField('.myfield-phone',e);
 
 		   	// as soon as a key is pressed on the keyboard, hide the tooltip.
 			$(window).keypress(function() {

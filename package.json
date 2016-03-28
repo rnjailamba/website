@@ -1,5 +1,5 @@
 {
-  "name": "testApp",
+  "name": "website",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -32,6 +32,7 @@
     "node-uuid": "^1.4.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "permalinkjs": "0.0.2",
     "redis": "^2.4.2",
     "request": "^2.69.0",
     "solr-client": "^0.6.0",
