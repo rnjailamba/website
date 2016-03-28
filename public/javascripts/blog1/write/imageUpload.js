@@ -1,4 +1,4 @@
-// Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+  // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
 var previewNode = document.querySelector("#template");
 previewNode.id = "";
 var previewTemplate = previewNode.parentNode.innerHTML;
@@ -72,7 +72,7 @@ var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
 
 
 myDropzone.on("addedfile", function(file) {
-  // Hookup the start button
+  // Hookup the start button  
   file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
 });
 
@@ -88,8 +88,6 @@ myDropzone.on("sending", function(file) {
   console.log(file);
   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
 
-
-
 });
 
 // Hide the total progress bar when nothing's uploading anymore
@@ -101,7 +99,7 @@ myDropzone.on("queuecomplete", function(progress) {
   for (i = 0; i < myDropzone.files.length; i++) {
       text += myDropzone.files[i].xhr.responseURL;
   }
-  alert(text);
+  // alert(text);
 });
 
 // Setup the buttons for all transfers

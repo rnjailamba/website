@@ -8,7 +8,9 @@ module.exports = function(){
     switch(process.env.NODE_ENV || 'development'){// other option is export NODE_ENV=development in console
         case 'development':
             userServiceURL = "http://localhost:9000/userService/";
+            blogServiceURL = "http://localhost:9000/blogService/";
             // userServiceURL = "http://192.168.2.137:9000/userService/";
+
             break;
 
         case 'production':
@@ -25,12 +27,14 @@ module.exports = function(){
        'userService.login': userServiceURL+'login',
        'userService.findByMobile': userServiceURL+'findByMobile',
        'userService.resetPassword': userServiceURL+'resetPassword',
-
        'userService.createCustomer': userServiceURL+'createCustomer',
        'userService.updateCustomerData': userServiceURL+'updateCustomerData',
        'userService.logout': userServiceURL+'logout',
        'userService.findCustomerByCustomerId': userServiceURL+'findCustomerByCustomerId',
-       'userService.updatePassword': userServiceURL+'updatePassword'
+       'userService.updatePassword': userServiceURL+'updatePassword',
+       'blogService.createBlog': blogServiceURL+'createBlog',
+       'blogService.readBlogs': blogServiceURL+'readBlogs',
+
 
     };
 };

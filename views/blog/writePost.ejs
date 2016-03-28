@@ -22,7 +22,18 @@
 <body>
 
 <form method="post" action="/blog/writePost">
+    <h1 class="heading">Blog Title</h1>
+    <div class="cd-form floating-labels">
+        <fieldset>
 
+            <div class="icon">
+                <label class="cd-label" for="cd-title">Title</label>
+                <input class="user myfield-title required" type="text" name="cd-title" id="cd-title" type="text" aria-describedby="myfield_description">
+                <span id="myfield_description" role="tooltip">Please insert your title here</span>
+            </div>                          
+
+        </fieldset>
+    </div>
     <div class="textEditor container">
         <section>
             <h1 class="heading">Write your blog entry below</h1>
@@ -41,39 +52,40 @@
                         <!--<h4>Budget</h4>-->
 
                         <p class="cd-select icon">
-                            <select class="budget" >
+                            <select class="category" name="category" >
                                 <option value="" >Select an option</option>
-
-                                <option value="0">Select Budget</option>
-                                <option value="1">&lt; $5000</option>
-                                <option value="2">$5000 - $10000</option>
-                                <option value="3">&gt; $10000</option>
+                                <option value="0">Carpenter</option>
+                                <option value="1">Carpenter</option>
+                                <option value="2">Carpenter</option>
+                                <option value="3">Carpenter</option>
                             </select>
+                            <span id="myfield_description" role="tooltip">Please select an option</span>
+
                         </p>
                     </div>
 
                     <legend>Subcategory</legend>
 
                     <div>
-                        <!--<h4>Budget</h4>-->
+                        <!-- <h4>Budget</h4> -->
 
                         <p class="cd-select icon">
-                            <select class="budget" >
+                            <select class="subcategory" name="subcategory">
                                 <option value="" >Select an option</option>
-
-                                <option value="0">Select Budget</option>
-                                <option value="1">&lt; $5000</option>
-                                <option value="2">$5000 - $10000</option>
-                                <option value="3">&gt; $10000</option>
+                                <option value="0">Door</option>
+                                <option value="1">Window</option>
+                                <option value="2">Cabinet</option>
+                                <option value="3">Floor</option>
                             </select>
+                            <span id="myfield_description" role="tooltip">Please select an option</span>
                         </p>
                     </div>
                     <fieldset>
                         <legend>Your Info</legend>
 
-                        <!--<div class="error-message">-->
-                            <!--<p>Please enter your phone number so we can send OTP</p>-->
-                        <!--</div>-->
+<!--                         <div class="error-message">
+                            <p>Please enter your phone number so we can send OTP</p>
+                        </div> -->
 
                         <div class="icon">
                             <label class="cd-label" for="cd-phone">Phone</label>
@@ -90,18 +102,7 @@
 
                     </fieldset>
 
-                    <fieldset>
-                        <legend>Your Info</legend>
 
-                        <!--<div class="error-message">-->
-                        <!--<p>Please enter your phone number so we can send OTP</p>-->
-                        <!--</div>-->
-
-                        <div class="icon">
-                            <label class="cd-label" for="cd-name">Phone</label>
-                            <input class="user" type="text" name="cd-name" id="cd-name" >
-                        </div>
-                    </fieldset>
                 </fieldset>
             </div>
             <div class = "imageUpload">

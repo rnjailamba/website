@@ -1,6 +1,8 @@
 var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
 var config = require('../config/config.js');//require all modules that are shared by all controllers
+var appConfig = require('../config/appConfig'); // configure service api urls in dev/prod/beta
+var mappings = appConfig();
 
 var solrClient;
 module.exports.setSolrClient = function(inClient) { solrClient = inClient; };
@@ -62,10 +64,22 @@ router.get('/writePost1', function(req, res, next) {
 
 router.post('/writePost1', function(req, res, next) {
     console.log("in the post",req.body);
+    var name = req.body.name;
+    var phone = req.body.phone;
+    var title = req.body.title;
+    var category = req.body.category;
+    var subcategory = req.body.subcategory;
+    var tinymceText = req.body.tinymceText;
+    var data = {};
+    data.mobile = reply;
+    data.email = signupEmail;
+    modules.request({
+      url:mappings['userService.create'], 
+      method: 'POST',
+      json: req.body
+    });     
 
     res.render('blog/blogSummary', { title: 'Cementify Blog' });
-
-
 });
 
 

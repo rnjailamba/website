@@ -369,6 +369,12 @@ Custom icons
 .cd-form .budget {
   background: url("../../images/codeSnippets/img/cd-icon-budget.svg") no-repeat 16px center;
 }
+.cd-form .category {
+  background: url("../../images/codeSnippets/img/cd-icon-budget.svg") no-repeat 16px center;
+}
+.cd-form .subcategory {
+  background: url("../../images/codeSnippets/img/cd-icon-budget.svg") no-repeat 16px center;
+}
 .cd-form .message {
   background: url("../../images/codeSnippets/img/cd-icon-message.svg") no-repeat 16px 16px;
 }
