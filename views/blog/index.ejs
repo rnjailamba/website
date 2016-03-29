@@ -12,12 +12,13 @@
     <link rel="stylesheet" type="text/css" href="/css/blog/frontPage.css"> <!-- css for the front page of blog and the article and category page -->
     <link rel="stylesheet" type="text/css" href="/css/blog/tooltipMenu.css"> <!-- css for the tooltip menu on the index page and the category page -->
     <link rel="stylesheet" type="text/css" href="/css/blog/writeapost.css"> <!-- css for the write a post sticky element -->
-    <script src="/js/home3/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
+    <script src="/js/common/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
 
-    <script src="/js/home3/modernizr.custom.js"></script>  <!-- Modernizr /-->
+    <script src="/js/common/modernizr.custom.js"></script>  <!-- Modernizr /-->
 </head>
 <body>
 
+<% include ../partials/loginModal.ejs %>
 
 <!-- Categories Slider -->
 <section id="browse-categories" class="hidden">
@@ -170,9 +171,13 @@
         <div class="cta">Browse Categories</div>
     </a>
 
-    <nav class="nav">
-        <ul>
+    <nav class="nav">   
+        <ul class="main-nav">
+            <li class="cd-signin"><a href="#" >Login</a> </li>
+            <li class="cd-signup"><a href="#"  >Signup</a> </li>
+            <!-- <li class="cd-signout"><a href="#" >SignOut</a> </li> -->
             <li><a href="#" id="trigger-info-modal"><span class="icon-info"></span></a> </li>
+            <!-- <li><a href="#" id="trigger-info-modal"><span class="icon-info"></span></a></li> -->
 
         </ul>
     </nav>
@@ -428,7 +433,7 @@
 
 </footer>
 
-<script src="/js/home3/jquery-1.10.2.js"></script> <!-- js for jquery -->
+<script src="/js/common/jquery-1.10.2.js"></script> <!-- js for jquery -->
 <script src="/js/blog1/sticky.js"></script>
 <script src="/js/blog1/classie.js"></script> <!-- js for classie -->
 <script src="/js/blog1/main.js"></script> <!-- js for the main theme of the blog -->
@@ -439,7 +444,7 @@
 <script>
     var menu = new cbpTooltipMenu( document.getElementById( 'cbp-tm-menu' ) );
 </script>
-
+<script src="/js/home3/login.js"></script> <!-- js for the login -->
 
 </body>
 </html>

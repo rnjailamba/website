@@ -75,7 +75,7 @@
 .cbp-tm-menu {
 	display: block;
 	position: absolute;
-	z-index: 1000;
+	z-index: 1;
 	top: 240px;
 	width: 100%;
 	background: #47a3da;
