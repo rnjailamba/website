@@ -32,8 +32,10 @@ module.exports = function(){
        'userService.logout': userServiceURL+'logout',
        'userService.findCustomerByCustomerId': userServiceURL+'findCustomerByCustomerId',
        'userService.updatePassword': userServiceURL+'updatePassword',
+
        'blogService.createBlog': blogServiceURL+'createBlog',
        'blogService.readBlogs': blogServiceURL+'readBlogs',
+       'blogService.ping': blogServiceURL+'ping',
 
 
     };

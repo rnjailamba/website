@@ -12,7 +12,7 @@ var mappings = appConfig();
 // PING
 // ============================================== 
 router.get('/ping', function(req, res){
-  // var bodyRet;
+  var bodyRet;
   // modules.request(
   //       {url:mappings['userService.ping']}, 
   //       function (error, response, body) {
@@ -20,34 +20,38 @@ router.get('/ping', function(req, res){
   //                 bodyRet = body;
 
   //           console.log("pring returned body1",body);
+  //           res.send(body);
   //         }
   //         else{
 
   //         }
   //    });
 
-   // var data = {};
-   //  data.mobile = '7838185123';
-   //  data.password = '7838185123';
-   //  data.email = 'rnjai@gmail.com';
+   var data = {};
+    data.mobile = '7838185123';
+    data.password = '7838185123';
+    data.email = 'rnjai@gmail.com';
 
 
-   // modules.request({
-   //      url:mappings['userService.create'], 
-   //      method: 'POST',
-   //      json: data
-   //    },
-   //      function (error, response, body) {
-   //        if (!error && response.statusCode == 200) {
-   //                bodyRet = body; 
+   console.log(mappings['userService.create']);
+   console.log(data);
 
-   //          console.log("pring returned bodyyy");
-   //          res.status(200).send(body);
-   //        }
-   //        else{
-   //          console.log("not signed up successfully");
-   //        }
-   //   });
+   modules.request({
+        url:mappings['userService.create'], 
+        method: 'POST',
+        json: data
+      },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+                  bodyRet = body; 
+
+            console.log("pring returned bodyyy");
+            res.status(200).send(body);
+          }
+          else{
+            console.log("not signed up successfully");
+          }
+     });
 
    // var data = {};
    //  data.mobile = '7838185123';
@@ -111,10 +115,10 @@ router.get('/ping', function(req, res){
      // });
 
 
-    var osType = modules.os.type(); // 'Windows_NT' 
-    var osPlatform = modules.os.platform(); // 'win32'
-    var osArch = modules.os.arch(); // 'x64'
-    res.status(200).send(osType.concat(osPlatform,osArch));
+    // var osType = modules.os.type(); // 'Windows_NT' 
+    // var osPlatform = modules.os.platform(); // 'win32'
+    // var osArch = modules.os.arch(); // 'x64'
+    // res.status(200).send(osType.concat(osPlatform,osArch));
 
 });
 
