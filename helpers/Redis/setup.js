@@ -8,3 +8,6 @@ users1.setClient(redisClient);
 
 var basicPages = require('../../controllers/basicPages.js');
 basicPages.setClient(redisClient);
+
+var blog = require('../../controllers/blog.js');
+blog.setRedisClient(redisClient);

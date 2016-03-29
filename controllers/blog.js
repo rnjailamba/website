@@ -3,13 +3,14 @@ var router = modules.express.Router();
 var config = require('../config/config.js');//require all modules that are shared by all controllers
 var appConfig = require('../config/appConfig'); // configure service api urls in dev/prod/beta
 var mappings = appConfig();
+var loginMiddleWare = require("../middleware/login.js");
 
 var solrClient;
 module.exports.setSolrClient = function(inClient) { solrClient = inClient; };
-
 var knoxClient;
 module.exports.setClient = function(inClient) { knoxClient = inClient; };
-
+var redisClient;
+module.exports.setRedisClient = function(inClient) { redisClient = inClient; };
 
 var promise = new modules.Promise(function(resolve, reject) {
 //  console.log("created the promise2",knoxClient);
@@ -137,14 +138,18 @@ router.post('/writePost1', function(req, res, next) {
 // INDEX
 // ==============================================
 router.get('/', function(req, res, next) {
-  res.render('blog/index', { title: 'Cementify Blog' });
+
+  loginMiddleWare.isLoggedIn(req,res,redisClient,'blog/index',null);
+
 });
 
 
 // INDEX
 // ==============================================
 router.get('/index', function(req, res, next) {
-  res.render('blog/index', { title: 'Cementify Blog' });
+
+  loginMiddleWare.isLoggedIn(req,res,redisClient,'blog/index',null);
+  
 });
 
 

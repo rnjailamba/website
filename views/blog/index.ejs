@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="/css/blog/tooltipMenu.css"> <!-- css for the tooltip menu on the index page and the category page -->
     <link rel="stylesheet" type="text/css" href="/css/blog/writeapost.css"> <!-- css for the write a post sticky element -->
     <script src="/js/common/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
-
     <script src="/js/common/modernizr.custom.js"></script>  <!-- Modernizr /-->
 </head>
 <body>
@@ -173,9 +172,13 @@
 
     <nav class="nav">   
         <ul class="main-nav">
-            <li class="cd-signin"><a href="#" >Login</a> </li>
-            <li class="cd-signup"><a href="#"  >Signup</a> </li>
-            <!-- <li class="cd-signout"><a href="#" >SignOut</a> </li> -->
+            <%if (isLoggedIn == true) { %>
+                <li class="cd-signout"><a href="#" >SignOut</a> </li>
+            <% } else { %>
+                <li class="cd-signin"><a href="#" >Login</a> </li>
+                <li class="cd-signup"><a href="#"  >Signup</a> </li>
+            <% } %>
+           
             <li><a href="#" id="trigger-info-modal"><span class="icon-info"></span></a> </li>
             <!-- <li><a href="#" id="trigger-info-modal"><span class="icon-info"></span></a></li> -->
 
