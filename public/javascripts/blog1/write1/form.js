@@ -75,17 +75,8 @@ jQuery(document).ready(function($){
 
     //AJAX CALL FOR SUBMITTING BLOG
     // ==============================================
-    function ajaxCallForSubmitBlog(name,phone,title,category,subcategory,tinymceText,imageURLs){
-        console.log("in submit up ",name,phone);
-        var data = {};
-        data.name = name;
-        data.phone = phone;
-        data.title = title;
-        data.category = category;
-        data.subcategory = subcategory;
-        data.tinymceText = tinymceText;
-        data.imageURLs = imageURLs;
-
+    function ajaxCallForSubmitBlog(data){
+        console.log("in submit up ",data);
         $.ajax({
             url:"/blog/writePost1",
             type: 'POST',
@@ -113,7 +104,8 @@ jQuery(document).ready(function($){
 		$('.cd-form input[type="submit"]').click(function(e){
 			e.preventDefault();
 			var checkName = checkInputTextFieldEmpty('.myfield-name',e);
-			var checkPhone = checkInputTextFieldEmpty('.myfield-phone',e);
+			var checkAbout = checkInputTextFieldEmpty('.myfield-about',e);
+			// var checkPhone = checkInputTextFieldEmpty('.myfield-phone',e);
 			var checkTitle = checkInputTextFieldEmpty('.myfield-title',e);
 			var checkCategory = checkInputSelectFieldEmpty('.category',e);
 			var checkSubcategory = checkInputSelectFieldEmpty('.subcategory',e);
@@ -131,13 +123,24 @@ jQuery(document).ready(function($){
 			}
 			if( !checkName && !checkPhone && !checkTitle && !checkCategory && !checkSubcategory ){
 				var name = $('.myfield-name').val();
-				var phone = $('.myfield-phone').val();
+				var phone = $('.myfield-about').val();
+				// var phone = $('.myfield-phone').val();
 				var title = $('.myfield-title').val();
 				var category = $('.category').val();
 				var subcategory = $('.subcategory').val();			
 				var tinymceText = tinyMCE.get('mytextarea').getContent();
+
+				var data = {};
+				data.name = name;
+				data.about = about;
+				// data.phone = phone;
+				data.title = title;
+				data.category = category;
+				data.subcategory = subcategory;
+				data.tinymceText = tinymceText;
+				data.imageURLs = imageURLs;
 				// console.log(name,phone,title,category,subcategory,tinymceText,imageURLs);
-				ajaxCallForSubmitBlog(name,phone,title,category,subcategory,tinymceText,imageURLs);
+				ajaxCallForSubmitBlog(data);
 	
 			}
 
