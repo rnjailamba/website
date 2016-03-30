@@ -72,6 +72,13 @@ router.get('/socialSharing', function(req, res, next) {
   res.render('codeSnippets/socialSharing', { title: 'Express' });
 });
 
+
+// SWEET ALERT
+// ==============================================
+router.get('/sweetAlert', function(req, res, next) {
+  res.render('codeSnippets/sweetAlert', { title: 'Express' });
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }
