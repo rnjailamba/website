@@ -95,7 +95,9 @@ router.get('/ping', function(req, res){
 // WRITEPOST
 // ==============================================
 router.get('/writePost', function(req, res, next) {
-    res.render('blog/writePost');
+
+  loginMiddleWare.isLoggedIn(req,res,redisClient,'blog/writePost',null);
+
 });
 
 router.post('/writePost', function(req, res, next) {

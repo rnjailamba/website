@@ -101,7 +101,7 @@ jQuery(document).ready(function($){
     //ON SUBMIT
     // ==============================================
 	$(document).ready(function(){
-		$('.cd-form input[type="submit"]').click(function(e){
+		$('.cd-normal-form input[type="submit"]').click(function(e){
 			e.preventDefault();
 			var checkName = checkInputTextFieldEmpty('.myfield-name',e);
 			var checkAbout = checkInputTextFieldEmpty('.myfield-about',e);

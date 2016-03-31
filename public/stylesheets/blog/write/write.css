@@ -33,3 +33,29 @@ Image upload area
     margin-bottom: 20px;
     font-size: 2rem;
 }
+
+/* --------------------------------
+
+Signin Signup Signout nav
+
+-------------------------------- */
+
+
+ul.main-nav {
+    padding: 0;
+}
+
+ul.main-nav li {
+    display: inline;
+}
+
+ul.main-nav li a {
+    padding: 10px 20px;
+    text-decoration: none;
+    color:black;
+
+}
+
+ul.main-nav li a:hover {
+    background-color: orange;
+}

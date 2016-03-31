@@ -25,14 +25,17 @@
 <% include ../partials/loginModal.ejs %>
     <nav class="nav">   
         <ul class="main-nav">
-            <li class="cd-signout"><a href="#" >SignOut</a> </li>
-            <li class="cd-signin"><a href="#" >Login</a> </li>
-            <li class="cd-signup"><a href="#"  >Signup</a> </li>
+            <%if (isLoggedIn == true) { %>
+                <li class="cd-signout"><a href="#" >SignOut</a> </li>
+            <% } else { %>
+                <li class="cd-signin"><a href="#" >Login</a> </li>
+                <li class="cd-signup"><a href="#"  >Signup</a> </li>
+            <% } %>            
         </ul>
     </nav>
 <form method="post" action="/blog/writePost">
     <h1 class="heading">Blog Title</h1>
-    <div class="cd-form floating-labels">
+    <div class="cd-normal-form floating-labels">
         <fieldset>
 
             <div class="icon">
@@ -51,7 +54,7 @@
         </section>
         <section>
             <h1 class="heading">Enter Blog Details</h1>
-            <div class="cd-form floating-labels">
+            <div class="cd-normal-form floating-labels">
 
 
                 <fieldset>
@@ -131,7 +134,7 @@
                 </fieldset>
             </div>
 
-            <div class="cd-form floating-labels" >
+            <div class="cd-normal-form floating-labels" >
                 <div>
                     <input type="submit" value="Publish Your Blog"></input>                    
                 </div>
@@ -185,7 +188,7 @@
 <script src="/js/common/tooltipster.js"></script> <!-- js for tooltipster -->
 <script src="/js/blog1/write1/form.js"></script> <!-- js for the form - handles form validation and tooltip and floating stuff -->
 <script src="/js/codeSnippets/sweetAlert.js"></script><!-- js for sweet alert -->
-<script src="/js/home3/login.js"></script> <!-- js for the login -->
+<script src="/js/home3/loginAsync.js"></script> <!-- js for the login -->
 
 </html>
 
