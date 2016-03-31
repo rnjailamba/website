@@ -27,9 +27,13 @@
         <ul class="main-nav">
             <%if (isLoggedIn == true) { %>
                 <li class="cd-signout"><a href="#" >SignOut</a> </li>
+                <li class="cd-signin" style="display: none;"><a href="#" >Login</a> </li>
+                <li class="cd-signup" style="display: none;"><a href="#" >Signup</a> </li>
             <% } else { %>
                 <li class="cd-signin"><a href="#" >Login</a> </li>
                 <li class="cd-signup"><a href="#"  >Signup</a> </li>
+                <li class="cd-signout" style="display: none;"><a href="#" >SignOut</a> </li>
+
             <% } %>            
         </ul>
     </nav>
@@ -180,6 +184,9 @@
         '/css/blog/write/innerLayout.css'
       ]
     });
+
+    var isLoggedIn = <%- JSON.stringify(isLoggedIn) %>; 
+
 
 </script>
 

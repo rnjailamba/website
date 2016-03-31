@@ -276,7 +276,7 @@ jQuery(document).ready(function($){
             processData: false,
             success: function(response) {
                 console.log('Register succesfully',response);
-                location.reload();
+                loginLogoutAsync();
             },
             error: function(response) {
                 console.log('Error with register ' + response.statusText);
@@ -324,13 +324,32 @@ jQuery(document).ready(function($){
             processData: false,
             success: function(response) {
                 console.log('Logged out succesfully',response);
-                location.reload();
+                loginLogoutAsync();
             },
             error: function(response) {
                 console.log('Error with logging out' + response.statusText);
             }
         });
     }
+
+
+    //LOGIN LOGOUT IN ASYNC
+    // ==============================================
+    function loginLogoutAsync(){
+        if( isLoggedIn == false ){
+            isLoggedIn = true;
+            formModal.removeClass('is-visible');        
+            $('.cd-signout').show();
+            $('.cd-signin').hide();
+            $('.cd-signup').hide();
+        }
+        else{
+            isLoggedIn = false;
+            $('.cd-signout').hide();
+            $('.cd-signin').show();
+            $('.cd-signup').show();   
+        }
+    }    
 
 
     //CLICK THE LOGIN BUTTON
@@ -387,7 +406,7 @@ jQuery(document).ready(function($){
             processData: false,
             success: function(response) {
                 console.log('Login succesfully',response);
-                location.reload();
+                loginLogoutAsync();
             },
             error: function(response) {
                 console.log('Error with logging in' + response.status);
@@ -685,7 +704,7 @@ jQuery(document).ready(function($){
             processData: false,
             success: function(response) {
                 console.log('Reset password succesfully',response);
-                location.reload();
+                loginLogoutAsync();
             },
             error: function(response) {
                 console.log('Error with reset password ' + response.statusText);

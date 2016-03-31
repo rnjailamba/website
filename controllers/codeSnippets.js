@@ -79,6 +79,13 @@ router.get('/sweetAlert', function(req, res, next) {
   res.render('codeSnippets/sweetAlert', { title: 'Express' });
 });
 
+
+// SWITCHER
+// ==============================================
+router.get('/switcher', function(req, res, next) {
+  res.render('codeSnippets/switcher', { title: 'Express' });
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }

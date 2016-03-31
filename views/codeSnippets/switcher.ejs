@@ -1,0 +1,43 @@
+<script src="/js/common/jquery-1.10.2.js"></script> <!-- js for jquery -->
+
+<script type="text/javascript">
+    //LOGIN LOGOUT IN ASYNC
+    // ==============================================
+    $(document).ready(function(){
+
+        function loginLogoutAsync(isLoggedIn){
+            if( isLoggedIn == false ){                
+                $('.cd-signout').show();
+                $('.cd-signin').hide();
+                $('.cd-signup').hide();
+            }
+            else{
+                $('.cd-signout').hide();
+                $('.cd-signin').show();
+                $('.cd-signup').show();                 
+            }
+            return;
+        }    
+
+        $('.cd-signout').click(function(event){ 
+            event.preventDefault(); 
+            loginLogoutAsync(true);
+        });
+
+        $('.cd-signin').click(function(event){ 
+            event.preventDefault(); 
+            loginLogoutAsync(false);
+        });
+    });
+
+</script>
+
+<body>
+
+    <ul class="main-nav">
+        <li class="cd-signout"><a href="#" >SignOut</a> </li>
+        <li class="cd-signin"><a href="#" >Login</a> </li>
+        <li class="cd-signup"><a href="#"  >Signup</a> </li>
+    </ul>
+
+</body>
