@@ -96,7 +96,7 @@ router.get('/ping', function(req, res){
 // ==============================================
 router.get('/writePost', function(req, res, next) {
 
-  loginMiddleWare.isLoggedIn(req,res,redisClient,'blog/writePost',null);
+  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/writePost',null);
 
 });
 
@@ -141,7 +141,7 @@ router.post('/writePost1', function(req, res, next) {
 // ==============================================
 router.get('/', function(req, res, next) {
 
-  loginMiddleWare.isLoggedIn(req,res,redisClient,'blog/index',null);
+  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/index',null);
 
 });
 
@@ -150,7 +150,7 @@ router.get('/', function(req, res, next) {
 // ==============================================
 router.get('/index', function(req, res, next) {
 
-  loginMiddleWare.isLoggedIn(req,res,redisClient,'blog/index',null);
+  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/index',null);
   
 });
 

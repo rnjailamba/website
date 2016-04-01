@@ -11,3 +11,6 @@ basicPages.setClient(redisClient);
 
 var blog = require('../../controllers/blog.js');
 blog.setRedisClient(redisClient);
+
+var loginMiddleware = require('../../middleware/login.js');
+loginMiddleware.setRedisClient(redisClient);

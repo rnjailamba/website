@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
 // ==============================================
 router.get('/home3', function(req, res){
 
-  loginMiddleWare.isLoggedIn(req,res,redisClient,'basicPages/home3',null);
+  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'basicPages/home3',null);
 
 });
 
