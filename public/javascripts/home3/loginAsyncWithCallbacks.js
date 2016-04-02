@@ -277,6 +277,11 @@ jQuery(document).ready(function($){
             success: function(response) {
                 console.log('Register succesfully',response);
                 loginLogoutAsync();
+                console.log(publishAttemptedWithFullDataWritePost);
+                if( publishAttemptedWithFullDataWritePost == true){
+                    console.log('publish was attempted in WritePost');
+                    $('.cd-normal-form input[type="submit"]').click();
+                }                
             },
             error: function(response) {
                 console.log('Error with register ' + response.statusText);
@@ -407,6 +412,11 @@ jQuery(document).ready(function($){
             success: function(response) {
                 console.log('Login succesfully',response);
                 loginLogoutAsync();
+                if( publishAttemptedWithFullDataWritePost == true){
+                    console.log('publish was attempted in WritePost');
+                    $('.cd-normal-form input[type="submit"]').click();
+                }
+
             },
             error: function(response) {
                 console.log('Error with logging in' + response.status);
@@ -421,7 +431,7 @@ jQuery(document).ready(function($){
                 }
             }
         });
-    }
+    }     
 
     function loginFailedNoAccount(phoneNumber,signinPassword){
         loginEnterDetails(phoneNumber,signinPassword);
@@ -705,6 +715,11 @@ jQuery(document).ready(function($){
             success: function(response) {
                 console.log('Reset password succesfully',response);
                 loginLogoutAsync();
+                console.log(publishAttemptedWithFullDataWritePost);
+                if( publishAttemptedWithFullDataWritePost == true){
+                    console.log('publish was attempted in WritePost');
+                    $('.cd-normal-form input[type="submit"]').click();
+                }                
             },
             error: function(response) {
                 console.log('Error with reset password ' + response.statusText);

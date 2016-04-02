@@ -32,7 +32,8 @@
                 <li class="cd-signin"><a href="#" >Login</a> </li>
                 <li class="cd-signup"><a href="#"  >Signup</a> </li>
                 <li class="cd-signout" style="display: none;"><a href="#" >SignOut</a> </li>
-            <% } %>            
+            <% } %>         
+                <li ><a href="/blog/index" ><b>View More Blogs</b></a> </li>
         </ul>
     </nav>
 <form method="post" action="/blog/writePost">
@@ -184,7 +185,8 @@
     });
 
     var isLoggedIn = <%- JSON.stringify(isLoggedIn) %>; 
-
+    var publishAttemptedWithFullDataWritePost = false;
+    var likeAttempted = false;
 
 </script>
 
@@ -193,8 +195,7 @@
 <script src="/js/common/tooltipster.js"></script> <!-- js for tooltipster -->
 <script src="/js/blog1/write1/form.js"></script> <!-- js for the form - handles form validation and tooltip and floating stuff -->
 <script src="/js/codeSnippets/sweetAlert.js"></script><!-- js for sweet alert -->
-<script src="/js/home3/loginAsync.js"></script> <!-- js for the login -->
-<script src="/js/blog1/write/alert.js"></script> <!-- js for the login -->
+<script src="/js/home3/loginAsyncWithCallbacks.js"></script> <!-- js for the login -->
 
 </html>
 

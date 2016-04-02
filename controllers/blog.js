@@ -118,22 +118,36 @@ router.get('/writePost1', function(req, res, next) {
 
 router.post('/writePost1', function(req, res, next) {
     console.log("in the post",req.body);
-    var name = req.body.name;
-    var phone = req.body.phone;
-    var title = req.body.title;
-    var category = req.body.category;
-    var subcategory = req.body.subcategory;
-    var tinymceText = req.body.tinymceText;
     var data = {};
-    data.mobile = reply;
-    data.email = signupEmail;
-    modules.request({
-      url:mappings['userService.create'], 
-      method: 'POST',
-      json: req.body
-    });     
+    data.postedBy = 12;
+    data.categoryId = 11;
+    data.isVerified = false;
+    data.noOfCommentsCollections = 0;
+    data.paragraphs =  [
+                            {
+                                "text": "hello mister",
+                                "paragraphType": "Text"
+                            }
+                        ];
 
-    res.render('blog/blogSummary', { title: 'Cementify Blog' });
+    modules.request({
+        url:mappings['blogService.createBlog'], 
+        method: 'POST',
+        json: data
+      },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+                  bodyRet = body; 
+
+            console.log("pring returned bodyyy");
+            res.status(200).send(response);
+          }
+          else{
+            res.status(404).send(response);
+            console.log("not signed up successfully");
+          }
+     });
+
 });
 
 
@@ -251,7 +265,14 @@ router.post('/editPost1', function(req, res, next) {
 // BLOGSUMMARY
 // ==============================================
 router.get('/blogSummary', function(req, res, next) {
-  res.render('blog/blogSummary', { title: 'Cementify Blog' });
+  console.log(req.query);
+  if( req.query.status == 200 ){
+    res.render('blog/blogSummary', { title: 'Blog successfully submitted' });
+  }
+  else{
+    res.render('blog/blogSummary', { title: 'Blog not successfully submitted' });
+  }
+  
 });
 
 

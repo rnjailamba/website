@@ -8,7 +8,7 @@ module.exports = function(){
     switch(process.env.NODE_ENV || 'development'){// other option is export NODE_ENV=development in console
         case 'development':
             userServiceURL = "http://localhost:9000/userService/";
-            blogServiceURL = "http://localhost:9000/blogService/";
+            blogServiceURL = "http://localhost:8080/blogService/";
             // userServiceURL = "http://192.168.2.137:9000/userService/";
 
             break;
