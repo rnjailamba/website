@@ -269,16 +269,18 @@ jQuery(document).ready(function($){
 				var title = $('.myfield-title').val();
 				var category = $('.category').val();
 				var subcategory = $('.subcategory').val();			
-				var tinymceText = "f";
 
-				var blogData = {};
+        SirTrevor.onBeforeSubmit();
+        SirTrevor.SKIP_VALIDATION = true;
+        var sirTrevorText = $('.js-st-instance').val();
+        var blogData = {};        
 				blogData.name = name;
 				blogData.about = about;
 				// data.phone = phone;
 				blogData.title = title;
 				blogData.category = category;
 				blogData.subcategory = subcategory;
-				blogData.tinymceText = tinymceText;
+				blogData.sirTrevorText = sirTrevorText;
 				blogData.imageURLs = imageURLs;
 				// console.log(name,phone,title,category,subcategory,tinymceText,imageURLs);
 				publishAttemptedWithFullDataWritePost = true;
@@ -292,8 +294,8 @@ jQuery(document).ready(function($){
                	 	text: "You have not filled up all the required fields above ! :)",
                	 	type:'error',   
                	 	timer: 1500,   
-					allowEscapeKey:true,
-					allowOutsideClick:true,			 	
+        					allowEscapeKey:true,
+        					allowOutsideClick:true,			 	
                	 	showConfirmButton: true	 
                	});
 			}
