@@ -42,25 +42,17 @@ modules.winston.remove(modules.winston.transports.Console);
 modules.winston.log('debug', 'Hello again distributed log files!');
 
 
-// PING
-// ============================================== 
-router.get('/ping', function(req, res){
-  var bodyRet;
-  // modules.request(
-  //       {url:mappings['blogService.ping']}, 
-  //       function (error, response, body) {
-  //         if (!error && response.statusCode == 200) {
-  //                 bodyRet = body;
+// WRITEPOST
+// ==============================================
+router.get('/writePost', function(req, res, next) {
 
-  //           console.log("pring returned body1",body);
-  //           res.send(body);
-  //         }
-  //         else{
+  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/writePost',null);
 
-  //         }
-  //    });
+});
 
-   var data = {};
+router.post('/writePost', function(req, res, next) {
+    console.log("in the post",req.body);
+    var data = {};
     data.postedBy = 12;
     data.categoryId = 11;
     data.isVerified = false;
@@ -72,7 +64,7 @@ router.get('/ping', function(req, res){
                             }
                         ];
 
-   modules.request({
+    modules.request({
         url:mappings['blogService.createBlog'], 
         method: 'POST',
         json: data
@@ -82,29 +74,13 @@ router.get('/ping', function(req, res){
                   bodyRet = body; 
 
             console.log("pring returned bodyyy");
-            res.status(200).send(body);
+            res.status(200).send(response);
           }
           else{
-                        res.status(404).send(response);
-
+            res.status(404).send(response);
             console.log("not signed up successfully");
           }
      });
-});
-
-// WRITEPOST
-// ==============================================
-router.get('/writePost', function(req, res, next) {
-
-  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/writePost',null);
-
-});
-
-router.post('/writePost', function(req, res, next) {
-    console.log("in the post",req.body);
-
-    res.render('blog/blogSummary', { title: 'Cementify Blog' });
-
 
 });
 
@@ -112,7 +88,9 @@ router.post('/writePost', function(req, res, next) {
 // WRITEPOST1
 // ==============================================
 router.get('/writePost1', function(req, res, next) {
-    res.render('blog/writePost1');
+
+  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/writePost1',null);
+
 });
 
 
@@ -332,6 +310,56 @@ router.get('/ping', function(req, res, next) {
 
 });
 
+
+// PING
+// ============================================== 
+router.get('/ping', function(req, res){
+  var bodyRet;
+  // modules.request(
+  //       {url:mappings['blogService.ping']}, 
+  //       function (error, response, body) {
+  //         if (!error && response.statusCode == 200) {
+  //                 bodyRet = body;
+
+  //           console.log("pring returned body1",body);
+  //           res.send(body);
+  //         }
+  //         else{
+
+  //         }
+  //    });
+
+   var data = {};
+    data.postedBy = 12;
+    data.categoryId = 11;
+    data.isVerified = false;
+    data.noOfCommentsCollections = 0;
+    data.paragraphs =  [
+                            {
+                                "text": "hello mister",
+                                "paragraphType": "Text"
+                            }
+                        ];
+
+   modules.request({
+        url:mappings['blogService.createBlog'], 
+        method: 'POST',
+        json: data
+      },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+                  bodyRet = body; 
+
+            console.log("pring returned bodyyy");
+            res.status(200).send(body);
+          }
+          else{
+                        res.status(404).send(response);
+
+            console.log("not signed up successfully");
+          }
+     });
+});
 
 
 var justPrintSomething = function(){

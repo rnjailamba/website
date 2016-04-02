@@ -15,22 +15,64 @@
     <script type="text/javascript" src="/node_modules/underscore/underscore-min.js"></script><!-- Underscore (included in sir-trevor) -->
     <script type="text/javascript" src="/js/common/eventable.js"></script><!-- Eventable (included in sir-trevor) -->
     <link rel="stylesheet" type="text/css" href="/css/blog/write1/captioned-image.css"/><!-- css for captioned image block -->
+    <script src="/js/common/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
     <script type="text/javascript" src="/js/blog1/write1/captioned-image.js"></script><!-- js for captioned image block -->
     <script type="text/javascript" src="/js/blog1/write1/ordered-list.js"></script><!-- js for ordered list block -->
     <script src="/js/blog1/write1/sir-trevor-custom.js"></script> <!-- js for customizing sir trevor -->
     <link rel="stylesheet" type="text/css" href="/css/blog/write1/sir-trevor-custom.css"></link><!-- css for sir trevor customization -->
 </head>
 <body>
+<% include ../partials/loginModal.ejs %>
+    <nav class="nav">   
+        <ul class="main-nav">
+            <%if (isLoggedIn == true) { %>
+                <li class="cd-signout"><a href="#" >SignOut</a> </li>
+                <li class="cd-signin" style="display: none;"><a href="#" >Login</a> </li>
+                <li class="cd-signup" style="display: none;"><a href="#" >Signup</a> </li>
+            <% } else { %>
+                <li class="cd-signin"><a href="#" >Login</a> </li>
+                <li class="cd-signup"><a href="#"  >Signup</a> </li>
+                <li class="cd-signout" style="display: none;"><a href="#" >SignOut</a> </li>
+            <% } %>         
+                <li ><a href="/blog/index" ><b>View More Blogs</b></a> </li>
+        </ul>
+    </nav>
+
     <form method="post" action="/blog/writePost1">
-        <textarea class="js-st-instance"></textarea>
+        <textarea class="js-st-instance">
+            {"data":[
+                    {
+                        "type":"heading",
+                        "data":{"text":"Write your heading here"}},
+                    {
+                        "type":"text",
+                        "data":{"text":"Enter some text here"}},
+
+                    {
+                        "type":"text",
+                        "data":{"text":"Enter more text or try adding images/youtube videos after pressing the '+'  sign "}}                  
+                    
+            ]}</textarea>
+
+
         <input class = "submit" type="submit" value="Submit">
     </form>
 
     <div class = "output"></div>
 
 </body>
+<script>
+
+    var isLoggedIn = <%- JSON.stringify(isLoggedIn) %>; 
+    var publishAttemptedWithFullDataWritePost1 = false;
+    var likeAttempted = false;
+
+</script>
+
 
 <link rel="stylesheet" type="text/css" href="/css/blog/write/write.css"></link> <!-- css for the text editor and form for submission -->
+<script src="/js/codeSnippets/sweetAlert.js"></script><!-- js for sweet alert -->
+<script src="/js/home3/loginAsyncWithCallbacks.js"></script> <!-- js for the login -->
 
 </html>
 

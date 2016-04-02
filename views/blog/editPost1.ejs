@@ -22,7 +22,22 @@
 </head>
 <body>
     <form method="post" action="/blog/writePost1">
-        <textarea class="js-st-instance">{"data":[{"type":"text","data":{"text":"Hello, I&rsquo;m **Sir Trevor**.\nCreate some new blocks and see _what I can do_.\n"}},{"type":"video","data":{"source":"youtube","remote_id":"hcFLFpmc4Pg"}}]}</textarea>
+        <textarea class="js-st-instance">
+            {"data":[
+                    {
+                        "type":"heading",
+                        "data":{"text":"Write your heading here"}},
+                    {
+                        "type":"text",
+                        "data":{"text":"Enter some text here"}},
+
+                    {
+                        "type":"text",
+                        "data":{"text":"Enter more text or try adding images/youtube videos after pressing the '+'  sign "}},                        
+                    {
+                        "type":"video",
+                        "data":{"source":"youtube","remote_id":"hcFLFpmc4Pg"}
+            }]}</textarea>
         <input class = "submit" type="submit" value="Submit">
     </form>
 
