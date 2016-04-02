@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <title>Cementify - Write a blog</title>
     <meta name="description" content="Pedesa is a free magazine HTML theme"></meta>
@@ -11,15 +10,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <script type="text/javascript" src="/js/common/jquery-2.2.0.js"></script> <!-- js for jquery -->
     <script type="text/javascript" src="/bower/sir-trevor-js/sir-trevor.js"></script>  <!-- js for sir trevor /-->
+    <link rel="stylesheet" href="/css/common/reset.css"><!-- css for reset  -->
     <link rel="stylesheet" type="text/css" href="/bower/sir-trevor-js/sir-trevor.css"></link><!-- css for sir trevor -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link><!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/blog/write/form.css"></link> <!-- css for text editor and form for submission , including the tooltip stuff-->
     <script type="text/javascript" src="/node_modules/underscore/underscore-min.js"></script><!-- Underscore (included in sir-trevor) -->
     <script type="text/javascript" src="/js/common/eventable.js"></script><!-- Eventable (included in sir-trevor) -->
-    <link rel="stylesheet" type="text/css" href="/css/blog/write1/captioned-image.css"/><!-- css for captioned image block -->
     <script src="/js/common/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
     <script type="text/javascript" src="/js/blog1/write1/captioned-image.js"></script><!-- js for captioned image block -->
     <script type="text/javascript" src="/js/blog1/write1/ordered-list.js"></script><!-- js for ordered list block -->
     <script src="/js/blog1/write1/sir-trevor-custom.js"></script> <!-- js for customizing sir trevor -->
     <link rel="stylesheet" type="text/css" href="/css/blog/write1/sir-trevor-custom.css"></link><!-- css for sir trevor customization -->
+    <link rel="stylesheet" href="/css/codeSnippets/sweetAlert/sweetAlert.css"><!-- css for sweet alert -->
+    <link rel="stylesheet" type="text/css" href="/css/common/tooltipster.css"></link> <!-- css for tooltipster -->
+
 </head>
 <body>
 <% include ../partials/loginModal.ejs %>
@@ -39,6 +43,24 @@
     </nav>
 
     <form method="post" action="/blog/writePost1">
+
+
+
+
+
+        <h1 class="heading">Blog Title</h1>
+        <div class="cd-normal-form floating-labels">
+            <fieldset>
+
+                <div class="icon">
+                    <label class="cd-label" for="cd-title">Title</label>
+                    <input class="user myfield-title required" type="text" name="cd-title" id="cd-title" type="text" aria-describedby="myfield_description">
+                    <span id="myfield_description" role="tooltip">Please insert your title here</span>
+                </div>                          
+
+            </fieldset>
+        </div>
+
         <textarea class="js-st-instance">
             {"data":[
                     {
@@ -53,6 +75,84 @@
                         "data":{"text":"Enter more text or try adding images/youtube videos after pressing the '+'  sign "}}                  
                     
             ]}</textarea>
+        <section>
+            <h1 class="heading">Enter Blog Details</h1>
+            <div class="cd-normal-form floating-labels">
+
+
+                <fieldset>
+                    <legend>Category</legend>
+
+                    <div>
+                        <!--<h4>Budget</h4>-->
+
+                        <p class="cd-select icon">
+                            <select class="category" name="category" >
+                                <option value="" >Select an option</option>
+                                <option value="0">Carpenter</option>
+                                <option value="1">Carpenter</option>
+                                <option value="2">Carpenter</option>
+                                <option value="3">Carpenter</option>
+                            </select>
+                            <span id="myfield_description" role="tooltip">Please select an option</span>
+
+                        </p>
+                    </div>
+
+                    <legend>Subcategory</legend>
+
+                    <div>
+                        <!-- <h4>Budget</h4> -->
+
+                        <p class="cd-select icon">
+                            <select class="subcategory" name="subcategory">
+                                <option value="" >Select an option</option>
+                                <option value="0">Door</option>
+                                <option value="1">Window</option>
+                                <option value="2">Cabinet</option>
+                                <option value="3">Floor</option>
+                            </select>
+                            <span id="myfield_description" role="tooltip">Please select an option</span>
+                        </p>
+                    </div>
+                    <fieldset>
+                        <legend>Your Info</legend>
+
+<!--                         <div class="error-message">
+                            <p>Please enter your phone number so we can send OTP</p>
+                        </div> -->
+
+<!--                         <div class="icon">
+                            <label class="cd-label" for="cd-phone">Phone</label>
+                            <input class="required myfield-phone user" type="text" name="cd-phone" id="cd-phone" >
+                            <span id="myfield_description" role="tooltip">Please insert your phone here</span>
+
+                        </div> -->
+                        <div class="icon">
+                            <label class="cd-label" for="cd-name">Name</label>
+                            <input class="user myfield-name required" type="text" name="cd-name" id="cd-name" type="text" aria-describedby="myfield_description">
+                            <span id="myfield_description" role="tooltip">Please insert your name here</span>
+                        </div> 
+                        <div class="icon">
+                            <label class="cd-label" for="cd-textarea">About You</label>
+                            <textarea class="message myfield-about  required" name="cd-textarea" id="cd-textarea"></textarea>
+                            <span id="myfield_description" role="tooltip">Please insert your description here</span>
+                        </div>                        
+
+
+
+                    </fieldset>
+
+
+                </fieldset>
+            </div>
+
+            <div class="cd-normal-form floating-labels" >
+                <div>
+                    <input type="submit" value="Publish Your Blog"></input>                    
+                </div>
+            </div>
+        </section>            
 
 
         <input class = "submit" type="submit" value="Submit">
@@ -72,7 +172,9 @@
 
 <link rel="stylesheet" type="text/css" href="/css/blog/write/write.css"></link> <!-- css for the text editor and form for submission -->
 <script src="/js/codeSnippets/sweetAlert.js"></script><!-- js for sweet alert -->
+<script src="/js/blog1/write1/form.js"></script> <!-- js for the form - handles form validation and tooltip and floating stuff -->
 <script src="/js/home3/loginAsyncWithCallbacks.js"></script> <!-- js for the login -->
+<script src="/js/common/tooltipster.js"></script> <!-- js for tooltipster -->
 
 </html>
 

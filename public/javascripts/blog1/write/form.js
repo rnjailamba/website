@@ -261,7 +261,9 @@ jQuery(document).ready(function($){
 
 			var imageURLs = "";
 			var i;
-
+			for (i = 0; i < myDropzone.files.length; i++) {
+			  imageURLs += myDropzone.files[i].xhr.responseURL;
+			}
 			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory ){
 				var name = $('.myfield-name').val();
 				var about = $('.myfield-about').val();
@@ -269,7 +271,7 @@ jQuery(document).ready(function($){
 				var title = $('.myfield-title').val();
 				var category = $('.category').val();
 				var subcategory = $('.subcategory').val();			
-				var tinymceText = "f";
+				var tinymceText = tinyMCE.get('mytextarea').getContent();
 
 				var blogData = {};
 				blogData.name = name;

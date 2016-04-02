@@ -1,2 +1,9 @@
 <h4><%= title %></h4>
-<a href= "/blog/writePost">Want to write another post?</a>
+<button onclick="goBack()">Want to write another post?</button>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+<p>Your blog is not published yet ,you will get a notification with the link of your post when it is published</p>
