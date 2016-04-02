@@ -227,10 +227,10 @@ jQuery(document).ready(function($){
             success: function(response) {
                 console.log('Blog submission succesfull',response);
                 if(response.statusCode == 200 ){
-                	window.location.replace("/blog/blogSummary?status=200");
+                	window.location = "/blog/blogSummary?status=200";
                 }
                 else{
-                	window.location.replace("http://google.com");
+                	window.location = "/blog/blogSummary";
                 }
             },
             error: function(response) {

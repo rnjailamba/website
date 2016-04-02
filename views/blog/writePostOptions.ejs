@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <title>Blog Writing Options</title>
+
+  <link rel="stylesheet" href="/css/codeSnippets/sweetAlert/example.css">
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+  <!-- This is what you need -->
+  <script src="/js/codeSnippets/sweetAlert.js"></script>
+  <link rel="stylesheet" href="/css/codeSnippets/sweetAlert/sweetAlert.css">
+  <!--.......................-->
+
+</head>
+
+<body>
+
+<button class="download">Back to previous page</button>
+
+<!-- What does it do? -->
+<h3 class = "blue">You have two different ways to write your blog -</h3>
+
+
+<p>The one on the <a href="/blog/writePost" target="_blank">left</a> is a simple text editor with which you can submit your write up and associated photos.</p>
+
+<p>The one on the <a href="/blog/writePost1" target="_blank">right</a> is a dynamic content editor with which you can submit your write up and associated photos, youtube videos etc.</p>
+
+
+
+
+
+
+
+<div class="showcase normal">
+	<h4>Normal Editor</h4>
+	<button>Try it!</button>
+	<img src="/img/blog/writePostOptions/writePost.png" width="350" height="150">
+	<img src="/img/blog/writePostOptions/writePost(1).png" width="350" height="150">
+
+
+	</pre>
+
+	<div class="vs-icon"></div>
+</div>
+
+<div class="showcase normal">
+	<h4>Dynamic Editor</h4>
+	<button>Try it!</button>
+	<img src="/img/blog/writePostOptions/sirtrevor.gif">
+
+
+</div>
+
+<p>Both the above editors are highly customizeable, as you will see!</p>
+
+
+
+<footer>
+	<span >Cementify</span> • <script>document.write(new Date().getFullYear())</script>
+</footer>
+
+
+<script>
+
+document.querySelector('button.download').onclick = function(){
+    window.location = "/blog/index";
+};
+
+document.querySelector('.showcase.normal button').onclick = function(){
+	window.location = "/blog/writePost";
+};
+
+document.querySelector('.showcase.sweet button').onclick = function(){
+	window.location = "/blog/writePost1";
+};
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

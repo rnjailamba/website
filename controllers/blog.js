@@ -169,6 +169,27 @@ router.get('/index', function(req, res, next) {
 });
 
 
+// BLOGSUMMARY
+// ==============================================
+router.get('/blogSummary', function(req, res, next) {
+  console.log(req.query);
+  if( req.query.status == 200 ){
+    res.render('blog/blogSummary', { title: 'Blog successfully submitted' });
+  }
+  else{
+    res.render('blog/blogSummary', { title: 'Blog not successfully submitted' });
+  }
+  
+});
+
+
+// WRITEPOST OPTIONS
+// ==============================================
+router.get('/writePostOptions', function(req, res, next) {
+  res.render('blog/writePostOptions', { title: 'Cementify Blog' });
+});
+
+
 // INDEX1
 // ==============================================
 router.get('/index1', function(req, res, next) {
@@ -259,20 +280,6 @@ router.post('/editPost1', function(req, res, next) {
     res.render('blog/blogSummary', { title: 'Cementify Blog' });
 
 
-});
-
-
-// BLOGSUMMARY
-// ==============================================
-router.get('/blogSummary', function(req, res, next) {
-  console.log(req.query);
-  if( req.query.status == 200 ){
-    res.render('blog/blogSummary', { title: 'Blog successfully submitted' });
-  }
-  else{
-    res.render('blog/blogSummary', { title: 'Blog not successfully submitted' });
-  }
-  
 });
 
 

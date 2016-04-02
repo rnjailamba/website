@@ -13,7 +13,6 @@ router.get('/', function(req, res, next) {
   console.log("in index");
   justPrintSomething();
 
-	req.flash('info', 'Flash is back!')
   var drinks = [
         { name: 'Bloody Mary', drunkness: 3 },
         { name: 'Martini', drunkness: 5 },
