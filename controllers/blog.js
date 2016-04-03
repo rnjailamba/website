@@ -69,6 +69,7 @@ router.post('/writePost', function(req, res, next) {
                             }                   
                         ];
 
+    console.log(JSON.stringify(data));
     modules.request({
         url:mappings['blogService.createBlog'], 
         method: 'POST',
@@ -108,6 +109,7 @@ router.post('/writePost1', function(req, res, next) {
     data.isVerified = false;
     data.noOfCommentsCollections = 0;    
     data.paragraphs =  req.body.sirTrevorText;
+    console.log(JSON.stringify(data));
 
     modules.request({
         url:mappings['blogService.createBlog'], 

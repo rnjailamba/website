@@ -306,8 +306,8 @@ jQuery(document).ready(function($){
                           var imageURLs = new Array();
 
                           var singleImageData = {};
-                          singleImageData.imgageUrl = data['file']['url'];
-                          singleImageData.imgageCaption = "hello";
+                          singleImageData.imageUrl = data['file']['url'];
+                          singleImageData.imageCaption = "hello";
                           imageURLs.push ( singleImageData );
 
                           imageData.imageList = imageURLs;

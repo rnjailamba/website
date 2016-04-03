@@ -264,7 +264,7 @@ jQuery(document).ready(function($){
 			var i;
 			for (i = 0; i < myDropzone.files.length; i++) {
 			  imageURLs += myDropzone.files[i].xhr.responseURL;
-        imageURLsArray.push ( {"imgageUrl":myDropzone.files[i].xhr.responseURL} );
+        imageURLsArray.push ( {"imageUrl":myDropzone.files[i].xhr.responseURL,"imageCaption": "hello"} );
 
 			}
 			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory && !checkAbout){
@@ -285,7 +285,7 @@ jQuery(document).ready(function($){
 				blogData.subcategory = subcategory;
 				blogData.tinymceText = tinymceText;
 				blogData.imageURLs = imageURLsArray;
-        // console.log("imageURLsArray",JSON.stringify(imageURLsArray));
+        console.log("imageURLsArray",JSON.stringify(blogData));
 				// console.log(name,title,category,subcategory,tinymceText,imageURLs);
 				publishAttemptedWithFullDataWritePost = true;
 				isLoggedIn(blogData);
