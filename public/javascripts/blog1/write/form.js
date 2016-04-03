@@ -183,24 +183,24 @@ jQuery(document).ready(function($){
             cache: false,
             processData: false,
             success: function(response) {
-                console.log('Am i logged in?',response);
-                if(response == true){
-					ajaxCallForSubmitBlog(blogData);
-                }
-                else{
-					swal({
-						title: 'Please login to post your blog',
-						type:'success',   
-						text: 'Thank you :)',
-						closeOnConfirm: true,
-						confirmButtonColor: "#2ecc71",
-						showLoaderOnConfirm: true,
-						allowEscapeKey:true,
-						allowOutsideClick:true,
-					}, function(){
-						loginSelected();// After this the handling is done in loginAsynWithCallbacks
-					});
-                }
+              console.log('Am i logged in?',response);
+              if(response == true){
+				         ajaxCallForSubmitBlog(blogData);
+              }
+              else{
+      					swal({
+      						title: 'Please login to post your blog',
+      						type:'success',   
+      						text: 'Thank you :)',
+      						closeOnConfirm: true,
+      						confirmButtonColor: "#2ecc71",
+      						showLoaderOnConfirm: true,
+      						allowEscapeKey:true,
+      						allowOutsideClick:true,
+      					}, function(){
+      						loginSelected();// After this the handling is done in loginAsynWithCallbacks
+      					});
+              }
             },
             error: function(response) {
                 console.log('Error with register ' + response.statusText);
@@ -216,7 +216,7 @@ jQuery(document).ready(function($){
     function ajaxCallForSubmitBlog(data){
         console.log("in submit up ",data);
         $.ajax({
-            url:"/blog/writePost1",
+            url:"/blog/writePost",
             type: 'POST',
             async: true,
             data: JSON.stringify(data),
@@ -260,9 +260,12 @@ jQuery(document).ready(function($){
 			});
 
 			var imageURLs = "";
+      var imageURLsArray = new Array(); // or the shortcut: = []
 			var i;
 			for (i = 0; i < myDropzone.files.length; i++) {
 			  imageURLs += myDropzone.files[i].xhr.responseURL;
+        imageURLsArray.push ( {"imgageUrl":myDropzone.files[i].xhr.responseURL} );
+
 			}
 			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory ){
 				var name = $('.myfield-name').val();
@@ -281,8 +284,9 @@ jQuery(document).ready(function($){
 				blogData.category = category;
 				blogData.subcategory = subcategory;
 				blogData.tinymceText = tinymceText;
-				blogData.imageURLs = imageURLs;
-				// console.log(name,phone,title,category,subcategory,tinymceText,imageURLs);
+				blogData.imageURLs = imageURLsArray;
+        // console.log("imageURLsArray",JSON.stringify(imageURLsArray));
+				// console.log(name,title,category,subcategory,tinymceText,imageURLs);
 				publishAttemptedWithFullDataWritePost = true;
 				isLoggedIn(blogData);
 	
@@ -294,8 +298,8 @@ jQuery(document).ready(function($){
                	 	text: "You have not filled up all the required fields above ! :)",
                	 	type:'error',   
                	 	timer: 1500,   
-					allowEscapeKey:true,
-					allowOutsideClick:true,			 	
+        					allowEscapeKey:true,
+        					allowOutsideClick:true,			 	
                	 	showConfirmButton: true	 
                	});
 			}

@@ -8,6 +8,7 @@ module.exports.setRedisClient = function(inClient) { redisClient = inClient; };
 module.exports.functions = {
   sayHelloInEnglish: function() {
     console.log("HELLO");
+    return "hello";
   },
        
   sayHelloInSpanish: function() {
@@ -35,13 +36,20 @@ module.exports.functions = {
     // console.log(ruid,customerId);
   },
 
-  isLoggedIn: function() {
-    isLoggedIn();
-  }  
+  isLoggedIn: function(req,res) {
+    isLoggedIn(req,res);
+  },
+
+  getCustomerId: function(req,res){
+    return req.cookies.customerId; 
+  }
 
 
 };
 
+
+// IS LOGGED IN
+// ==============================================
 var isLoggedIn = function(req,res){
   var customerId = req.cookies.customerId; 
   var ruid = req.cookies.ruid;
@@ -58,10 +66,25 @@ var isLoggedIn = function(req,res){
 }
 
 
+// GET CUSOMTER ID
+// ==============================================
+var getCustomerId = function(req,res){
+  var customerId = req.cookies.customerId; 
+  return "customerId"; 
+}
+
+
 // IS LOGGED IN
 // ==============================================
 router.get('/isLoggedIn', function(req, res, next) {
     isLoggedIn(req,res);
+});
+
+
+// GET CUSOMTER ID
+// ==============================================
+router.get('/getCustomerId', function(req, res, next) {
+    getCustomerId();
 });
 
 

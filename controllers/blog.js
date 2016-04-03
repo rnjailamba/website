@@ -50,18 +50,24 @@ router.get('/writePost', function(req, res, next) {
 
 });
 
+
 router.post('/writePost', function(req, res, next) {
-    console.log("in the post",req.body);
+    console.log("in the postt",req.body);
+    var imageList = imageListArray(req.body.imageURLs);
     var data = {};
-    data.postedBy = 12;
-    data.categoryId = 11;
+    data.postedBy = loginMiddleWare.functions.getCustomerId(req,res);
+    data.categoryId = req.body.category;
     data.isVerified = false;
     data.noOfCommentsCollections = 0;
     data.paragraphs =  [
                             {
-                                "text": "hello mister",
+                                "text": req.body.tinymceText,
                                 "paragraphType": "Text"
-                            }
+                            },
+                            {
+                                "imageList": imageList,
+                                "paragraphType": "Image"
+                            }                   
                         ];
 
     modules.request({
@@ -71,14 +77,15 @@ router.post('/writePost', function(req, res, next) {
       },
         function (error, response, body) {
           if (!error && response.statusCode == 200) {
-                  bodyRet = body; 
-
+            bodyRet = body; 
             console.log("pring returned bodyyy");
             res.status(200).send(response);
+
           }
           else{
-            res.status(404).send(response);
             console.log("not signed up successfully");
+            res.status(404).send(response);
+
           }
      });
 
@@ -115,8 +122,7 @@ router.post('/writePost1', function(req, res, next) {
       },
         function (error, response, body) {
           if (!error && response.statusCode == 200) {
-                  bodyRet = body; 
-
+            bodyRet = body; 
             console.log("pring returned bodyyy");
             res.status(200).send(response);
           }
@@ -263,52 +269,52 @@ router.post('/editPost1', function(req, res, next) {
 
 // PING
 // ==============================================
-router.get('/ping', function(req, res, next) {
-    solrClient.add({ id : 13 },function(err,obj){
-       if(err){
-          console.log(err);
-       }else{
-          console.log('Solr response:', obj);
-       }
-    });
+// router.get('/ping', function(req, res, next) {
+//     solrClient.add({ id : 13 },function(err,obj){
+//        if(err){
+//           console.log(err);
+//        }else{
+//           console.log('Solr response:', obj);
+//        }
+//     });
 
-    var docs = [];
-    for(var i = 0; i <= 10 ; i++){
-       var doc = {
-           id : 12345 + i,
-           title_t : "Title "+ i,
-           description_t : "Text"+ i + "Alice"
-       }
-       docs.push(doc);
-    }
+//     var docs = [];
+//     for(var i = 0; i <= 10 ; i++){
+//        var doc = {
+//            id : 12345 + i,
+//            title_t : "Title "+ i,
+//            description_t : "Text"+ i + "Alice"
+//        }
+//        docs.push(doc);
+//     }
 
-    // Add documents
-    solrClient.add(docs,function(err,obj){
-      if(err){
-        console.log(err);
-      }else{
-        console.log(obj);
-      }
-    });
-
-
-    solrClient.commit(function(err,res){
-       if(err) console.log(err);
-       if(res) console.log(res);
-    });
+//     // Add documents
+//     solrClient.add(docs,function(err,obj){
+//       if(err){
+//         console.log(err);
+//       }else{
+//         console.log(obj);
+//       }
+//     });
 
 
-    var query = 'q=*:*';
-    solrClient.get('select', query, function(err, obj){
-      if(err){
-        console.log(err);
-      }else{
-        console.log(obj.response.docs);
-      }
-    });
-    res.send(200, 'All good');
+//     solrClient.commit(function(err,res){
+//        if(err) console.log(err);
+//        if(res) console.log(res);
+//     });
 
-});
+
+//     var query = 'q=*:*';
+//     solrClient.get('select', query, function(err, obj){
+//       if(err){
+//         console.log(err);
+//       }else{
+//         console.log(obj.response.docs);
+//       }
+//     });
+//     res.send(200, 'All good');
+
+// });
 
 
 // PING
@@ -329,37 +335,41 @@ router.get('/ping', function(req, res){
   //         }
   //    });
 
-   var data = {};
-    data.postedBy = 12;
-    data.categoryId = 11;
-    data.isVerified = false;
-    data.noOfCommentsCollections = 0;
-    data.paragraphs =  [
-                            {
-                                "text": "hello mister",
-                                "paragraphType": "Text"
-                            }
-                        ];
+   // var data = {};
+   //  data.postedBy = 12;
+   //  data.categoryId = 11;
+   //  data.isVerified = false;
+   //  data.noOfCommentsCollections = 0;
+   //  data.paragraphs =  [
+   //                          {
+   //                              "text": "hello mister",
+   //                              "paragraphType": "Text"
+   //                          }
+   //                      ];
 
-   modules.request({
-        url:mappings['blogService.createBlog'], 
-        method: 'POST',
-        json: data
-      },
-        function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-                  bodyRet = body; 
+   // modules.request({
+   //      url:mappings['blogService.createBlog'], 
+   //      method: 'POST',
+   //      json: data
+   //    },
+   //      function (error, response, body) {
+   //        if (!error && response.statusCode == 200) {
+   //                bodyRet = body; 
 
-            console.log("pring returned bodyyy");
-            res.status(200).send(body);
-          }
-          else{
-                        res.status(404).send(response);
+   //          console.log("pring returned bodyyy");
+   //          res.status(200).send(body);
+   //        }
+   //        else{
+   //                      res.status(404).send(response);
 
-            console.log("not signed up successfully");
-          }
-     });
+   //          console.log("not signed up successfully");
+   //        }
+   //   });
+
+
+   
 });
+
 
 
 var justPrintSomething = function(){

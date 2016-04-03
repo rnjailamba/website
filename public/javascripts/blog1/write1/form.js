@@ -259,8 +259,6 @@ jQuery(document).ready(function($){
 
 			});
 
-			var imageURLs = "";
-			var i;
 
 			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory ){
 				var name = $('.myfield-name').val();
@@ -281,7 +279,6 @@ jQuery(document).ready(function($){
 				blogData.category = category;
 				blogData.subcategory = subcategory;
 				blogData.sirTrevorText = sirTrevorText;
-				blogData.imageURLs = imageURLs;
 				// console.log(name,phone,title,category,subcategory,tinymceText,imageURLs);
 				publishAttemptedWithFullDataWritePost = true;
 				isLoggedIn(blogData);
