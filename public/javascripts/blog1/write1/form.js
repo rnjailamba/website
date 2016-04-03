@@ -210,7 +210,6 @@ jQuery(document).ready(function($){
     }
 
 
-
     //AJAX CALL FOR SUBMITTING BLOG
     // ==============================================
     function ajaxCallForSubmitBlog(data){
@@ -241,62 +240,240 @@ jQuery(document).ready(function($){
     }	
 
 
+    //CONVERT SIR TREVOR TEXT
+    // ==============================================
+    function convertSirTrevorData(sirTrevorText){
+      var objectsirTrevorText = JSON.parse( sirTrevorText );   // { foo: "bar" }
+      var convertedArray = new Array(); // or the shortcut: = []
+
+      console.log("in convertSirTrevorData ",JSON.stringify(objectsirTrevorText));
+
+      if(!isEmpty(objectsirTrevorText)){
+         var obj = objectsirTrevorText["data"];
+          var type;
+          var data;
+        for (var i=0; i<obj.length; i++){
+          for (var name in obj[i]) {
+            // console.log("Item name: "+name+obj[i][name]);
+            switch(name){
+              case 'type':
+                          type = obj[i][name];
+                          break;
+              case 'data':
+                          data = obj[i][name];
+                          break;
+              default:
+                        alert("data type is not known by system");
+            } 
+          }// end inner for loop
+          console.log(type);
+          switch(type){
+            case 'heading':
+                          console.log(JSON.stringify(data['text']));
+                          var headingData = {};
+                          headingData.text = data['text'];
+                          headingData.paragraphType = "Text";
+                          convertedArray.push(headingData);
+                          break;
+            case 'text':
+                          console.log(JSON.stringify(data['text']));
+                          var textData = {};
+                          textData.text = data['text'];
+                          textData.paragraphType = "Text";    
+                          convertedArray.push(textData);                      
+                          break;
+            case 'list':
+                          console.log(JSON.stringify(data["listItems"]));
+                          var obj = data["listItems"];
+                          var list = document.createElement('ul');
+                          for (var i=0; i<obj.length; i++){
+                            // Create the list item:
+                            var item = document.createElement('li');
+                            // Set its contents:
+                            item.appendChild(document.createTextNode(obj[i]["content"]));
+                            // Add it to the list:
+                            list.appendChild(item);
+                          }   
+                          console.log(list.outerHTML);
+                          var listData = {};
+                          listData.text = String(list.outerHTML);
+                          listData.paragraphType = "Text";
+                          convertedArray.push(listData);
+                          break;
+            case 'image':
+                          console.log(JSON.stringify(data['file']));
+                          var imageData = {};
+                          var imageURLs = new Array();
+
+                          var singleImageData = {};
+                          singleImageData.imgageUrl = data['file']['url'];
+                          singleImageData.imgageCaption = "hello";
+                          imageURLs.push ( singleImageData );
+
+                          imageData.imageList = imageURLs;
+                          imageData.paragraphType = "Image";                          
+                          convertedArray.push(imageData);                      
+                          break;
+            case 'quote':
+                          console.log(JSON.stringify(data['text']));
+                          // console.log(JSON.stringify(data['cite']));
+                          var quoteData = {};
+                          quoteData.text = data['text'];
+                          quoteData.paragraphType = "Text"; 
+                          convertedArray.push(quoteData);                      
+                          break;
+            case 'video':
+                          console.log(JSON.stringify(data['source']));
+                          console.log(JSON.stringify(data['remote_id']));
+                          var videoData = {};
+                          var videoURLs = new Array();
+
+                          var singleVideoData = {};
+                          singleVideoData.videoUrl = data['remote_id'];
+                          singleVideoData.videoCaption = "hello";
+                          videoURLs.push ( singleVideoData );
+
+                          videoData.videoList = videoURLs;                          
+                          videoData.paragraphType = "Video";                          
+                          convertedArray.push(videoData);                      
+                          break;
+            default : alert("this type is not known by system",type);
+
+          }
+        } // end outer for loop
+
+        
+      
+      }
+      else{
+        alert(" is empty");
+      }
+      return convertedArray;
+ 
+    }     
+
+
+    function isEmpty(obj){
+      return (Object.keys(obj).length === 0 && JSON.stringify(obj) === JSON.stringify({}));
+    }       
+
     //ON SUBMIT
     // ==============================================
-	$(document).ready(function(){
-		$('.cd-normal-form input[type="submit"]').click(function(e){
-			e.preventDefault();
-			var checkName = checkInputTextFieldEmpty('.myfield-name',e);
-			var checkAbout = checkInputTextFieldEmpty('.myfield-about',e);
-			// var checkPhone = checkInputTextFieldEmpty('.myfield-phone',e);
-			var checkTitle = checkInputTextFieldEmpty('.myfield-title',e);
-			var checkCategory = checkInputSelectFieldEmpty('.category',e);
-			var checkSubcategory = checkInputSelectFieldEmpty('.subcategory',e);
+  	$(document).ready(function(){
+  		$('.cd-normal-form input[type="submit"]').click(function(e){
+  			e.preventDefault();
+  			var checkName = checkInputTextFieldEmpty('.myfield-name',e);
+  			var checkAbout = checkInputTextFieldEmpty('.myfield-about',e);
+  			// var checkPhone = checkInputTextFieldEmpty('.myfield-phone',e);
+  			var checkTitle = checkInputTextFieldEmpty('.myfield-title',e);
+  			var checkCategory = checkInputSelectFieldEmpty('.category',e);
+  			var checkSubcategory = checkInputSelectFieldEmpty('.subcategory',e);
 
-		   	// as soon as a key is pressed on the keyboard, hide the tooltip.
-			$(window).keypress(function() {
-			  $('.myfield').tooltipster('hide');
+  		   	// as soon as a key is pressed on the keyboard, hide the tooltip.
+  			$(window).keypress(function() {
+  			  $('.myfield').tooltipster('hide');
 
-			});
+  			});
 
 
-			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory ){
-				var name = $('.myfield-name').val();
-				var about = $('.myfield-about').val();
-				// var phone = $('.myfield-phone').val();
-				var title = $('.myfield-title').val();
-				var category = $('.category').val();
-				var subcategory = $('.subcategory').val();			
+  			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory ){
+  				var name = $('.myfield-name').val();
+  				var about = $('.myfield-about').val();
+  				// var phone = $('.myfield-phone').val();
+  				var title = $('.myfield-title').val();
+  				var category = $('.category').val();
+  				var subcategory = $('.subcategory').val();			
 
-        SirTrevor.onBeforeSubmit();
-        SirTrevor.SKIP_VALIDATION = true;
-        var sirTrevorText = $('.js-st-instance').val();
-        var blogData = {};        
-				blogData.name = name;
-				blogData.about = about;
-				// data.phone = phone;
-				blogData.title = title;
-				blogData.category = category;
-				blogData.subcategory = subcategory;
-				blogData.sirTrevorText = sirTrevorText;
-				// console.log(name,phone,title,category,subcategory,tinymceText,imageURLs);
-				publishAttemptedWithFullDataWritePost = true;
-				isLoggedIn(blogData);
-	
-			}
-			else{
-				sweetAlert("Oops...", "", "error");
-			    swal({   
-               	 	title: "Oops.....",   
-               	 	text: "You have not filled up all the required fields above ! :)",
-               	 	type:'error',   
-               	 	timer: 1500,   
-        					allowEscapeKey:true,
-        					allowOutsideClick:true,			 	
-               	 	showConfirmButton: true	 
-               	});
-			}
+          SirTrevor.onBeforeSubmit();
+          SirTrevor.SKIP_VALIDATION = true;
+          var sirTrevorText = $('.js-st-instance').val();
+          var convertedArray = convertSirTrevorData(sirTrevorText);
+          console.log(JSON.stringify(convertedArray));  
+          var blogData = {};        
+  				blogData.name = name;
+  				blogData.about = about;
+  				// data.phone = phone;
+  				blogData.title = title;
+  				blogData.category = category;
+  				blogData.subcategory = subcategory;
+  				blogData.sirTrevorText = convertedArray;
+  				// console.log(name,phone,title,category,subcategory,tinymceText,imageURLs);
+  				publishAttemptedWithFullDataWritePost = true;
+  				isLoggedIn(blogData);
+  	
+  			}
+  			else{
+  				sweetAlert("Oops...", "", "error");
+  			    swal({   
+                 	 	title: "Oops.....",   
+                 	 	text: "You have not filled up all the required fields above ! :)",
+                 	 	type:'error',   
+                 	 	timer: 1500,   
+          					allowEscapeKey:true,
+          					allowOutsideClick:true,			 	
+                 	 	showConfirmButton: true	 
+                 	});
+  			}
 
-		});
-	});		
+  		});
+  	});		
 });
+
+var x = {
+    "data": [
+        {
+            "type": "heading",
+            "data": {
+                "text": "Write your heading here",
+                "format": "html"
+            }
+        },
+        {
+            "type": "text",
+            "data": {
+                "text": "<p>Enter some text here</p>",
+                "format": "html"
+            }
+        },
+        {
+            "type": "list",
+            "data": {
+                "format": "html",
+                "listItems": [
+                    {
+                        "content": "fdfdfd"
+                    },
+                    {
+                        "content": "fdfddfd"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "image",
+            "data": {
+                "file": {
+                    "url": "https://cementifyblogimages.s3-ap-southeast-1.amazonaws.com/1459681536543.jpg?AWSAccessKeyId=AKIAJDTELPCXKB6E3LBQ&Content-Type=image%3Bcharset%3DUTF-8&Expires=1465681536&Signature=krHPIRlxisvjuxWva2EfTGP8VDc%3D&x-amz-acl=public-read"
+                }
+            }
+        },
+        {
+            "type": "quote",
+            "data": {
+                "text": "<p>fdfdfdfdfd</p>",
+                "format": "html",
+                "cite": "fdfd"
+            }
+        },
+        {
+            "type": "video",
+            "data": {
+                "source": "youtube",
+                "remote_id": "S176AKQhcCk"
+            }
+        }
+    ]
+};
+
+
+

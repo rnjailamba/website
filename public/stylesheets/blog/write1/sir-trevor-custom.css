@@ -28,3 +28,7 @@ CUSTOM SIR TREVOR STYLES
     margin-left: 20px;
     margin-right: 20px;
 }
+
+.st-list-block__list { 
+    list-style: inherit !important; 
+}

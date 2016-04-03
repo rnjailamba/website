@@ -53,7 +53,6 @@ router.get('/writePost', function(req, res, next) {
 
 router.post('/writePost', function(req, res, next) {
     console.log("in the postt",req.body);
-    var imageList = imageListArray(req.body.imageURLs);
     var data = {};
     data.postedBy = loginMiddleWare.functions.getCustomerId(req,res);
     data.categoryId = req.body.category;
@@ -102,18 +101,13 @@ router.get('/writePost1', function(req, res, next) {
 
 
 router.post('/writePost1', function(req, res, next) {
-    console.log("in the post",req.body);
+    console.log("in the post1",req.body);
     var data = {};
-    data.postedBy = 12;
-    data.categoryId = 11;
+    data.postedBy = loginMiddleWare.functions.getCustomerId(req,res);
+    data.categoryId = req.body.category;
     data.isVerified = false;
-    data.noOfCommentsCollections = 0;
-    data.paragraphs =  [
-                            {
-                                "text": "hello mister",
-                                "paragraphType": "Text"
-                            }
-                        ];
+    data.noOfCommentsCollections = 0;    
+    data.paragraphs =  req.body.sirTrevorText;
 
     modules.request({
         url:mappings['blogService.createBlog'], 
