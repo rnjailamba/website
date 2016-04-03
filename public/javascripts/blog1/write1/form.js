@@ -376,7 +376,7 @@ jQuery(document).ready(function($){
   			});
 
 
-  			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory ){
+  			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory && !checkAbout){
   				var name = $('.myfield-name').val();
   				var about = $('.myfield-about').val();
   				// var phone = $('.myfield-phone').val();
@@ -418,62 +418,4 @@ jQuery(document).ready(function($){
   		});
   	});		
 });
-
-var x = {
-    "data": [
-        {
-            "type": "heading",
-            "data": {
-                "text": "Write your heading here",
-                "format": "html"
-            }
-        },
-        {
-            "type": "text",
-            "data": {
-                "text": "<p>Enter some text here</p>",
-                "format": "html"
-            }
-        },
-        {
-            "type": "list",
-            "data": {
-                "format": "html",
-                "listItems": [
-                    {
-                        "content": "fdfdfd"
-                    },
-                    {
-                        "content": "fdfddfd"
-                    }
-                ]
-            }
-        },
-        {
-            "type": "image",
-            "data": {
-                "file": {
-                    "url": "https://cementifyblogimages.s3-ap-southeast-1.amazonaws.com/1459681536543.jpg?AWSAccessKeyId=AKIAJDTELPCXKB6E3LBQ&Content-Type=image%3Bcharset%3DUTF-8&Expires=1465681536&Signature=krHPIRlxisvjuxWva2EfTGP8VDc%3D&x-amz-acl=public-read"
-                }
-            }
-        },
-        {
-            "type": "quote",
-            "data": {
-                "text": "<p>fdfdfdfdfd</p>",
-                "format": "html",
-                "cite": "fdfd"
-            }
-        },
-        {
-            "type": "video",
-            "data": {
-                "source": "youtube",
-                "remote_id": "S176AKQhcCk"
-            }
-        }
-    ]
-};
-
-
 

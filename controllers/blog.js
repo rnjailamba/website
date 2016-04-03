@@ -64,7 +64,7 @@ router.post('/writePost', function(req, res, next) {
                                 "paragraphType": "Text"
                             },
                             {
-                                "imageList": imageList,
+                                "imageList": req.body.imageURLs,
                                 "paragraphType": "Image"
                             }                   
                         ];
