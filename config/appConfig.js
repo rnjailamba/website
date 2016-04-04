@@ -36,6 +36,7 @@ module.exports = function(){
        'blogService.createBlog': blogServiceURL+'createBlog',
        'blogService.readBlogs': blogServiceURL+'readBlogs',
        'blogService.ping': blogServiceURL+'ping',
+       'blogService.addComment': blogServiceURL+'addComment',
 
 
     };

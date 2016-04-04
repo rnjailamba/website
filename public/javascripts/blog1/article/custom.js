@@ -31,27 +31,137 @@ $(function() {
       });
       userFeed.run();
 });
-/* ====================================
-     Google Map
-   ==================================== */
- $('#map').gMap({
-  address: "Quito, Ecuador",
-  zoom: 5,
-  markers:[
-    {
-      latitude: -2.2014,
-      longitude: -80.9763,
-      html: "_latlng"
-    }
-  ]
-});
 
 $( document ).ready(function() {
-  'use strict';
-      $('.grid').masonry({
-        // options
-      });
-    });
+
+    var formModal = $('.cd-user-modal'),
+      formLogin = formModal.find('#cd-login'),
+      formSignup = formModal.find('#cd-signup'),
+      formForgotPassword = formModal.find('#cd-reset-password'),
+      formForgotPasswordDetailsSignup = formModal.find('#cd-reset-password-enter-details-signup'),
+      formEnterDetailsOTP = formModal.find('#cd-enter-details'),
+      formEnterLoginDetailsToSignUp = formModal.find('#cd-login-enter-details'),
+
+      formModalTab = $('.cd-switcher'),
+      tabLogin = formModalTab.children('li').eq(0).children('a'),
+      tabSignup = formModalTab.children('li').eq(1).children('a'),
+
+      forgotPasswordLink = formLogin.find('.cd-form-bottom-message a'),
+      backToLoginLink = formForgotPassword.find('.cd-form-bottom-message a'),
+      backToForgetPasswordLinkResetPasswordEnterDetailsSignup = formForgotPasswordDetailsSignup.find('.cd-form-bottom-message a'),
+      resendOTPLink = formEnterDetailsOTP.find('.cd-form-bottom-message a'),
+      resendOTPLinkAtLogin = formEnterLoginDetailsToSignUp.find('.cd-form-bottom-message a'),
+
+      sendOTPButton = formSignup.find('p .sendOTP'),
+      signupButton = formEnterDetailsOTP.find('p .signUpButton'),
+
+      loginButton = formLogin.find('p .loginButton'),
+      loginButtonWithDetails = formEnterLoginDetailsToSignUp.find('p .loginButtonWithDetails'),
+
+      logoutButton = $('.cd-signout');
+
+      resetPasswordButton = formForgotPassword.find('p .resetButton'),
+      resetPasswordButtonDetailsSignup = formForgotPasswordDetailsSignup.find('p .resetButtonDetails'),
+
+      mainNav = $('.main-nav');
+        
+
+  $('div.leave-a-reply .btn-black').click(function(event){
+    event.preventDefault();
+    publishAttemptedForComment = true;
+    var data = {};
+    data.blogId = 12;
+    data.parentId = 12;
+    isLoggedIn(data);
+  });
+
+
+
+/* ======================================
+     IS LOGGED IN AND SHOW ALERT IF NOT
+   ====================================== */
+    function isLoggedIn(blogData){
+
+        var x = $.ajax({
+            url:"/loginMiddleware/isLoggedIn",
+            type: 'GET',
+            async: true,
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response) {
+              console.log('Am i logged in for comment?',response);
+              if(response == true){
+                 ajaxCallForSubmitComment(blogData);
+              }
+              else{
+                swal({
+                  title: 'Please login to post your comment',
+                  type:'success',   
+                  text: 'Thank you :)',
+                  closeOnConfirm: true,
+                  confirmButtonColor: "#2ecc71",
+                  showLoaderOnConfirm: true,
+                  allowEscapeKey:true,
+                  allowOutsideClick:true,
+                }, function(){
+                  loginSelected();// After this the handling is done in loginAsynWithCallbacks
+                });
+              }
+            },
+            error: function(response) {
+                console.log('Error with register ' + response.statusText);
+                console.log("error page");
+            }
+        });
+    }
+/* ======================================
+     AJAX CALL FOR SUBMITTING COMMENT
+   ====================================== */
+    function ajaxCallForSubmitComment(data){
+        console.log("in submit comment ",data);
+        $.ajax({
+            url:"/blog/galleryPostComments",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log('Blog submission succesfull',response);
+                if(response.statusCode == 200 ){
+                  window.location = "/blog/blogSummary?status=200";
+                }
+                else{
+                  window.location = "/blog/blogSummary";
+                }
+            },
+            error: function(response) {
+                console.log('Error with comment submission ' + response.statusText);
+                console.log("error page");
+            }
+        });
+    } 
+
+/* ======================================
+     LOGIN SELECTED
+   ====================================== */
+    function loginSelected(){
+      mainNav.children('ul').removeClass('is-visible');
+      formModal.addClass('is-visible');
+      formLogin.addClass('is-selected');
+      formSignup.removeClass('is-selected');
+      formEnterDetailsOTP.removeClass('is-selected');
+      formForgotPassword.removeClass('is-selected');
+      tabLogin.addClass('selected');
+      tabSignup.removeClass('selected');
+      formForgotPasswordDetailsSignup.removeClass('is-selected');
+      formEnterLoginDetailsToSignUp.removeClass('is-selected');
+      $('.cd-switcher').find('.selected').html("Sign in");
+    }    
+});
 
 /* ======================================
      Full Screen Header

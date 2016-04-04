@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GALLERY POST</title>
+    <title>Gallery Post</title>
 
     <!--  Favicons  -->
-    <link rel="shortcut icon" href="/img/blog/article/images/favicon/favicon.ico">
+    <link rel="shortcut icon" type='image/x-icon' href="/img/favicon/favicon.ico"/>
     <link rel="apple-touch-icon-precomposed" href="/img/blog/article/images/favicon/apple-touch-icon.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/blog/article/images/favicon/apple-touch-icon-57x57.png" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/blog/article/images/favicon/apple-touch-icon-72x72.png" />
@@ -16,13 +16,15 @@
     <!--  Google Font  -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    <script src="/js/common/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
 
     <!--  Stylesheet  -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link>
     <link href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
     <link href="/css/blog/article/style.css" rel="stylesheet">
     <link href="/css/blog/article/responsive.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="/css/codeSnippets/sweetAlert/sweetAlert.css"><!-- css for sweet alert -->
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,6 +33,8 @@
     <![endif]-->
 </head>
 <body>
+<% include ../partials/loginModal.ejs %>
+
 <header id="header" class="header navbar-fixed-top">
     <div class="container">
         <!-- Static navbar -->
@@ -42,36 +46,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Blogio</a>
+                <a class="navbar-brand" href="/home3">Cementify</a>
             </div>
             <div class="navbar-collapse collapse">
                 <!-- Right nav -->
-                <ul class="nav navbar-nav right">
-                    <li><a href="index.html">Home<i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="index-full-width.html">Full Width Blog</a></li>
-                            <li><a href="#">Masonry Blog<i class="fa fa-angle-right"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="3column.html">3 Column Full</a></li>
-                                    <li><a href="2column-sidebar.html">2 Column with Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="index2.html">Style 2</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Page<i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="single.html">Single Page</a></li>
-                            <li class="active"><a href="gallery.html">Gallery Post</a></li>
-                            <li><a href="image-post.html">Image Post</a></li>
-                            <li><a href="audio.html">Audio</a></li>
-                            <li><a href="video.html">Video</a></li>
-                            <li><a href="404.html">404 Page</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="archive.html">Archive</a></li>
-                    <li><a href="about.html">About Me</a></li>
-                    <li><a href="contact.html">Contact Me</a></li>
+                <ul class="nav navbar-nav right main-nav">
+                    <li><a href="/blog/index">Blogs</a></li>
+                    <%if (isLoggedIn == true) { %>
+                        <li class="cd-signout"><a href="#" >SignOut</a> </li>
+                        <li class="cd-signin" style="display: none;"><a href="#" >Login</a> </li>
+                        <li class="cd-signup" style="display: none;"><a href="#" >Signup</a> </li>
+                    <% } else { %>
+                        <li class="cd-signin"><a href="#" >Login</a> </li>
+                        <li class="cd-signup"><a href="#"  >Signup</a> </li>
+                        <li class="cd-signout" style="display: none;"><a href="#" >SignOut</a> </li>
+                    <% } %>    
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -91,7 +80,7 @@
             </div><!-- End .title -->
             <div class="breadcrumb">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/blog/index">Home</a></li>
                     <li>Gallery Post</li>
                 </ul>
             </div>
@@ -109,6 +98,20 @@
             <div class="col-md-8">
                 <div class="primary">
                     <div class="blog-post">
+                        <div class="post">
+                            <div class="blog-title">
+                                <h1><a href="#">Sophisticated Kiev Home Makes</a></h1>
+                            </div>
+                            <div class="meta">
+                                <ul>
+                                    <li class="category"><a href="archive.html">Lifestyle</a></li>
+                                    <li class="author">By Admin</li>
+                                    <li class="date">JUne 14, 2015</li>
+                                    <li class="comment">4 Comments</li>
+                                </ul>
+                            </div> <!-- End .meta -->
+                        </div>
+                        <br>
                         <div class="thum-item">
                             <div id="gallery-slider" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
@@ -139,17 +142,6 @@
                             </div><!-- /.carousel -->
                         </div> <!-- End .thum-item -->
                         <div class="post">
-                            <div class="blog-title">
-                                <h2><a href="#">Sophisticated Kiev Home Makes</a></h2>
-                            </div>
-                            <div class="meta">
-                                <ul>
-                                    <li class="category"><a href="archive.html">Lifestyle</a></li>
-                                    <li class="author">By Admin</li>
-                                    <li class="date">JUne 14, 2015</li>
-                                    <li class="comment">4 Comments</li>
-                                </ul>
-                            </div> <!-- End .meta -->
                             <div class="content">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit aperiam.
                                     <br> <br>
@@ -217,7 +209,7 @@
                                         <img src="/img/blog/article/images/placeholder-post-thum.jpg" alt="Post">
                                         <h4>Sophisticated Kiev Home Makes</h4>
                                     </a>
-                                    <span>JUne 14, 2015</span>
+                                    <span>June 14, 2015</span>
                                 </div> <!-- End .item -->
                             </div> <!-- End .col-md-4 -->
                             <div class="col-md-4">
@@ -231,6 +223,20 @@
                             </div> <!-- End .col-md-4 -->
                         </div> <!-- End .row -->
                     </div> <!-- End .related-post -->
+                    <div class="leave-a-reply">
+                        <span class="title">Leave a Comment</span>
+                        <div class="row">
+                            <form action="#" method="POST">
+                                <div class="col-md-12">
+                                    <textarea name="comment" id="comment" class="form-control" rows="8" placeholder="Message"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn-black">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div> <!-- End .leave-a-reply -->
+
                     <div class="comment">
                         <span class="title">Blog Comments</span>
 
@@ -274,28 +280,6 @@
                             </div> <!-- End .full-comment -->
                         </div> <!-- End .comment-wrap -->
                     </div> <!-- End .commnet -->
-                    <div class="leave-a-reply">
-                        <span class="title">Leave a Reply</span>
-                        <div class="row">
-                            <form action="#" method="POST">
-                                <div class="col-md-8">
-                                    <input type="text" name="name" class="form-control"  id="name" placeholder="Name">
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="email" name="email" class="form-control"  id="email" placeholder="Email">
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" name="website" class="form-control"  id="website" placeholder="Website">
-                                </div>
-                                <div class="col-md-12">
-                                    <textarea name="comment" id="comment" class="form-control" rows="8" placeholder="Message"></textarea>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn-black">Send Message</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div> <!-- End .leave-a-reply -->
                 </div>
                 <!--
                     ===============
@@ -534,10 +518,17 @@
    =======================
 -->
 
+<script type="text/javascript">
+
+    var isLoggedIn = <%- JSON.stringify(isLoggedIn) %>; 
+    var publishAttemptedForComment = false;
+
+</script>
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/js/common/jquery-1.10.2.js"></script>
 <!-- Bootstrap Main -->
-<script src="/js/home3/bootstrap.js"></script>
+<script src="/js/common/bootstrap.js"></script>
 
 <!-- Masonry Cascading grid layout library -->
 <script src="/js/common/masonry.pkgd.min.js"></script>
@@ -551,8 +542,15 @@
 <!-- Instagram photos -->
 <script type="text/javascript" src="/js/blog1/article/instafeed.min.js"></script>
 
+<!-- js for the login -->
+<script src="/js/home3/loginAsyncWithCallbacks.js"></script> 
 
-<!-- All custom jQuery -->
+<!-- All custom jQuery - includes comments -->
 <script src="/js/blog1/article/custom.js"></script>
+
+<!-- js for sweet alert -->
+<script src="/js/codeSnippets/sweetAlert.js"></script>
+
+
 </body>
 </html>

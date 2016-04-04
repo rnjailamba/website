@@ -170,6 +170,55 @@ router.get('/writePostOptions', function(req, res, next) {
 });
 
 
+// GALLERYPOST
+// ==============================================
+router.get('/galleryPost', function(req, res, next) {
+
+  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',null);
+
+});
+
+
+// GALLERYPOST COMMENTS
+// ==============================================
+router.post('/galleryPostComments', function(req, res, next) {
+
+  var data = {};
+  data.blogId = "5701ebf996311f1bb22035ca";
+  data.comment =  {
+                      "postedBy": {
+                          "userName": "raj",
+                          "userId": 1234
+                      },
+                      "commentContent": {
+                          "text": "hellocomment",
+                          "paragraphType": "Text"
+                      }
+                  };
+
+  modules.request({
+      url:mappings['blogService.ping'], 
+      method: 'GET'
+    },
+      function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+                bodyRet = body; 
+
+          console.log("pring returned bodyyy");
+          res.status(200).send(body);
+        }
+        else{
+          res.status(200).send(body);
+          console.log("not signed up successfully");
+        }
+   });
+
+
+});
+
+
+
+
 // INDEX1
 // ==============================================
 router.get('/index1', function(req, res, next) {
@@ -223,13 +272,6 @@ router.get('/article22', function(req, res, next) {
 // ==============================================
 router.get('/category', function(req, res, next) {
   res.render('blog/category', { title: 'Cementify Blog' });
-});
-
-
-// GALLERYPOST
-// ==============================================
-router.get('/galleryPost', function(req, res, next) {
-  res.render('blog/galleryPost', { title: 'Cementify Blog' });
 });
 
 
@@ -362,8 +404,52 @@ router.get('/ping', function(req, res){
    //        }
    //   });
 
+// {
+//     "blogId": "56f96717ebd6a00df7af2021",
+//     "comment": {
+//         "postedBy": {
+//             "userName": "raj",
+//             "userId": 1234
+//         },
+//         "commentContent": {
+//             "text": "hellocomment",
+//             "paragraphType": "Text"
+//         }
+//     }
+// }
 
-   
+    var data = {};
+    data.blogId = "5701ebf996311f1bb22035ca";
+    data.comment =  {
+                        "postedBy": {
+                            "userName": "raj",
+                            "userId": 1234
+                        },
+                        "commentContent": {
+                            "text": "hellocomment",
+                            "paragraphType": "Text"
+                        }
+                    };
+
+    modules.request({
+        url:mappings['blogService.addComment'], 
+        method: 'POST',
+        json: data
+      },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+                  bodyRet = body; 
+
+            console.log("pring returned bodyyy");
+            res.status(200).send(body);
+          }
+          else{
+                        res.status(404).send(response);
+
+            console.log("not signed up successfully");
+          }
+     });
+
 });
 
 

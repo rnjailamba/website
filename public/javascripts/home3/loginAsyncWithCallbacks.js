@@ -277,11 +277,17 @@ jQuery(document).ready(function($){
             success: function(response) {
                 console.log('Register succesfully',response);
                 loginLogoutAsync();
-                console.log(publishAttemptedWithFullDataWritePost);
                 if( publishAttemptedWithFullDataWritePost == true){
                     console.log('publish was attempted in WritePost');
                     $('.cd-normal-form input[type="submit"]').click();
-                }                
+                }   
+                if( publishAttemptedForComment == true){
+                    console.log('publish comment was attempted in gallery post');
+                    $('.cd-normal-form input[type="submit"]').click();
+                }                            
+
+
+                    
             },
             error: function(response) {
                 console.log('Error with register ' + response.statusText);
@@ -416,6 +422,10 @@ jQuery(document).ready(function($){
                     console.log('publish was attempted in WritePost');
                     $('.cd-normal-form input[type="submit"]').click();
                 }
+                if( publishAttemptedForComment == true){
+                    console.log('publish comment was attempted in gallery post');
+                    $('.cd-normal-form input[type="submit"]').click();
+                }                 
 
             },
             error: function(response) {
@@ -715,11 +725,14 @@ jQuery(document).ready(function($){
             success: function(response) {
                 console.log('Reset password succesfully',response);
                 loginLogoutAsync();
-                console.log(publishAttemptedWithFullDataWritePost);
                 if( publishAttemptedWithFullDataWritePost == true){
                     console.log('publish was attempted in WritePost');
                     $('.cd-normal-form input[type="submit"]').click();
-                }                
+                }   
+                if( publishAttemptedForComment == true){
+                    console.log('publish comment was attempted in gallery post');
+                    $('.cd-normal-form input[type="submit"]').click();
+                }                                   
             },
             error: function(response) {
                 console.log('Error with reset password ' + response.statusText);
