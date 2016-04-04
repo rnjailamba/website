@@ -64,8 +64,11 @@ $( document ).ready(function() {
       resetPasswordButtonDetailsSignup = formForgotPasswordDetailsSignup.find('p .resetButtonDetails'),
 
       mainNav = $('.main-nav');
-        
 
+
+/* ======================================
+     ON CLICKING TOP LEVEL REPLY
+   ====================================== */
   $('div.leave-a-reply .btn-black').click(function(event){
     event.preventDefault();
     publishAttemptedForComment = true;
@@ -74,6 +77,35 @@ $( document ).ready(function() {
     data.parentId = 12;
     isLoggedIn(data);
   });
+
+
+/* ======================================
+     ON CLICKING OTHER REPLIES
+   ====================================== */
+  $('div.comment-wrap .btn-white-sm').click(function(event){
+    event.preventDefault();
+    // alert("clicked nested reply");
+    var data = {};
+    data.blogId = 12;
+    data.parentId = 12;
+    var topCommentDiv = $(this).parents('.comment-wrap');
+    var commentReply = '<div class="row"><form action="#" method="POST"><div class="col-md-12"><textarea name="comment" id="comment" class="form-control" rows="8" placeholder="Message"></textarea></div><div class="col-md-12"><button type="submit" class="btn-black">Reply To Comment</button></div></form></div>';
+    var isCommentBoxOpen = $( ".comment" ).has( ".row" ).length;
+    var isCommentBoxOpenAfterCurrentElement = $( topCommentDiv ).next().hasClass("row");
+    console.log(isCommentBoxOpenAfterCurrentElement);
+    if( isCommentBoxOpen > 0 ){
+      $( ".comment .row" ).remove( );
+    }
+    if( isCommentBoxOpen == 0 || isCommentBoxOpenAfterCurrentElement ==0 )
+      $( commentReply ).insertAfter(topCommentDiv);
+    // isLoggedIn(data);
+
+    $('html, body').animate({
+          scrollTop: topCommentDiv.offset().top -85
+        }, 500);
+  });  
+
+
 
 
 
