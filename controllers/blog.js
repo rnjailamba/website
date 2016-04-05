@@ -182,23 +182,25 @@ router.get('/galleryPost', function(req, res, next) {
 // GALLERYPOST COMMENTS
 // ==============================================
 router.post('/galleryPostComments', function(req, res, next) {
-
+  console.log("in the galleryPostComments",req.body);
   var data = {};
-  data.blogId = "5701ebf996311f1bb22035ca";
+  data.blogId = req.body.blogId;
+  data.parentId =req.body.parentId;
   data.comment =  {
                       "postedBy": {
-                          "userName": "raj",
-                          "userId": 1234
+                          "userName": "",
+                          "userId": loginMiddleWare.functions.getCustomerId(req,res)
                       },
                       "commentContent": {
-                          "text": "hellocomment",
+                          "text": req.body.commentText,
                           "paragraphType": "Text"
                       }
                   };
 
   modules.request({
-      url:mappings['blogService.ping'], 
-      method: 'GET'
+      url:mappings['blogService.addComment'], 
+      method: 'POST',
+      json: data
     },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -208,7 +210,8 @@ router.post('/galleryPostComments', function(req, res, next) {
           res.status(200).send(body);
         }
         else{
-          res.status(200).send(body);
+                      res.status(404).send(response);
+
           console.log("not signed up successfully");
         }
    });
@@ -418,6 +421,7 @@ router.get('/ping', function(req, res){
 
     var data = {};
     data.blogId = "5701ebf996311f1bb22035ca";
+    data.parentId = "5701ebf996311f1bb22035ca";
     data.comment =  {
                         "postedBy": {
                             "userName": "raj",

@@ -94,6 +94,9 @@ $( document ).ready(function() {
       var commentData = {};
       commentData.commentText = publishAttemptedForComment.commentText;
       commentData.aboveElement = $('.blog-comments');
+      commentData.blogId = blogId;
+      commentData.parentId = blogId;
+
       isLoggedIn(commentData);
     }
     else{
@@ -127,6 +130,8 @@ $( document ).ready(function() {
       commentData.commentText = publishAttemptedForComment.commentText;
       commentData.aboveElement = $(this).parents('.leave-a-reply-to-comment')
                                         .prevAll(".comment-wrap:first"); 
+      commentData.blogId = blogId;
+      commentData.parentId = blogId;                                        
       isLoggedIn(commentData);
     }
     else{
@@ -157,9 +162,10 @@ $( document ).ready(function() {
     if( isCommentBoxOpen > 0 ){
       removeCommentBox();
     }
-    if( isCommentBoxOpen == 0 || isCommentBoxOpenAfterCurrentElement == 0 )
+    if( isCommentBoxOpen == 0 || isCommentBoxOpenAfterCurrentElement == 0 ){
       $( commentReply ).insertAfter(topCommentDiv);
-
+      $( commentReply ).find("#comment").focus();
+    }
     $('html, body').animate({
           scrollTop: topCommentDiv.offset().top -85
         }, 500);
@@ -174,6 +180,16 @@ $( document ).ready(function() {
       $( ".comment .leave-a-reply-to-comment" ).remove( );                                     
 
     }
+
+
+/* ======================================
+     REMOVE TOP LEVEL PUBLISH COMMENT TEXT
+   ====================================== */
+    function removeTextTopLevel(){
+
+      var x = $('.leave-a-reply').find('#comment').val('');                          
+
+    }    
 
 
 /* ======================================
@@ -201,6 +217,14 @@ $( document ).ready(function() {
 
     }
 
+/* ======================================
+     IS ELEMENT OF TYPE 
+   ====================================== */
+
+   function isElementType(element,type){
+      return $(element).is(type);
+   }
+
 
 /* ======================================
      CREATE COMMENT 
@@ -220,7 +244,7 @@ $( document ).ready(function() {
 //     </div> <!-- End .full-comment -->
 // </div> <!-- End .comment-wrap -->   
       var marginLeft = parseInt($( data.aboveElement ).css( "margin-left" ));   
-      var isElementSpan = $(data.aboveElement).is("span"); //true or false
+      var isElementSpan = isElementType(data.aboveElement,"span"); //true or false
       if(isElementSpan)
         marginLeft = -60;
      
@@ -321,15 +345,16 @@ $( document ).ready(function() {
             context: this,
             cache: false,
             processData: false,
-            success: function(response) {
-                console.log('Comment submission succesfull',response);
-                addCommentDynamically(data);
-                
-                if(response.statusCode == 200 ){
+            success: function(response, textStatus, xhr) {
+                console.log('Comment submission succesfull',xhr.status);
+                if(xhr.status == 200 ){
+                  addCommentDynamically(data);
                 }
                 else{
+                  alert("comment was not added due to internal error");
+                  console.log('comment was not added due to internal error',response,textStatus,xhr);
 
-                }
+                } 
             },
             error: function(response) {
                 console.log('Error with comment submission ' + response.statusText);
@@ -346,6 +371,7 @@ $( document ).ready(function() {
       var comment =  createComment(data);
       $( comment ).insertAfter(data.aboveElement);
       removeCommentBox();
+      removeTextTopLevel();
       $('html, body').animate({
         scrollTop: (data.aboveElement).offset().top -85
       }, 500);
