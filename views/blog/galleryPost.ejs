@@ -21,9 +21,9 @@
     <!--  Stylesheet  -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"></link>
     <link href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
-    <link href="/css/blog/article/style.css" rel="stylesheet">
     <link href="/css/blog/article/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/codeSnippets/sweetAlert/sweetAlert.css"><!-- css for sweet alert -->
+    <link rel="stylesheet" type="text/css" href="/css/common/tooltipster.css"></link> <!-- css for tooltipster -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -229,6 +229,8 @@
                             <form action="#" method="POST">
                                 <div class="col-md-12">
                                     <textarea name="comment" id="comment" class="form-control" rows="8" placeholder="Message"></textarea>
+                                    <span id="myfield_description" role="tooltip">Please insert your comment here</span>
+
                                 </div>
                                 <div class="col-md-12">
                                     <button type="submit" class="btn-black">Publish Comment</button>
@@ -238,7 +240,7 @@
                     </div> <!-- End .leave-a-reply -->
 
                     <div class="comment">
-                        <span class="title">Blog Comments</span>
+                        <span class="title blog-comments">Blog Comments</span>
 
                         <div class="comment-wrap">
                             <div class="photo">
@@ -517,11 +519,15 @@
      End Footer
    =======================
 -->
+<link href="/css/blog/article/style.css" rel="stylesheet">
 
 <script type="text/javascript">
 
     var isLoggedIn = <%- JSON.stringify(isLoggedIn) %>; 
-    var publishAttemptedForComment = false;
+    var publishAttemptedWithFullDataWritePost = false;
+    var publishAttemptedForComment = {};
+    publishAttemptedForComment.trueFalse = false;    
+    var likeAttempted = false;    
 
 </script>
 
@@ -539,9 +545,6 @@
 <!-- SmartMenus jQuery Bootstrap Addon -->
 <script type="text/javascript" src="/js/blog1/article/jquery.smartmenus.bootstrap.min.js"></script>
 
-<!-- Instagram photos -->
-<script type="text/javascript" src="/js/blog1/article/instafeed.min.js"></script>
-
 <!-- js for the login -->
 <script src="/js/home3/loginAsyncWithCallbacks.js"></script> 
 
@@ -550,6 +553,7 @@
 
 <!-- js for sweet alert -->
 <script src="/js/codeSnippets/sweetAlert.js"></script>
+<script src="/js/common/tooltipster.js"></script> <!-- js for tooltipster -->
 
 
 </body>

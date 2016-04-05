@@ -217,8 +217,6 @@ router.post('/galleryPostComments', function(req, res, next) {
 });
 
 
-
-
 // INDEX1
 // ==============================================
 router.get('/index1', function(req, res, next) {

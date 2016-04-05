@@ -281,7 +281,7 @@ jQuery(document).ready(function($){
                     console.log('publish was attempted in WritePost');
                     $('.cd-normal-form input[type="submit"]').click();
                 }   
-                if( publishAttemptedForComment == true){
+                if( publishAttemptedForComment.trueFalse == true){
                     console.log('publish comment was attempted in gallery post');
                     $('.cd-normal-form input[type="submit"]').click();
                 }                            
@@ -422,7 +422,7 @@ jQuery(document).ready(function($){
                     console.log('publish was attempted in WritePost');
                     $('.cd-normal-form input[type="submit"]').click();
                 }
-                if( publishAttemptedForComment == true){
+                if( publishAttemptedForComment.trueFalse == true){
                     console.log('publish comment was attempted in gallery post');
                     $('.cd-normal-form input[type="submit"]').click();
                 }                 
@@ -729,7 +729,7 @@ jQuery(document).ready(function($){
                     console.log('publish was attempted in WritePost');
                     $('.cd-normal-form input[type="submit"]').click();
                 }   
-                if( publishAttemptedForComment == true){
+                if( publishAttemptedForComment.trueFalse == true){
                     console.log('publish comment was attempted in gallery post');
                     $('.cd-normal-form input[type="submit"]').click();
                 }                                   

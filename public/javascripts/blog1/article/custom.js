@@ -1,12 +1,8 @@
 /* ==============================================
     Fixed Navbar
    =============================================== */
-jQuery(window).bind('scroll', function (){
-  if (jQuery(window).scrollTop() > 80){
-    jQuery('.header').addClass('fixed-nav');
-  } else {
-    jQuery('.header').removeClass('fixed-nav');
-  }
+$( document ).ready(function() {
+  jQuery('.header').addClass('fixed-nav');
 });
 /* ==============================================
     Preloader
@@ -16,20 +12,6 @@ $(window).load(function() {
   $('#status').fadeOut();
   $('#preloader').delay(350).fadeOut('slow');
   $('body').delay(350).css({'overflow':'visible'});
-});
-
-/* ==============================================
-    jQuery Instafeed
-   =============================================== */
-$(function() {
-      var userFeed = new Instafeed({
-          limit: 16,
-          get: 'tagged',
-          tagName: 'awesome',
-          accessToken: '2106621868.95809bd.6cedcfe289c44294b83e1602f419049e',
-          template: '<a target="_blank" href="{{link}}"><img src="{{image}}" /></a>'
-      });
-      userFeed.run();
 });
 
 $( document ).ready(function() {
@@ -66,39 +48,117 @@ $( document ).ready(function() {
       mainNav = $('.main-nav');
 
 
+  //CHECK INPUT TEXT FIELD EMPTY
+  // ==============================================
+  function checkInputTextFieldEmpty(element){
+    initializeTooltipster(element);
+    var myfield = $(element).val();
+    if(myfield.length == 0){
+      element.tooltipster('show');
+      return true;  
+
+    }
+    else{
+      element.tooltipster('hide'); 
+      return false; 
+    }
+
+  }
+
+
+  //INITIALIZE THE TOOLTIPSTER FOR ELEMENT
+  // ==============================================
+  function initializeTooltipster(element){
+    element.tooltipster({
+      autoClose:false,
+      trigger:'custom',
+      position: 'right',
+        functionInit: function(){
+            return $(element).siblings('#myfield_description').html();
+        }
+    });
+  } 
+
+
 /* ======================================
-     ON CLICKING TOP LEVEL REPLY
+     ON CLICKING TOP LEVEL PUBLISH COMMENT
    ====================================== */
-  $('div.leave-a-reply .btn-black').click(function(event){
+   $(document).on('click','div.leave-a-reply .btn-black',function(){
+
     event.preventDefault();
-    publishAttemptedForComment = true;
-    var data = {};
-    data.blogId = 12;
-    data.parentId = 12;
-    isLoggedIn(data);
+    var textAreaElement = $(this).parents('.leave-a-reply').find('#comment');
+    var checkComment = checkInputTextFieldEmpty(textAreaElement);
+    if( !checkComment ){
+      publishAttemptedForComment.trueFalse = true;
+      publishAttemptedForComment.commentText = textAreaElement.val();
+      var commentData = {};
+      commentData.commentText = publishAttemptedForComment.commentText;
+      commentData.aboveElement = $('.blog-comments');
+      isLoggedIn(commentData);
+    }
+    else{
+      sweetAlert("Oops...", "", "error");
+        swal({   
+                title: "Oops.....",   
+                text: "You have not filled up any text above ! :)",
+                type:'error',   
+                timer: 1500,   
+                allowEscapeKey:true,
+                allowOutsideClick:true,       
+                showConfirmButton: true  
+              });
+    }     
+
   });
 
 
 /* ======================================
-     ON CLICKING OTHER REPLIES
+     ON CLICKING OTHER LEVEL PUBLISH COMMENT
    ====================================== */
-  $('div.comment-wrap .btn-white-sm').click(function(event){
+   $(document).on('click','div.comment .btn-black',function(){
+
     event.preventDefault();
-    // alert("clicked nested reply");
-    var data = {};
-    data.blogId = 12;
-    data.parentId = 12;
-    var topCommentDiv = $(this).parents('.comment-wrap');
-    var commentReply = '<div class="row"><form action="#" method="POST"><div class="col-md-12"><textarea name="comment" id="comment" class="form-control" rows="8" placeholder="Message"></textarea></div><div class="col-md-12"><button type="submit" class="btn-black">Reply To Comment</button></div></form></div>';
-    var isCommentBoxOpen = $( ".comment" ).has( ".row" ).length;
-    var isCommentBoxOpenAfterCurrentElement = $( topCommentDiv ).next().hasClass("row");
-    console.log(isCommentBoxOpenAfterCurrentElement);
-    if( isCommentBoxOpen > 0 ){
-      $( ".comment .row" ).remove( );
+    var textAreaElement = $(this).parents('.leave-a-reply-to-comment').find('#comment');
+    var checkComment = checkInputTextFieldEmpty(textAreaElement);
+    if( !checkComment ){
+      publishAttemptedForComment.trueFalse = true;
+      publishAttemptedForComment.commentText = textAreaElement.val();
+      var commentData = {};
+      commentData.commentText = publishAttemptedForComment.commentText;
+      commentData.aboveElement = $(this).parents('.leave-a-reply-to-comment')
+                                        .prevAll(".comment-wrap:first"); 
+      isLoggedIn(commentData);
     }
-    if( isCommentBoxOpen == 0 || isCommentBoxOpenAfterCurrentElement ==0 )
+    else{
+      sweetAlert("Oops...", "", "error");
+        swal({   
+                title: "Oops.....",   
+                text: "You have not filled up any text above ! :)",
+                type:'error',   
+                timer: 1500,   
+                allowEscapeKey:true,
+                allowOutsideClick:true,       
+                showConfirmButton: true  
+              });
+    }     
+
+  });
+
+
+/* ======================================
+     ON CLICKING OTHER REPLIES - ONLY THE INTENT - SO THIS WILL CREATE THE REPLY BOX
+   ====================================== */
+   $(document).on('click','div.comment-wrap .btn-white-sm',function(){
+    event.preventDefault();
+    var topCommentDiv = $(this).parents('.comment-wrap');
+    var commentReply = createCommentReply();
+    var isCommentBoxOpen = $( ".comment" ).has( ".leave-a-reply-to-comment" ).length;
+    var isCommentBoxOpenAfterCurrentElement = $( topCommentDiv ).next().hasClass("leave-a-reply-to-comment");
+    if( isCommentBoxOpen > 0 ){
+      removeCommentBox();
+    }
+    if( isCommentBoxOpen == 0 || isCommentBoxOpenAfterCurrentElement == 0 )
       $( commentReply ).insertAfter(topCommentDiv);
-    // isLoggedIn(data);
 
     $('html, body').animate({
           scrollTop: topCommentDiv.offset().top -85
@@ -106,13 +166,111 @@ $( document ).ready(function() {
   });  
 
 
+/* ======================================
+     REMOVE THE COMMENT BOX
+   ====================================== */
+    function removeCommentBox(){
 
+      $( ".comment .leave-a-reply-to-comment" ).remove( );                                     
+
+    }
+
+
+/* ======================================
+     CREATE COMMENT REPLY
+   ====================================== */
+    function createCommentReply(){
+
+      var outerMostDiv = $('<div>')
+                              .attr("class", "leave-a-reply-to-comment");      
+      var outerDiv = $('<div>')
+                          .attr("class", "row");
+      var form = $('<form>')
+                        .attr({ action:"#", method:"POST" });
+      var textArea = $('<textarea>')
+                          .attr({ name:"comment", id:"comment" , class:"form-control" , rows:"8" , placeholder:"message" });
+      var button = $('<button>')
+                          .attr({ type:"submit", id:"class" , class:"btn-black" })
+                          .text('Reply to Comment');
+      var divButtonText =  $('<div>')
+                                .attr("class", "col-md-12");
+
+      form.append(divButtonText.append(textArea));                                             
+      form.append(divButtonText.append(button));  
+      return outerMostDiv.append(outerDiv.append(form));                                          
+
+    }
+
+
+/* ======================================
+     CREATE COMMENT 
+   ====================================== */
+    function createComment(data){
+// <div class="comment-wrap">
+//     <div class="photo">
+//         <a href="#"><img src="/img/blog/article/images/author.jpg" alt="S M Mishkatul Islam"></a>
+//     </div> <!-- End .photo -->
+//     <div class="full-comment">
+//         <h5><a href="">Themography</a></h5>
+//         <span class="date">June 15, 2015 at 2.17am</span>
+//         <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit aperiam.</p>
+//         <div class="reply">
+//             <a class="btn-white-sm" href="#">Reply</a>
+//         </div>
+//     </div> <!-- End .full-comment -->
+// </div> <!-- End .comment-wrap -->   
+      var marginLeft = parseInt($( data.aboveElement ).css( "margin-left" ));   
+      var isElementSpan = $(data.aboveElement).is("span"); //true or false
+      if(isElementSpan)
+        marginLeft = -60;
+     
+      var outerMostDiv = $('<div>')
+                              .attr("class", "comment-wrap")   
+                              .css("margin-left",marginLeft+60);
+      var photoDiv = $('<div>')
+                          .attr("class", "photo");
+      var photoLink = $('<a>')
+                          .attr("href", "#");   
+      var photoImage = $('<img>')
+                          .attr({ src:"/img/blog/article/images/author.jpg", alt:"Image" });                                                    
+
+      var commentDiv = $('<div>')
+                              .attr("class", "full-comment");
+      var commentHeading = $('<h5>');
+      var commentHeadingLink = $('<a>')
+                                  .attr("href", "#")
+                                  .text("Themography");   
+      var commentSpan = $('<a>')
+                            .attr("class", "date")
+                            .text("June 15, 2015 at 2.17am");     
+      var commentParagraph = $('<p>')
+                            .text(String(data.commentText));  
+      var commentReplyDiv = $('<div>')
+                                .attr("class", "reply");
+      var commentReplyLink = $('<a>')
+                                  .attr({ class:"btn-white-sm", href:"#" })
+                                  .text("Reply");  
+      commentReplyDiv.append(commentReplyLink);    
+      commentDiv.append(commentHeading.append(commentHeadingLink));    
+      commentDiv.append(commentReplyDiv);    
+      commentDiv.append(commentSpan);    
+      commentDiv.append(commentParagraph);    
+
+      photoLink.append(photoImage);
+      photoDiv.append(photoLink);    
+
+      outerMostDiv.append(photoDiv);
+      outerMostDiv.append(commentDiv);
+
+      return outerMostDiv;                                          
+
+    }    
 
 
 /* ======================================
      IS LOGGED IN AND SHOW ALERT IF NOT
    ====================================== */
-    function isLoggedIn(blogData){
+    function isLoggedIn(commentData){
 
         var x = $.ajax({
             url:"/loginMiddleware/isLoggedIn",
@@ -124,7 +282,7 @@ $( document ).ready(function() {
             success: function(response) {
               console.log('Am i logged in for comment?',response);
               if(response == true){
-                 ajaxCallForSubmitComment(blogData);
+                 ajaxCallForSubmitComment(commentData);
               }
               else{
                 swal({
@@ -147,6 +305,8 @@ $( document ).ready(function() {
             }
         });
     }
+
+
 /* ======================================
      AJAX CALL FOR SUBMITTING COMMENT
    ====================================== */
@@ -162,12 +322,13 @@ $( document ).ready(function() {
             cache: false,
             processData: false,
             success: function(response) {
-                console.log('Blog submission succesfull',response);
+                console.log('Comment submission succesfull',response);
+                addCommentDynamically(data);
+                
                 if(response.statusCode == 200 ){
-                  window.location = "/blog/blogSummary?status=200";
                 }
                 else{
-                  window.location = "/blog/blogSummary";
+
                 }
             },
             error: function(response) {
@@ -176,6 +337,21 @@ $( document ).ready(function() {
             }
         });
     } 
+
+
+/* ======================================
+     ADD ELEMENT DYNAMICALLY
+   ====================================== */
+    function addCommentDynamically(data){
+      var comment =  createComment(data);
+      $( comment ).insertAfter(data.aboveElement);
+      removeCommentBox();
+      $('html, body').animate({
+        scrollTop: (data.aboveElement).offset().top -85
+      }, 500);
+    }    
+
+
 
 /* ======================================
      LOGIN SELECTED

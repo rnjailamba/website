@@ -24,13 +24,14 @@ Table of Index
 9. PAGE: GALLERY POST CSS
 10. PAGE: ARCHIVE CSS
 11. FOOTER CSS
+12. LOGIN CUSTOM CSS
 */
 
 /* ================================
  	1. GLOBAL
    ================================ */
 body {
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: normal;
 }
 
@@ -59,7 +60,6 @@ a:hover, a:focus {
 	text-decoration: none;
 }
 p {
-	text-transform: capitalize;
 	font-family: 'Droid Sans', sans-serif;
 	font-size: 13px;
 	line-height: 30px;
@@ -101,7 +101,6 @@ img {
 }
 input, textarea {
 	border: 1px solid #000000;
-	text-transform: uppercase;
 }
 .line {
 	height: 1px;
@@ -650,7 +649,7 @@ input, textarea {
 	margin-bottom: 60px;
 }
 .comment-wrap {
-	border-bottom: 1px dashed #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
 	position: relative;
 	margin-top: 50px;
 	padding-bottom: 20px;
@@ -979,4 +978,15 @@ footer {
     background-repeat:no-repeat;
     background-position:center;
     margin:-100px 0 0 -100px;
+}
+
+/* ================================
+ 	12. LOGIN CUSTOM 
+   ================================ */
+.cd-user-modal {
+	z-index: 10000;
+}
+
+#myfield_description{
+    display: none;
 }
