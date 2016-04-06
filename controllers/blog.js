@@ -172,9 +172,21 @@ router.get('/writePostOptions', function(req, res, next) {
 
 // GALLERYPOST
 // ==============================================
-router.get('/galleryPost', function(req, res, next) {
+router.get('/galleryPost/:id', function(req, res, next) {
 
-  loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',null);
+  // console.log("in gallery post ",req.params.id);
+  var blogId = req.params.id;
+  var commentsPromise = getBlogCommentsPromise(blogId,1);
+  commentsPromise.then(function(data) {
+      console.log(data,"data from promeis");
+
+      loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',null);
+
+  }).then(function() {
+
+  });
+
+  
 
 });
 
@@ -188,7 +200,7 @@ router.post('/galleryPostComments', function(req, res, next) {
   data.parentId =req.body.parentId;
   data.comment =  {
                       "postedBy": {
-                          "userName": "",
+                          "userName": "fdfdf",
                           "userId": loginMiddleWare.functions.getCustomerId(req,res)
                       },
                       "commentContent": {
@@ -419,40 +431,174 @@ router.get('/ping', function(req, res){
 //     }
 // }
 
-    var data = {};
-    data.blogId = "5701ebf996311f1bb22035ca";
-    data.parentId = "5701ebf996311f1bb22035ca";
-    data.comment =  {
-                        "postedBy": {
-                            "userName": "raj",
-                            "userId": 1234
-                        },
-                        "commentContent": {
-                            "text": "hellocomment",
-                            "paragraphType": "Text"
-                        }
-                    };
+    // var data = {};
+    // data.blogId = "5701ebf996311f1bb22035ca";
+    // data.parentId = "5701ebf996311f1bb22035ca";
+    // data.comment =  {
+    //                     "postedBy": {
+    //                         "userName": "raj",
+    //                         "userId": 1234
+    //                     },
+    //                     "commentContent": {
+    //                         "text": "hellocomment",
+    //                         "paragraphType": "Text"
+    //                     }
+    //                 };
 
+    // modules.request({
+    //     url:mappings['blogService.addComment'], 
+    //     method: 'POST',
+    //     json: data
+    //   },
+    //     function (error, response, body) {
+    //       if (!error && response.statusCode == 200) {
+    //               bodyRet = body; 
+
+    //         console.log("pring returned bodyyy");
+    //         res.status(200).send(body);
+    //       }
+    //       else{
+    //                     res.status(404).send(response);
+
+    //         console.log("not signed up successfully");
+    //       }
+    //  });
+
+
+    // var data = {};
+    // data.blogId = "570480e696311f2867b1f6d8";
+
+    // modules.request({
+    //     url:mappings['blogService.readBlogs'], 
+    //     method: 'POST',
+    //     json: data
+    //   },
+    //     function (error, response, body) {
+    //       if (!error && response.statusCode == 200) {
+    //         console.log("pring returned bodyyy");
+    //         res.status(200).send(body);
+    //       }
+    //       else{
+    //         res.status(404).send(response);
+    //         console.log("not signed up successfully");
+    //       }
+    //  });
+    var data = {};
+    data.blogId = "570480e696311f2867b1f6d8";
+    data.collectionNo = 1;
     modules.request({
-        url:mappings['blogService.addComment'], 
+        url:mappings['blogService.readComments'], 
         method: 'POST',
         json: data
       },
         function (error, response, body) {
           if (!error && response.statusCode == 200) {
-                  bodyRet = body; 
-
             console.log("pring returned bodyyy");
-            res.status(200).send(body);
+            var comments = body["comments"];
+            var obj = comments;
+            var arrayComments = new Array();
+            for (var i=0; i<obj.length; i++){
+              var dataCompressedComments = obj[i]["commentContent"];
+              dataCompressedComments.postedByUserName = obj[i]["postedBy"]["userName"];
+              dataCompressedComments.postedByUserId = obj[i]["postedBy"]["userId"];
+              dataCompressedComments.createdDate = obj[i]["createdDate"];
+              dataCompressedComments.modifiedDate = obj[i]["modifiedDate"];
+              dataCompressedComments.noOfReplyCommentsCollections = obj[i]["noOfReplyCommentsCollections"];
+              dataCompressedComments.softDelete = obj[i]["softDelete"];
+
+              arrayComments.push(dataCompressedComments);
+            }
+            res.status(200).send(JSON.stringify(arrayComments));
+            // res.status(200).send(body["comments"]);
           }
           else{
-                        res.status(404).send(response);
-
+            res.status(404).send(response);
             console.log("not signed up successfully");
           }
-     });
-
+     });    
 });
+
+var getBlogCommentsPromise = function(blogId,collectionNo){
+  var data = {};
+  data.blogId = blogId;
+  data.collectionNo = collectionNo;
+  console.log("in promise",blogId,collectionNo);
+  return new Promise(function(resolve, reject){
+
+    modules.request({
+        url:mappings['blogService.readComments'], 
+        method: 'POST',
+        json: data
+      },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            console.log("pring returned bodyyy");
+            var comments = body["comments"];
+            var obj = comments;
+            var arrayComments = new Array();
+            for (var i=0; i<obj.length; i++){
+              var dataCompressedComments = obj[i]["commentContent"];
+              dataCompressedComments.postedByUserName = obj[i]["postedBy"]["userName"];
+              dataCompressedComments.postedByUserId = obj[i]["postedBy"]["userId"];
+              dataCompressedComments.createdDate = obj[i]["createdDate"];
+              dataCompressedComments.modifiedDate = obj[i]["modifiedDate"];
+              dataCompressedComments.noOfReplyCommentsCollections = obj[i]["noOfReplyCommentsCollections"];
+              dataCompressedComments.softDelete = obj[i]["softDelete"];
+
+              arrayComments.push(dataCompressedComments);
+            }
+            resolve(JSON.stringify(arrayComments));
+            // res.status(200).send(JSON.stringify(arrayComments));
+            // res.status(200).send(body["comments"]);
+          }
+          else{
+            // res.status(404).send(response);
+            reject(error);
+            console.log("not signed up successfully");
+          }
+     });     
+
+
+  });
+}
+
+
+var getBlogComments = function(blogId,collectionNo){
+
+  var data = {};
+  data.blogId = blogId;
+  data.collectionNo = collectionNo;
+  modules.request({
+      url:mappings['blogService.readComments'], 
+      method: 'POST',
+      json: data
+    },
+      function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log("pring returned bodyyy");
+          var comments = body["comments"];
+          var obj = comments;
+          var arrayComments = new Array();
+          for (var i=0; i<obj.length; i++){
+            var dataCompressedComments = obj[i]["commentContent"];
+            dataCompressedComments.postedByUserName = obj[i]["postedBy"]["userName"];
+            dataCompressedComments.postedByUserId = obj[i]["postedBy"]["userId"];
+            dataCompressedComments.createdDate = obj[i]["createdDate"];
+            dataCompressedComments.modifiedDate = obj[i]["modifiedDate"];
+            dataCompressedComments.noOfReplyCommentsCollections = obj[i]["noOfReplyCommentsCollections"];
+            dataCompressedComments.softDelete = obj[i]["softDelete"];
+
+            arrayComments.push(dataCompressedComments);
+          }
+          res.status(200).send(JSON.stringify(arrayComments));
+          // res.status(200).send(body["comments"]);
+        }
+        else{
+          res.status(404).send(response);
+          console.log("not signed up successfully");
+        }
+   });   
+}
 
 
 
