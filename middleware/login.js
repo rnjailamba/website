@@ -18,19 +18,18 @@ module.exports.functions = {
   isLoggedInWithRender: function(req,res,redisClient,pageToDisplay,extraParams) {
     var customerId = req.cookies.customerId; 
     var ruid = req.cookies.ruid;
+    var viewData = {};
     redisClient.get(ruid, function(err, reply) {
       // console.log("have set otpo",reply);
       if( customerId == reply && reply != null && typeof customerId != 'undefined'){
         console.log("logged in",customerId,reply);
-          res.render(pageToDisplay, {
-              isLoggedIn : true
-          });
+        viewData = getViewData(extraParams,true);
+        res.render( pageToDisplay,viewData );
       }
       else{
       	console.log("not logged in",customerId,reply);
-        res.render(pageToDisplay, {
-            isLoggedIn : false
-        });        
+        viewData = getViewData(extraParams,false);
+        res.render( pageToDisplay,viewData );        
       }
     }); 
     // console.log(ruid,customerId);
@@ -71,6 +70,40 @@ var isLoggedIn = function(req,res){
 var getCustomerId = function(req,res){
   var customerId = req.cookies.customerId; 
   return "customerId"; 
+}
+
+
+// GET VIEW DATA
+// ==============================================
+var getViewData = function(extraParams,isLoggedIn){
+  var data = {};
+  if( isLoggedIn == true)
+    data.isLoggedIn = true;
+  else
+    data.isLoggedIn = false;
+
+  if( extraParams != null && !isEmpty(extraParams) ){
+    return mergeObjects(data,extraParams);
+  }     
+  else{
+    return data;
+  }
+}
+
+// MERGE OBJECTS
+// ==============================================
+var mergeObjects = function(obj1,obj2){
+    var obj3 = {};
+    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+    return obj3;
+}
+
+
+// GET IS EMPTY
+// ==============================================
+var isEmpty = function (obj){
+  return (Object.keys(obj).length === 0 && JSON.stringify(obj) === JSON.stringify({}));
 }
 
 

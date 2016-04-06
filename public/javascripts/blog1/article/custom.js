@@ -4,6 +4,149 @@
 $( document ).ready(function() {
   jQuery('.header').addClass('fixed-nav');
 });
+
+
+/* ======================================
+     CREATE BLOG TITLE
+   ====================================== */
+    function createBlogTitle(){
+
+      var outerMostDiv = $('<div>')
+                              .attr("class", "post");      
+      var blogTitle = $('<div>')
+                          .attr("class", "blog-title");
+      var blogTitleHeading = $('<h1>');
+      var blogTitleHeadingLink = $('<a>')
+                                      .attr("href", "#");  
+
+      var metaDiv = $('<div>')
+                              .attr("class", "meta"); 
+      var photoImage = $('<img>')
+                          .attr({ src:"/img/blog/article/images/author.jpg", alt:"Image" });                                                    
+
+      var commentDiv = $('<div>')
+                              .attr("class", "full-comment");
+      var unorderedList = $('<ul>')
+      var listCategory = $('<li>')
+                              .attr("class", "category");
+      var listCategoryLink = $('<a>')
+                                .attr("href", "#");                              
+      var listAuthor = $('<li>')
+                            .attr("class", "author");
+      var listDate = $('<li>')
+                            .attr("class", "date");
+      var listComment = $('<li>')
+                              .attr("class", "comment"); 
+
+
+
+      var title = blogContent.title;
+      if(typeof title != 'undefined' && title != null){
+
+        blogTitleHeadingLink.text(title);
+
+      }
+      else{
+        
+        blogTitleHeadingLink.text("No title provided");
+
+      }
+
+      var date = blogContent.createdDate;
+      if(typeof date != 'undefined' && date != null){
+
+        listDate.text(date);
+
+      }
+      else{
+        
+        listDate.text("No date provided");
+
+      }  
+
+      var userName = blogContent.userName;
+      if(typeof userName != 'undefined' && userName != null){
+
+        listAuthor.text(userName);
+
+      }
+      else{
+        
+        listAuthor.text("No user name");
+
+      }  
+      var totalComments = blogContent.totalComments;
+      if(typeof totalComments != 'undefined' && totalComments != null){
+
+        listComment.text(totalComments+" comments");
+      }
+      else{
+        
+        listComment.text("No comments");
+
+      }                                   
+
+      blogTitle.append(blogTitleHeading.append(blogTitleHeadingLink));
+
+      unorderedList.append(listCategory.append(listCategoryLink));
+      unorderedList.append(listAuthor);
+      unorderedList.append(listDate);
+      unorderedList.append(listComment);
+
+      metaDiv.append(unorderedList);
+      
+      outerMostDiv.append(blogTitle);
+      outerMostDiv.append(metaDiv);
+      
+      return outerMostDiv;                                       
+
+    }
+
+
+/* ==============================================
+    PLACE CONTENT
+   =============================================== */
+$( document ).ready(function() {
+
+  $('#content .blog-post').empty();
+  $('#content .blog-post').append(createBlogTitle());
+  
+
+ 
+
+
+  var obj = blogContent.paragraphs;
+  console.log(obj);
+  for (var i=0; i<obj.length; i++){
+    switch( obj[i]["paragraphType"]){
+      case 'Text':
+                // alert("text");
+                $('#content .blog-post .post .content').append(obj[i]["text"]);
+                break;
+      case 'Image':
+                // alert("image");   
+                break;
+      default:
+                alert("paragraphType not supported");                                
+                break;
+    }
+  }  
+
+
+
+});
+
+// #content .blog-post .blog-title
+// #content .blog-post .meta .category
+// #content .blog-post .meta .author
+// #content .blog-post .meta .date
+// #content .blog-post .meta .comment
+
+// #content .blog-post .post .content p
+
+
+
+
 /* ==============================================
     Preloader
    =============================================== */
@@ -216,6 +359,7 @@ $( document ).ready(function() {
       return outerMostDiv.append(outerDiv.append(form));                                          
 
     }
+
 
 /* ======================================
      IS ELEMENT OF TYPE 

@@ -98,13 +98,15 @@
             <div class="col-md-8">
                 <div class="primary">
                     <div class="blog-post">
+
+
                         <div class="post">
                             <div class="blog-title">
                                 <h1><a href="#">Sophisticated Kiev Home Makes</a></h1>
                             </div>
                             <div class="meta">
                                 <ul>
-                                    <li class="category"><a href="archive.html">Lifestyle</a></li>
+                                    <li class="category"><a href="#">Lifestyle</a></li>
                                     <li class="author">By Admin</li>
                                     <li class="date">JUne 14, 2015</li>
                                     <li class="comment">4 Comments</li>
@@ -112,6 +114,23 @@
                             </div> <!-- End .meta -->
                         </div>
                         <br>
+                        <div class="thum-item">
+                           <div class="embed-responsive embed-responsive-16by9">
+                              <iframe src="https://player.vimeo.com/video/44801709?byline=0&amp;portrait=0" width="500" height="281" allowfullscreen=""></iframe>
+                            </div> <!-- End .embed-responsive -->
+                        </div>
+                        <div class="thum-item">
+                             <img src="/img/blog/article/images/placeholder-post-thum.jpg" alt="Post Thumnail Image">
+                        </div> 
+                        <div class="thum-item">
+                             <img src="https://cementifyblogimages.s3-ap-southeast-1.amazonaws.com/1459912919472.jpg" alt="Post Thumnail Image">
+                        </div>                               
+                        
+                        <div class="thum-item">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe width="854" height="510" src="https://www.youtube.com/embed/pXwaKB7YOjw" allowfullscreen=""></iframe>
+                            </div> <!-- End .embed-responsive -->
+                        </div>                                         
                         <div class="thum-item">
                             <div id="gallery-slider" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
@@ -143,15 +162,14 @@
                         </div> <!-- End .thum-item -->
                         <div class="post">
                             <div class="content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit aperiam.
-                                    <br> <br>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit aperiam.</p><p>
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
                                 <blockquote class="post-blockquote">
                                     <p>Eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                                     <div class="blockquote-author"><span>- </span>Jone Doe</div>
                                 </blockquote>
-                                <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    <br> <br>
+                                <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                <p>
                                     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit aperiam.</p>
                             </div> <!-- End .content -->
                             <div class="line"></div>
@@ -529,6 +547,11 @@
     publishAttemptedForComment.trueFalse = false;    
     var likeAttempted = false; 
     var blogId = "570480e696311f2867b1f6d8";   
+    var blogContent = <%- (content) %>; 
+    blogContent = blogContent[0];
+    var blogComments = <%- (comments) %>; 
+    // console.log(blogComments);
+    console.log(blogContent);
 
 </script>
 

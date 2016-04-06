@@ -60,13 +60,13 @@ router.post('/writePost', function(req, res, next) {
     data.noOfCommentsCollections = 0;
     data.paragraphs =  [
                             {
-                                "text": req.body.tinymceText,
-                                "paragraphType": "Text"
-                            },
-                            {
                                 "imageList": req.body.imageURLs,
                                 "paragraphType": "Image"
-                            }                   
+                            },    
+                            {
+                                "text": req.body.tinymceText,
+                                "paragraphType": "Text"
+                            }                 
                         ];
 
     console.log(JSON.stringify(data));
@@ -179,9 +179,10 @@ router.get('/galleryPost/:id', function(req, res, next) {
   var blogCommentsPromise = getBlogCommentsPromise(blogId,1);
 
   modules.Promise.all([blogContentPromise,blogCommentsPromise]).then(function(results){
-    console.log("data from blog contetn promeis",results[0]);
-    console.log("data from blog contetn promeis",results[1]);
-    loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',null);
+    // console.log("data from blog contetn promeis",results[0]);
+    // console.log("data from blog contetn promeis",results[1]);
+    var combinedData = getCombinedObjects(results[0],results[1]);
+    loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',combinedData);
   })
 
 });
@@ -479,6 +480,7 @@ router.get('/ping', function(req, res){
     //         console.log("not signed up successfully");
     //       }
     //  });
+
     var data = {};
     data.blogId = "570480e696311f2867b1f6d8";
     data.collectionNo = 1;
@@ -504,7 +506,7 @@ router.get('/ping', function(req, res){
 
               arrayComments.push(dataCompressedComments);
             }
-            res.status(200).send(JSON.stringify(arrayComments));
+            res.status(200).send(JSON.stringify(body));
           }
           else{
             res.status(404).send(response);
@@ -580,6 +582,15 @@ var getBlogContentPromise = function(blogId){
   });
 }
 
+
+// COMBINE OBJECTS
+// ==============================================
+var getCombinedObjects = function(obj1,obj2){
+  var obj3 = {};
+  obj3.content = obj1;
+  obj3.comments = obj2;
+  return obj3;
+}
 
 var justPrintSomething = function(){
     console.log("print something");
