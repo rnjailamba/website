@@ -174,19 +174,15 @@ router.get('/writePostOptions', function(req, res, next) {
 // ==============================================
 router.get('/galleryPost/:id', function(req, res, next) {
 
-  // console.log("in gallery post ",req.params.id);
   var blogId = req.params.id;
-  var commentsPromise = getBlogCommentsPromise(blogId,1);
-  commentsPromise.then(function(data) {
-      console.log(data,"data from promeis");
+  var blogContentPromise = getBlogContentPromise(blogId);
+  var blogCommentsPromise = getBlogCommentsPromise(blogId,1);
 
-      loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',null);
-
-  }).then(function() {
-
-  });
-
-  
+  modules.Promise.all([blogContentPromise,blogCommentsPromise]).then(function(results){
+    console.log("data from blog contetn promeis",results[0]);
+    console.log("data from blog contetn promeis",results[1]);
+    loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',null);
+  })
 
 });
 
@@ -509,7 +505,6 @@ router.get('/ping', function(req, res){
               arrayComments.push(dataCompressedComments);
             }
             res.status(200).send(JSON.stringify(arrayComments));
-            // res.status(200).send(body["comments"]);
           }
           else{
             res.status(404).send(response);
@@ -518,12 +513,14 @@ router.get('/ping', function(req, res){
      });    
 });
 
+
+// GET BLOG COMMENTS PROMISE
+// ==============================================
 var getBlogCommentsPromise = function(blogId,collectionNo){
   var data = {};
   data.blogId = blogId;
   data.collectionNo = collectionNo;
-  console.log("in promise",blogId,collectionNo);
-  return new Promise(function(resolve, reject){
+  return new modules.Promise(function(resolve, reject){
 
     modules.request({
         url:mappings['blogService.readComments'], 
@@ -548,58 +545,40 @@ var getBlogCommentsPromise = function(blogId,collectionNo){
               arrayComments.push(dataCompressedComments);
             }
             resolve(JSON.stringify(arrayComments));
-            // res.status(200).send(JSON.stringify(arrayComments));
-            // res.status(200).send(body["comments"]);
           }
           else{
-            // res.status(404).send(response);
             reject(error);
-            console.log("not signed up successfully");
+            console.log("could not get the blog comments");
           }
      });     
-
-
   });
 }
 
 
-var getBlogComments = function(blogId,collectionNo){
-
+// GET BLOG CONTENT PROMISE
+// ==============================================
+var getBlogContentPromise = function(blogId){
   var data = {};
   data.blogId = blogId;
-  data.collectionNo = collectionNo;
-  modules.request({
-      url:mappings['blogService.readComments'], 
-      method: 'POST',
-      json: data
-    },
-      function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          console.log("pring returned bodyyy");
-          var comments = body["comments"];
-          var obj = comments;
-          var arrayComments = new Array();
-          for (var i=0; i<obj.length; i++){
-            var dataCompressedComments = obj[i]["commentContent"];
-            dataCompressedComments.postedByUserName = obj[i]["postedBy"]["userName"];
-            dataCompressedComments.postedByUserId = obj[i]["postedBy"]["userId"];
-            dataCompressedComments.createdDate = obj[i]["createdDate"];
-            dataCompressedComments.modifiedDate = obj[i]["modifiedDate"];
-            dataCompressedComments.noOfReplyCommentsCollections = obj[i]["noOfReplyCommentsCollections"];
-            dataCompressedComments.softDelete = obj[i]["softDelete"];
+  return new modules.Promise(function(resolve, reject){
 
-            arrayComments.push(dataCompressedComments);
+    modules.request({
+        url:mappings['blogService.readBlogs'], 
+        method: 'POST',
+        json: data
+      },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            console.log("pring returned bodyyy");
+            resolve(JSON.stringify(body));
           }
-          res.status(200).send(JSON.stringify(arrayComments));
-          // res.status(200).send(body["comments"]);
-        }
-        else{
-          res.status(404).send(response);
-          console.log("not signed up successfully");
-        }
-   });   
+          else{
+            reject(error);
+            console.log("could not get blog contents from the promise");
+          }
+     });     
+  });
 }
-
 
 
 var justPrintSomething = function(){
