@@ -56,6 +56,8 @@ router.post('/writePost', function(req, res, next) {
     var data = {};
     data.postedBy = loginMiddleWare.functions.getCustomerId(req,res);
     data.categoryId = req.body.category;
+    data.subCategoryId = req.body.subcategory;
+    data.title = req.body.title;
     data.isVerified = false;
     data.noOfCommentsCollections = 0;
     data.paragraphs =  [
@@ -106,6 +108,8 @@ router.post('/writePost1', function(req, res, next) {
     var data = {};
     data.postedBy = loginMiddleWare.functions.getCustomerId(req,res);
     data.categoryId = req.body.category;
+    data.subCategoryId = req.body.subcategory;
+    data.title = req.body.title;    
     data.isVerified = false;
     data.noOfCommentsCollections = 0;    
     data.paragraphs =  req.body.sirTrevorText;
@@ -184,6 +188,9 @@ router.get('/galleryPost/:id', function(req, res, next) {
     var combinedData = getCombinedObjects(results[0],results[1]);
     loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'blog/galleryPost',combinedData);
   })
+  .catch(function(error){
+    //do something with the error and handle it
+  });  
 
 });
 
@@ -530,11 +537,11 @@ var getBlogCommentsPromise = function(blogId,collectionNo){
         json: data
       },
         function (error, response, body) {
-          if (!error && response.statusCode == 200) {
+          var arrayComments = new Array();
+          if (response.statusCode == 200) {
             console.log("pring returned bodyyy");
             var comments = body["comments"];
             var obj = comments;
-            var arrayComments = new Array();
             for (var i=0; i<obj.length; i++){
               var dataCompressedComments = obj[i]["commentContent"];
               dataCompressedComments.postedByUserName = obj[i]["postedBy"]["userName"];
@@ -546,6 +553,9 @@ var getBlogCommentsPromise = function(blogId,collectionNo){
 
               arrayComments.push(dataCompressedComments);
             }
+            resolve(JSON.stringify(arrayComments));
+          }
+          else if( !error ){
             resolve(JSON.stringify(arrayComments));
           }
           else{
@@ -570,10 +580,13 @@ var getBlogContentPromise = function(blogId){
         json: data
       },
         function (error, response, body) {
-          if (!error && response.statusCode == 200) {
+          if (response.statusCode == 200) {
             console.log("pring returned bodyyy");
             resolve(JSON.stringify(body));
           }
+          else if( !error ){
+            resolve(JSON.stringify(body));
+          }          
           else{
             reject(error);
             console.log("could not get blog contents from the promise");

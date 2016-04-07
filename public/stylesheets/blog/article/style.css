@@ -429,6 +429,9 @@ input, textarea {
 .blog-post .content {
 	margin: 45px 0;
 }
+.blog-post .content ul {
+	padding-left: 30px ;
+}
 .blog-post .post-bottom {
     overflow: hidden;
 }

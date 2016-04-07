@@ -546,12 +546,14 @@
     var publishAttemptedForComment = {};
     publishAttemptedForComment.trueFalse = false;    
     var likeAttempted = false; 
-    var blogId = "570480e696311f2867b1f6d8";   
     var blogContent = <%- (content) %>; 
+    // console.log(JSON.stringify(blogContent));
     blogContent = blogContent[0];
     var blogComments = <%- (comments) %>; 
-    // console.log(blogComments);
-    console.log(blogContent);
+    // console.log(JSON.stringify(blogComments));
+    var blogId = blogContent.blogId;   
+    console.log(blogId);
+
 
 </script>
 

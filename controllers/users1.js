@@ -149,20 +149,20 @@ router.post('/sendOTPandSetCookie',function(req, res){
         // put in redis for 10 mins the token
         redisClient.select(1, function(err,res){
 
-        redisClient.set(rString, token, function(err, reply) {
-          // console.log("have set",reply);
-        });
-        redisClient.set(rString+"phone", phoneNumber, function(err, reply) {
-          // console.log("have set",reply);
-        });
+            redisClient.set(rString, token, function(err, reply) {
+              // console.log("have set",reply);
+            });
+            redisClient.set(rString+"phone", phoneNumber, function(err, reply) {
+              // console.log("have set",reply);
+            });
 
-        redisClient.expire(rString, 30*60);//expires in 180 seconds
-        redisClient.expire(rString+"phone", 30*60);//expires in 180 seconds
-        redisClient.get(rString, function(err, reply) {
-            // console.log("am getting",reply);
+            redisClient.expire(rString, 30*60);//expires in 180 seconds
+            redisClient.expire(rString+"phone", 30*60);//expires in 180 seconds
+            redisClient.get(rString, function(err, reply) {
+                // console.log("am getting",reply);
 
+            });
         });
-    });
 
     res.clearCookie('phone');
     res.cookie('phone',rString); // rString is taking place of phone

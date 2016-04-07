@@ -1,4 +1,4 @@
-/* ==============================================
+  /* ==============================================
     Fixed Navbar
    =============================================== */
 $( document ).ready(function() {
@@ -9,7 +9,7 @@ $( document ).ready(function() {
 /* ======================================
      CREATE BLOG TITLE
    ====================================== */
-    function createBlogTitle(){
+    function createBlogHTMLTitle(){
 
       var outerMostDiv = $('<div>')
                               .attr("class", "post");      
@@ -38,8 +38,6 @@ $( document ).ready(function() {
       var listComment = $('<li>')
                               .attr("class", "comment"); 
 
-
-
       var title = blogContent.title;
       if(typeof title != 'undefined' && title != null){
 
@@ -51,6 +49,18 @@ $( document ).ready(function() {
         blogTitleHeadingLink.text("No title provided");
 
       }
+
+      var category = blogContent.categoryId;
+      if(typeof category != 'undefined' && category != null){
+
+        listCategoryLink.text(category);
+
+      }
+      else{
+        
+        listCategoryLink.text("No category provided");
+
+      }      
 
       var date = blogContent.createdDate;
       if(typeof date != 'undefined' && date != null){
@@ -103,28 +113,200 @@ $( document ).ready(function() {
     }
 
 
+/* ======================================
+     CREATE BLOG IMAGE SINGLE
+   ====================================== */
+    function createBlogHTMLImageSingle(imageList){
+
+    // <div class="thum-item">
+    //      <img src="https://cementifyblogimages.s3-ap-southeast-1.amazonaws.com/1459912919472.jpg" alt="Post Thumnail Image">
+    // </div>     
+
+      var outerMostDiv = $('<div>')
+                              .attr("class", "thum-item");      
+      
+      var obj = imageList;
+      var photoImage;
+      for (var i=0; i<obj.length; i++){
+        var imageUrl = obj[i]["imageUrl"];
+        imageUrl = imageUrl.substring(0, imageUrl.indexOf(".jpg")+4);
+        console.log(imageUrl);
+
+        photoImage = $('<img>')
+                          .attr({ src:imageUrl, alt:"Post Thumbnail Image" })
+      }                              
+
+      return outerMostDiv.append(photoImage);           
+    }    
+
+
+/* ======================================
+     CREATE BLOG IMAGE MULTIPLE
+   ====================================== */
+    function createBlogHTMLImageMultiple(imageList){
+// <div class="thum-item">
+//     <div id="gallery-slider" class="carousel slide" data-ride="carousel">
+//         <div class="carousel-inner" role="listbox">
+//             <div class="item active">
+//                 <div class="gallery-item">
+//                     <img class="" src="/img/blog/article/images/placeholder-post-thum.jpg" alt="">
+//                 </div> <!-- End .slider-img -->
+//             </div>
+//             <div class="item">
+//                 <div class="gallery-item">
+//                     <img class="" src="/img/blog/article/images/placeholder-post-thum.jpg" alt="">
+//                 </div> <!-- End .slider-img -->
+//             </div>
+//         </div>
+//         <a class="left-arrow carousel-control" href="#gallery-slider" role="button" data-slide="prev">
+//             <span class="fa fa-angle-left" aria-hidden="true"></span>
+//             <span class="sr-only">Previous</span>
+//         </a>
+//         <a class="right-arrow carousel-control" href="#gallery-slider" role="button" data-slide="next">
+//             <span class="fa fa-angle-right" aria-hidden="true"></span>
+//             <span class="sr-only">Next</span>
+//         </a>
+//     </div><!-- /.carousel -->
+// </div> <!-- End .thum-item -->
+
+      var outerMostDiv = $('<div>')
+                              .attr("class", "thum-item");      
+      var gallerySliderDiv = $('<div>')
+                                .attr("id", "gallery-slider")
+                                .attr("class", "carousel slide")
+                                .attr("data-ride", "carousel");
+      var carouselInnerDiv = $('<div>')
+                                  .attr("class", "carousel-inner")
+                                  .attr("role", "listbox");
+      
+      var obj = imageList;
+      for (var i=0; i<obj.length; i++){
+        var imageItemDiv = $('<div>')
+                              .attr("class", "item"); 
+        if( i == 1 ){
+          imageItemDiv.attr("class","item active");
+        }
+
+        var galleryItem = $('<div>')
+                              .attr("class", "gallery-item"); 
+        var imageUrl = obj[i]["imageUrl"];
+        imageUrl = imageUrl.substring(0, imageUrl.indexOf(".jpg")+4);
+        console.log(imageUrl);
+
+        var photoImage = $('<img>')
+                              .attr({ src:imageUrl, alt:"Image" })
+                              .attr("class", ""); 
+        carouselInnerDiv.append(imageItemDiv.append(galleryItem.append(photoImage)));                           
+
+      }
+
+      var leftArrowLink = $('<a>')
+                            .attr("class", "left-arrow carousel-control")
+                            .attr("href", "#gallery-slider")
+                            .attr("role", "button")
+                            .attr("data-slide", "prev");
+      var faSpan = $('<span>')
+                        .attr("class", "fa fa-angle-left")
+                        .attr("aria-hidden", "true"); 
+      var srSpan = $('<span>')
+                        .attr("class", "sr-only")
+                        .text("Previous"); 
+      leftArrowLink.append(faSpan);                         
+      leftArrowLink.append(srSpan);  
+
+//         <a class="right-arrow carousel-control" href="#gallery-slider" role="button" data-slide="next">
+//             <span class="fa fa-angle-right" aria-hidden="true"></span>
+//             <span class="sr-only">Next</span>
+//         </a>      
+
+      var rightArrowLink = $('<a>')
+                            .attr("class", "right-arrow carousel-control")
+                            .attr("href", "#gallery-slider")
+                            .attr("role", "button")
+                            .attr("data-slide", "next");
+      var faSpanRight = $('<span>')
+                        .attr("class", "fa fa-angle-right")
+                        .attr("aria-hidden", "true"); 
+      var srSpanRight = $('<span>')
+                        .attr("class", "sr-only")
+                        .text("Next"); 
+      rightArrowLink.append(faSpanRight);                         
+      rightArrowLink.append(srSpanRight);    
+
+
+      gallerySliderDiv.append(carouselInnerDiv);
+      gallerySliderDiv.append(leftArrowLink);
+      gallerySliderDiv.append(rightArrowLink);
+
+      outerMostDiv.append(gallerySliderDiv);                                 
+
+      return outerMostDiv;          
+      
+    }    
+
+
+/* ======================================
+     CREATE BLOG IMAGE HANDLER
+   ====================================== */
+    function createBlogHTMLImageHandler(imageList){
+
+      var obj = imageList;
+      if( obj.length == 0 ){
+        alert("length is 0 of imageList");
+        return;
+      }
+      else if( obj.length == 1 ){
+        alert("length is 1 of imageList");
+        return createBlogHTMLImageSingle(imageList);
+      } 
+      else if( obj.length > 1 ){
+        return createBlogHTMLImageMultiple(imageList);
+      } 
+    }  
+
+/* ======================================
+     CREATE BLOG TEXT CONTENT
+   ====================================== */
+    function createBlogTextContent(text){
+  // <div class="post">
+  //   <div class="content">
+  //     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit aperiam.</p>
+  //   </div>
+  // </div>
+      var outerMostDiv = $('<div>')
+                              .attr("class", "post");      
+      var contentDiv = $('<div>')
+                                .attr("class", "content")
+                                .append($(text));
+      return outerMostDiv.append(contentDiv);
+
+    }          
+
+
 /* ==============================================
     PLACE CONTENT
    =============================================== */
 $( document ).ready(function() {
 
   $('#content .blog-post').empty();
-  $('#content .blog-post').append(createBlogTitle());
+  $('#content .blog-post').append(createBlogHTMLTitle());
   
-
- 
-
-
   var obj = blogContent.paragraphs;
   console.log(obj);
   for (var i=0; i<obj.length; i++){
     switch( obj[i]["paragraphType"]){
       case 'Text':
-                // alert("text");
-                $('#content .blog-post .post .content').append(obj[i]["text"]);
+                var blogText = createBlogTextContent(obj[i]["text"]);
+                // console.log((blogText));
+                var $html = $(blogText);
+                var str = $html.prop('outerHTML');
+                console.log(str);
+                // blogText =  '<div class="post"><div class="content"><p>Lorem ipsum dolor sit amet, consectetur .</p></div></div>';
+                $('#content .blog-post').append( blogText );
                 break;
       case 'Image':
-                // alert("image");   
+                var blogImage = createBlogHTMLImageHandler(obj[i]["imageList"]);
+                $('#content .blog-post').append(blogImage);
                 break;
       default:
                 alert("paragraphType not supported");                                
@@ -147,15 +329,15 @@ $( document ).ready(function() {
 
 
 
-/* ==============================================
-    Preloader
-   =============================================== */
+// /* ==============================================
+//     Preloader
+//    =============================================== */
 
-$(window).load(function() {
-  $('#status').fadeOut();
-  $('#preloader').delay(350).fadeOut('slow');
-  $('body').delay(350).css({'overflow':'visible'});
-});
+// $(window).load(function() {
+//   $('#status').fadeOut();
+//   $('#preloader').delay(350).fadeOut('slow');
+//   $('body').delay(350).css({'overflow':'visible'});
+// });
 
 $( document ).ready(function() {
 
