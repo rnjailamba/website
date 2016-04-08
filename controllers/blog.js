@@ -195,7 +195,7 @@ router.get('/galleryPost/:id', function(req, res, next) {
 });
 
 
-// GALLERYPOST COMMENTS
+// GALLERYPOST COMMENTS SAVE
 // ==============================================
 router.post('/galleryPostComments', function(req, res, next) {
   console.log("in the galleryPostComments",req.body);
@@ -231,6 +231,23 @@ router.post('/galleryPostComments', function(req, res, next) {
           console.log("not signed up successfully");
         }
    });
+
+
+});
+
+
+// GALLERYPOST COMMENTS SHOW MORE
+// ==============================================
+router.post('/galleryPostCommentsShowMore', function(req, res, next) {
+  console.log("in the galleryPostComments show more",req.body);
+  var blogCommentsPromise = getBlogCommentsPromise(req.body.blogId,req.body.currentBlogCollection);
+  blogCommentsPromise.then(function(data){
+    res.status(200).send(data);
+  })
+  .catch(function(error){
+    //do something with the error and handle it
+    res.status(404).send("No data retrieved");
+  });    
 
 
 });
@@ -470,7 +487,7 @@ router.get('/ping', function(req, res){
 
 
     // var data = {};
-    // data.blogId = "570480e696311f2867b1f6d8";
+    // data.blogId = "5706648396311f367ef75546";
 
     // modules.request({
     //     url:mappings['blogService.readBlogs'], 
@@ -489,7 +506,7 @@ router.get('/ping', function(req, res){
     //  });
 
     var data = {};
-    data.blogId = "570480e696311f2867b1f6d8";
+    data.blogId = "5706648396311f367ef75546";
     data.collectionNo = 1;
     modules.request({
         url:mappings['blogService.readComments'], 

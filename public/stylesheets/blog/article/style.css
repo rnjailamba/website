@@ -25,6 +25,7 @@ Table of Index
 10. PAGE: ARCHIVE CSS
 11. FOOTER CSS
 12. LOGIN CUSTOM CSS
+13. SHOW MORE COMMENTS CSS
 */
 
 /* ================================
@@ -992,4 +993,16 @@ footer {
 
 #myfield_description{
     display: none;
+}
+
+
+/* ================================
+ 	13. SHOW MORE COMMENTS 
+   ================================ */
+.comment-show-more {
+	text-align: center;
+}
+
+.showMore:hover {
+	cursor: pointer; 
 }

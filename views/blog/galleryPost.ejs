@@ -300,6 +300,10 @@
                             </div> <!-- End .full-comment -->
                         </div> <!-- End .comment-wrap -->
                     </div> <!-- End .commnet -->
+                    <br>
+                    <div class="comment-show-more">
+                        <a class="showMore btn-white-sm" type="submit" class="btn-black">Show more comments</a>
+                    </div>
                 </div>
                 <!--
                     ===============
@@ -553,6 +557,9 @@
     // console.log(JSON.stringify(blogComments));
     var blogId = blogContent.blogId;   
     console.log(blogId);
+    var currentBlogCollection = 1;
+    var totalBlogCollection = blogContent.noOfCommentsCollections;
+    console.log(totalBlogCollection);
 
 
 </script>
