@@ -16,6 +16,21 @@ $( document ).ready(function() {
 
 
 /* ======================================
+     GET DATE FORMATTED
+   ====================================== */
+
+   function getDateFormatted(d){
+
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+
+    return output = d.getFullYear() + '/' +
+        (month<10 ? '0' : '') + month + '/' +
+        (day<10 ? '0' : '') + day; 
+  }  
+
+
+/* ======================================
      CREATE COMMENT REPLY
    ====================================== */
     function createCommentReply(){
@@ -89,10 +104,10 @@ $( document ).ready(function() {
       var commentHeading = $('<h5>');
       var commentHeadingLink = $('<a>')
                                   .attr("href", "#")
-                                  .text("Themography");   
+                                  .text("Your Comment");   
       var commentSpan = $('<a>')
                             .attr("class", "date")
-                            .text("June 15, 2015 at 2.17am");     
+                            .text(getDateFormatted(new Date()));     
       var commentParagraph = $('<p>')
                             .text(String(data.commentText));  
       var commentReplyDiv = $('<div>')
@@ -110,8 +125,14 @@ $( document ).ready(function() {
         outerMostDiv.attr("data-commentId",data.commentId);
       }         
       if ('postedByUserName' in data){
-        commentHeadingLink.text(data.postedByUserName);
+        commentHeadingLink.text(data.postedByUserName);        
       }  
+      else{
+        commentHeadingLink.css("color","red"); // Just to show dynamically that it is new
+      }
+      if ('modifiedDate' in data){
+        commentSpan.text(getDateFormatted( new Date(data.modifiedDate) ));
+      }        
 
 
       commentReplyDiv.append(commentReplyLink);    
@@ -209,7 +230,7 @@ $( document ).ready(function() {
 
       }  
 
-      var userName = blogContent.userName;
+      var userName = blogContent.customerId;
       if(typeof userName != 'undefined' && userName != null){
 
         listAuthor.text(userName);

@@ -584,7 +584,7 @@ var getBlogCommentsPromise = function(blogId,collectionNo,parentId){
   data.blogId = blogId;
   data.collectionNo = collectionNo;
   if(parentId == null ){
-    console.log("parentId is null");
+    data.parentId = blogId;
   }
   else {
     data.parentId = parentId;
