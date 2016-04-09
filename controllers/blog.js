@@ -231,8 +231,45 @@ router.post('/galleryPostComments', function(req, res, next) {
           console.log("not signed up successfully");
         }
    });
+});
 
 
+// GALLERYPOST COMMENT REPLY SAVE
+// ==============================================
+router.post('/galleryPostCommentReplys', function(req, res, next) {
+  console.log("in the galleryPostCommentReplys",req.body);
+  var data = {};
+  data.blogId = req.body.blogId;
+  data.parentId =req.body.parentId;
+  data.comment =  {
+                      "postedBy": {
+                          "userName": "fdfdf",
+                          "userId": loginMiddleWare.functions.getCustomerId(req,res)
+                      },
+                      "commentContent": {
+                          "text": req.body.commentText,
+                          "paragraphType": "Text"
+                      }
+                  };
+
+  modules.request({
+      url:mappings['blogService.addReplyComment'], 
+      method: 'POST',
+      json: data
+    },
+      function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+                bodyRet = body; 
+
+          console.log("pring returned bodyyy");
+          res.status(200).send(body);
+        }
+        else{
+                      res.status(404).send(response);
+
+          console.log("not signed up successfully");
+        }
+   });
 });
 
 
@@ -240,7 +277,7 @@ router.post('/galleryPostComments', function(req, res, next) {
 // ==============================================
 router.post('/galleryPostCommentsShowMore', function(req, res, next) {
   console.log("in the galleryPostComments show more",req.body);
-  var blogCommentsPromise = getBlogCommentsPromise(req.body.blogId,req.body.currentBlogCollection);
+  var blogCommentsPromise = getBlogCommentsPromise(req.body.blogId,req.body.currentBlogCollection,req.body.parentId);
   blogCommentsPromise.then(function(data){
     res.status(200).send(data);
   })
@@ -542,10 +579,17 @@ router.get('/ping', function(req, res){
 
 // GET BLOG COMMENTS PROMISE
 // ==============================================
-var getBlogCommentsPromise = function(blogId,collectionNo){
+var getBlogCommentsPromise = function(blogId,collectionNo,parentId){
   var data = {};
   data.blogId = blogId;
   data.collectionNo = collectionNo;
+  if(parentId == null ){
+    console.log("parentId is null");
+  }
+  else {
+    data.parentId = parentId;
+  }
+
   return new modules.Promise(function(resolve, reject){
 
     modules.request({
@@ -567,6 +611,7 @@ var getBlogCommentsPromise = function(blogId,collectionNo){
               dataCompressedComments.modifiedDate = obj[i]["modifiedDate"];
               dataCompressedComments.noOfReplyCommentsCollections = obj[i]["noOfReplyCommentsCollections"];
               dataCompressedComments.softDelete = obj[i]["softDelete"];
+              dataCompressedComments.commentId = obj[i]["commentId"];
 
               arrayComments.push(dataCompressedComments);
             }

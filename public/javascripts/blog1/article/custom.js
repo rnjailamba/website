@@ -73,7 +73,7 @@ $( document ).ready(function() {
 //         </div>
 //     </div> <!-- End .full-comment -->
 // </div> <!-- End .comment-wrap -->   
-
+      // console.log(JSON.stringify(data));
       var outerMostDiv = $('<div>')
                               .attr("class", "comment-wrap")   
                               .css("margin-left",params.marginLeft+60);
@@ -100,11 +100,35 @@ $( document ).ready(function() {
       var commentReplyLink = $('<a>')
                                   .attr({ class:"btn-white-sm", href:"#" })
                                   .text("Reply");  
+      var showMoreReplyDiv = $('<div>')
+                                .attr("class", "show-reply");                                  
+      var showMoreReplyLink = $('<a>')
+                                  .attr({ class:"btn-white-sm", href:"#" })
+                                  .text("Show replies");                                    
+
+      if ('commentId' in data){
+        outerMostDiv.attr("data-commentId",data.commentId);
+      }         
+      if ('postedByUserName' in data){
+        commentHeadingLink.text(data.postedByUserName);
+      }  
+
+
       commentReplyDiv.append(commentReplyLink);    
       commentDiv.append(commentHeading.append(commentHeadingLink));    
       commentDiv.append(commentReplyDiv);    
       commentDiv.append(commentSpan);    
       commentDiv.append(commentParagraph);    
+      if ('noOfReplyCommentsCollections' in data){
+        var noOfCollections = data.noOfReplyCommentsCollections;
+        if( noOfCollections > 0 ){
+          outerMostDiv.attr("data-totalCollections",noOfCollections);
+          outerMostDiv.attr("data-currentCollections",0);
+          showMoreReplyDiv.append(showMoreReplyLink);
+          commentDiv.append(showMoreReplyDiv);
+
+        }
+      }        
 
       photoLink.append(photoImage);
       photoDiv.append(photoLink);    
@@ -362,8 +386,7 @@ $( document ).ready(function() {
     function createBlogHTMLImageHandler(imageList){
 
       var obj = imageList;
-      if( obj.length == 0 ){
-        alert("length is 0 of imageList");
+      if( obj == null || typeof obj == 'undefined' || obj.length == 0 ){
         return;
       }
       else if( obj.length == 1 ){
@@ -374,6 +397,7 @@ $( document ).ready(function() {
         return createBlogHTMLImageMultiple(imageList);
       } 
     }  
+
 
 /* ======================================
      CREATE BLOG TEXT CONTENT
@@ -429,9 +453,9 @@ $( document ).ready(function() {
 
 
 /* ======================================
-     UPDATE PUSH COMMENTS TO VIEW FROM ARRAY
+     UPDATE PUSH COMMENTS TO VIEW FROM ARRAY - AFTER DATABASE CALL
    ====================================== */
-    function pushCommentsToView(blogComments){
+    function pushCommentsToView(blogComments,aboveElement){
 
       var obj = blogComments;
       // console.log(obj);
@@ -439,11 +463,29 @@ $( document ).ready(function() {
         switch( obj[i]["paragraphType"]){
           case 'Text':
                     var data = {};
+                    // console.log(JSON.stringify(obj[i]));
                     data.commentText = obj[i]["text"];
+                    data.commentId = obj[i]["commentId"];
+                    data.postedByUserName = obj[i]["postedByUserName"];
+                    data.modifiedDate = obj[i]["modifiedDate"];
+                    data.noOfReplyCommentsCollections = obj[i]["noOfReplyCommentsCollections"];     
                     var params = {};
-                    params.marginLeft = -60;
+                    if( aboveElement == null || aboveElement.hasClass('comment')){
+                      params.marginLeft = -60;
+                    }        
+                    else{
+                      console.log("setting it");
+                      var marginLeft = parseInt($( aboveElement ).css( "margin-left" ));   
+                      params.marginLeft = marginLeft;
+                    }
                     var commentText = createComment(data,params);
-                    $('div.comment').append( commentText );
+                    if( params.marginLeft == -60){
+                      aboveElement.append( commentText );
+                    }
+                    else{
+                      commentText.insertAfter(aboveElement);
+                    }
+
                     break;
           case 'Image':
                     alert("no support for images in blog comments at the moment");
@@ -460,7 +502,7 @@ $( document ).ready(function() {
      AJAX CALL FOR SHOW MORE COMMENTS
    ====================================== */
     function ajaxCallForShowMoreComments(data){
-        console.log("in submit comment ",data);
+        console.log("in ajaxCallForShowMoreComments ",data);
         $.ajax({
             url:"/blog/galleryPostCommentsShowMore",
             type: 'POST',
@@ -474,13 +516,45 @@ $( document ).ready(function() {
                 console.log('Comments show more get succesfull',xhr.status);
                 if(xhr.status == 200 ){
                   console.log(JSON.parse(response));
-                  pushCommentsToView(JSON.parse(response));
-                  // var data = {};
-                  // data.commentText = obj[i]["text"];
-                  // var params = {};
-                  // params.marginLeft = -60;
-                  // var commentText = createComment(data,params);
-                  // $('div.comment').append( commentText );
+                  var aboveElement = $('div.comment');
+                  pushCommentsToView(JSON.parse(response),aboveElement);
+                }
+                else{
+                  alert("Comments show more get was unsuccessful due to internal error");
+                  console.log('Comments show more get was unsuccessful due to internal error',response,textStatus,xhr);
+
+                } 
+            },
+            error: function(response) {
+                console.log('Error with comment submission ' + response.statusText);
+                console.log("error page");
+            }
+        });
+    }       
+
+
+/* ======================================
+     AJAX CALL FOR SHOW MORE REPLIES
+   ====================================== */
+    function ajaxCallForShowMoreReplies(data){
+        console.log("in ajaxCallForShowMoreReplies ",data);
+        $.ajax({
+            url:"/blog/galleryPostCommentsShowMore",
+            type: 'POST',
+            async: true,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            context: this,
+            cache: false,
+            processData: false,
+            success: function(response, textStatus, xhr) {
+                console.log('Comments show more get succesfull',xhr.status);
+                if(xhr.status == 200 ){
+                  console.log((response));
+                  console.log();
+                  var aboveElement = $('div.comment');                  
+                  pushCommentsToView(JSON.parse(response),data.aboveElement);
+
 
                 }
                 else{
@@ -495,6 +569,7 @@ $( document ).ready(function() {
             }
         });
     }       
+
 
 /* ==============================================
     PLACE BLOG CONTENT
@@ -536,8 +611,8 @@ $( document ).ready(function() {
 
   $('div.comment').empty();
   $('div.comment').append(createCommentsHTMLTitle());
-  
-  pushCommentsToView(blogComments);
+  var aboveElement = $('div.comment');
+  pushCommentsToView(blogComments,aboveElement);
   updateShowMoreComments();
 });
 
@@ -554,40 +629,9 @@ $( document ).ready(function() {
     updateShowMoreComments();
   }); 
 
-  // $('div.comment').empty();
-  // $('div.comment').append(createCommentsHTMLTitle());
-  
-  // var obj = blogComments;
-  // // console.log(obj);
-  // for (var i=0; i<obj.length; i++){
-  //   switch( obj[i]["paragraphType"]){
-  //     case 'Text':
-  //               var data = {};
-  //               data.commentText = obj[i]["text"];
-  //               var params = {};
-  //               params.marginLeft = -60;
-  //               var commentText = createComment(data,params);
-  //               $('div.comment').append( commentText );
-  //               break;
-  //     case 'Image':
-  //               alert("no support for images in blog comments at the moment");
-  //               break;
-  //     default:
-  //               alert("theis paragraphType not supported in comments");                                
-  //               break;
-  //   }
-  // }  
-
-
 });  
 
   
-
-
-
-
-
-
 // /* ==============================================
 //     Preloader
 //    =============================================== */
@@ -714,8 +758,9 @@ $( document ).ready(function() {
       commentData.commentText = publishAttemptedForComment.commentText;
       commentData.aboveElement = $(this).parents('.leave-a-reply-to-comment')
                                         .prevAll(".comment-wrap:first"); 
+      console.log(commentData.aboveElement.attr("data-commentId"));
       commentData.blogId = blogId;
-      commentData.parentId = blogId;                                        
+      commentData.parentId = commentData.aboveElement.attr("data-commentId");                                        
       isLoggedIn(commentData);
     }
     else{
@@ -737,7 +782,7 @@ $( document ).ready(function() {
 /* ======================================
      ON CLICKING OTHER REPLIES - ONLY THE INTENT - SO THIS WILL CREATE THE REPLY BOX
    ====================================== */
-   $(document).on('click','div.comment-wrap .btn-white-sm',function(){
+   $(document).on('click','div.comment-wrap .reply',function(){
     event.preventDefault();
     var topCommentDiv = $(this).parents('.comment-wrap');
     var commentReply = createCommentReply();
@@ -757,6 +802,33 @@ $( document ).ready(function() {
 
 
 /* ======================================
+     ON CLICKING SHOW REPLIES TO COMMENTS
+   ====================================== */
+   $(document).on('click','div.comment-wrap .show-reply',function(){
+    event.preventDefault();
+    var topCommentDiv = $(this).parents('.comment-wrap');
+    var commentId = $(topCommentDiv).attr("data-commentId"); 
+    var currentCollections = $(topCommentDiv).attr("data-currentCollections"); 
+
+    var data = {};
+    data.blogId = blogId;
+    data.currentBlogCollection = ++currentCollections;
+    data.parentId = commentId;
+    data.aboveElement = topCommentDiv;
+    console.log(topCommentDiv);
+    ajaxCallForShowMoreReplies(data);    
+
+    //get data
+
+    //run loop
+
+      //add comment dynamically 
+
+    //perform a check to see if have to increase current collection
+  });     
+
+
+/* ======================================
      REMOVE THE COMMENT BOX
    ====================================== */
     function removeCommentBox(){
@@ -773,7 +845,21 @@ $( document ).ready(function() {
 
       var x = $('.leave-a-reply').find('#comment').val('');                          
 
-    }    
+    }  
+
+
+/* ======================================
+     CHECK BLOGID = PARENTID
+   ====================================== */
+    function checkBlogidParentid(data){
+
+      if( data.blogId == data.parentId) return true;
+      else return false                      
+
+    }      
+
+
+
 
 
 /* ======================================
@@ -817,12 +903,18 @@ $( document ).ready(function() {
 
 
 /* ======================================
-     AJAX CALL FOR SUBMITTING COMMENT
+     AJAX CALL FOR SUBMITTING COMMENT -TOP LEVEL AND REPLIES
    ====================================== */
     function ajaxCallForSubmitComment(data){
         console.log("in submit comment ",data);
+        if(checkBlogidParentid(data)){
+          action = "galleryPostComments"
+        }    
+        else{
+          action = "galleryPostCommentReplys";
+        }    
         $.ajax({
-            url:"/blog/galleryPostComments",
+            url:"/blog/"+action,
             type: 'POST',
             async: true,
             data: JSON.stringify(data),
@@ -850,7 +942,7 @@ $( document ).ready(function() {
 
 
 /* ======================================
-     ADD ELEMENT DYNAMICALLY
+     ADD ELEMENT DYNAMICALLY - AFTER CLICK CALL
    ====================================== */
     function addCommentDynamically(data){
       var comment =  createCommentWithMargin(data);

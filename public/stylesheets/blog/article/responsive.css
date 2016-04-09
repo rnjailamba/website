@@ -134,6 +134,9 @@
 		top: 0;
 		right: 0;
 	}
+	.comment-wrap .show-reply {
+		top: 0;
+	}	
 }
 @media (min-width: 1024px) {
 	.feature-post h1 a {
