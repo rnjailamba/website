@@ -1,9 +1,6 @@
 var modules = require('../controllers/setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
-var redisClient;
-
-module.exports.setRedisClient = function(inClient) { redisClient = inClient; };
-
+var redisClient = require('../helpers/exporters/export_redisClient').redisClient;
 
 module.exports.functions = {
   sayHelloInEnglish: function() {

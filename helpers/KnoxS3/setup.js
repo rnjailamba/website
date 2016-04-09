@@ -16,9 +16,9 @@ console.log('connected to knox in helper',config.amazonS3key,config.amazonS3secr
 //
 //usingItNow(myCallback);
 
-
+var knoxClient;
 var promise = new modules.Promise(function(resolve, reject) {
-  var knoxClient = knox.createClient({
+   knoxClient = knox.createClient({
       key: config.amazonS3key
     , secret: config.amazonS3secret
     , bucket: 'cementifyblogimages'
@@ -31,15 +31,9 @@ var promise = new modules.Promise(function(resolve, reject) {
   }
 });
 
-promise.then(function(knoxClient) {
-//  console.log(knoxClient,"first"); // 1
-  var blog = require('../../controllers/blog.js');
-  blog.setClient(knoxClient);
 
-}).then(function() {
-//  console.log(val); // 3
-});
-
+var export_knoxClient = require('../exporters/export_knoxClient.js');
+export_knoxClient.setKnoxClient(knoxClient);
 
 
 

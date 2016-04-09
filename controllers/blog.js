@@ -4,13 +4,10 @@ var config = require('../config/config.js');//require all modules that are share
 var appConfig = require('../config/appConfig'); // configure service api urls in dev/prod/beta
 var mappings = appConfig();
 var loginMiddleWare = require("../middleware/login.js");
+var redisClient = require('../helpers/exporters/export_redisClient').redisClient;
+var knoxClient = require('../helpers/exporters/export_knoxClient').knoxClient;
+var solrClient = require('../helpers/exporters/export_solrClient').solrClient;
 
-var solrClient;
-module.exports.setSolrClient = function(inClient) { solrClient = inClient; };
-var knoxClient;
-module.exports.setClient = function(inClient) { knoxClient = inClient; };
-var redisClient;
-module.exports.setRedisClient = function(inClient) { redisClient = inClient; };
 
 var promise = new modules.Promise(function(resolve, reject) {
 //  console.log("created the promise2",knoxClient);

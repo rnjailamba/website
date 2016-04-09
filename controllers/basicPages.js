@@ -1,10 +1,7 @@
 var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
 var loginMiddleWare = require("../middleware/login.js");
-
-var redisClient;
-module.exports.setClient = function(inClient) { redisClient = inClient; };
-
+var redisClient = require('../helpers/exporters/export_redisClient').redisClient;
 
 // INDEX
 // ==============================================

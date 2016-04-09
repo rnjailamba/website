@@ -1,10 +1,8 @@
 var modules = require('./setup/all_modules');//require all modules that are shared by all controllers
 var router = modules.express.Router();
-var twilioClient;
-module.exports.setTwilioClient = function(inClient) { twilioClient = inClient; };
-
-var redisClient;
-module.exports.setClient = function(inClient) { redisClient = inClient; };
+var redisClient = require('../helpers/exporters/export_redisClient').redisClient;
+var twilioClient = require('../helpers/exporters/export_twilioClient').twilioClient;
+var solrClient = require('../helpers/exporters/export_solrClient').solrClient;
 
 var appConfig = require('../config/appConfig'); // configure service api urls in dev/prod/beta
 var mappings = appConfig();

@@ -1,4 +1,4 @@
-var exportedApp = require('./export_app');
+var exportedApp = require('../../helpers/exporters/export_app');
 var basicPages = require('../basicPages.js');
 var users1 = require('../users1.js');
 var blog = require('../blog.js');
