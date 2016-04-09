@@ -124,9 +124,9 @@ $( document ).ready(function() {
         if( noOfCollections > 0 ){
           outerMostDiv.attr("data-totalCollections",noOfCollections);
           outerMostDiv.attr("data-currentCollections",0);
+          showMoreReplyLink.text("Show replies ("+noOfCollections+")");
           showMoreReplyDiv.append(showMoreReplyLink);
           commentDiv.append(showMoreReplyDiv);
-
         }
       }        
 
@@ -139,7 +139,6 @@ $( document ).ready(function() {
       return outerMostDiv;                                          
 
     }    
-
 
 
 /* ======================================
@@ -450,6 +449,24 @@ $( document ).ready(function() {
       }
                                     
     }   
+
+/* ======================================
+     UPDATE SHOW MORE REPLIES
+   ====================================== */
+    function updateShowMoreReplies(currentCollections,totalCollections,showMoreDiv){
+
+      if( currentCollections >= totalCollections ){
+
+        showMoreDiv.empty();
+      
+      }
+      else{
+       
+        showMoreDiv.find("a").text("Show Replies ("+(totalCollections-currentCollections)+")");
+
+      }
+                                    
+    }     
 
 
 /* ======================================
@@ -809,15 +826,16 @@ $( document ).ready(function() {
     var topCommentDiv = $(this).parents('.comment-wrap');
     var commentId = $(topCommentDiv).attr("data-commentId"); 
     var currentCollections = $(topCommentDiv).attr("data-currentCollections"); 
+    var totalCollections = $(topCommentDiv).attr("data-totalCollections"); 
 
     var data = {};
     data.blogId = blogId;
     data.currentBlogCollection = ++currentCollections;
     data.parentId = commentId;
     data.aboveElement = topCommentDiv;
-    console.log(topCommentDiv);
-    ajaxCallForShowMoreReplies(data);    
-
+    ajaxCallForShowMoreReplies(data);  
+    updateShowMoreReplies(currentCollections,totalCollections,$(this));  
+    $(topCommentDiv).attr("data-currentCollections",currentCollections);
     //get data
 
     //run loop
