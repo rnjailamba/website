@@ -21,8 +21,11 @@
     <link rel="stylesheet" type="text/css" href="/css/common/tooltipster.css"></link> <!-- css for tooltipster -->
     <link rel="stylesheet" href="/css/codeSnippets/sweetAlert/sweetAlert.css"><!-- css for sweet alert -->
 </head>
+
 <body>
 <% include ../partials/loginModal.ejs %>
+<% include ../partials/loaders.ejs %>
+    
     <nav class="nav">   
         <ul class="main-nav">
             <%if (isLoggedIn == true) { %>
@@ -192,6 +195,8 @@
     var likeAttempted = false; 
 
 </script>
+
+
 
 </body>
 <link rel="stylesheet" type="text/css" href="/css/blog/write/write.css"></link> <!-- css for the tinymce and headings and image upload area -->

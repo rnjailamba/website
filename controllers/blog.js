@@ -54,6 +54,9 @@ router.post('/writePost', function(req, res, next) {
     data.postedBy = loginMiddleWare.functions.getCustomerId(req,res);
     data.categoryId = req.body.category;
     data.subCategoryId = req.body.subcategory;
+    data.name = req.body.name;
+    data.userAboutus = req.body.about;
+    data.blogType = "normal";
     data.title = req.body.title;
     data.isVerified = false;
     data.noOfCommentsCollections = 0;
