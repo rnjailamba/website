@@ -200,14 +200,17 @@ router.post('/registerUser',function(req, res){
     var signupEmail = req.body.signupEmail;
     var signupPassword = req.body.signupPassword;
     var rString = req.cookies.phone;
+    console.log("rString",rString);
     redisClient.get(rString+"phone", function(err, reply) {
       var data = {};
       data.mobile = reply;
+      console.log("reply",reply);
       if( !isBlank(signupEmail)){
         data.email = signupEmail;
       }
       else console.log("email is empty ");
       data.password = signupPassword;
+      console.log("signing up",JSON.stringify(data));
       modules.request({
         url:mappings['userService.create'], 
         method: 'POST',

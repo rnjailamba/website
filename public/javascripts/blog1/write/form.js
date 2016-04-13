@@ -264,7 +264,10 @@ jQuery(document).ready(function($){
 			var i;
 			for (i = 0; i < myDropzone.files.length; i++) {
 			  imageURLs += myDropzone.files[i].xhr.responseURL;
-        imageURLsArray.push ( {"imageUrl":myDropzone.files[i].xhr.responseURL} );
+        var imageUrl = myDropzone.files[i].xhr.responseURL;
+        imageUrl = imageUrl.substring(0, imageUrl.indexOf(".jpg")+4);
+
+        imageURLsArray.push ( {"imageUrl":imageUrl} );
 
 			}
 			if( !checkName && !checkTitle && !checkCategory && !checkSubcategory && !checkAbout){

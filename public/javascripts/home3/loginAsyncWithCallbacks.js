@@ -260,7 +260,7 @@ jQuery(document).ready(function($){
     //AJAX CALL FOR REGISTERING USER
     // ==============================================
     function ajaxCallForRegisterUser(signupEmail,signupPassword){
-        // console.log("in sign up ",signupEmail,signupPassword);
+        console.log("in sign up ",signupEmail,signupPassword);
         var data = {};
         data.signupEmail = signupEmail;
         data.signupPassword = signupPassword;
