@@ -587,6 +587,7 @@
             if (!token) {
               return;
             }
+            alert(token);
 
             if ($.isFunction($(input).data("settings").onFreeTaggingAdd)) {
               token = $(input).data("settings").onFreeTaggingAdd.call(hiddenInput, token);
@@ -660,7 +661,7 @@
 
               if(found_existing_token) {
                   select_token(found_existing_token);
-                  input_token.insertAfter(found_existing_token);
+                  // input_token.insertAfter(found_existing_token);
                   focusWithTimeout(input_box);
                   return;
               }
@@ -693,7 +694,7 @@
       function select_token (token) {
           if (!$(input).data("settings").disabled) {
               token.addClass($(input).data("settings").classes.selectedToken);
-              selected_token = token.get(0);
+              // selected_token = token.get(0);
 
               // Hide input box
               input_box.val("");
@@ -1068,11 +1069,11 @@
       function focusWithTimeout(object) {
           setTimeout(
             function() {
-        object.focus();
-            },
-      50
-      );
-      }
+              object.focus();
+                  },
+            50
+            );
+            }
   };
 
   // Really basic cache for the results
