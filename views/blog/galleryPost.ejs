@@ -24,6 +24,7 @@
     <link href="/css/blog/article/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/codeSnippets/sweetAlert/sweetAlert.css"><!-- css for sweet alert -->
     <link rel="stylesheet" type="text/css" href="/css/common/tooltipster.css"></link> <!-- css for tooltipster -->
+    <link rel="stylesheet" href="/css/common/rrssb.css" /> <!-- css for sharing buttons -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -192,6 +193,8 @@
                             </div> <!-- End .share -->
                         </div> <!--  End .post -->
                     </div> <!-- End .blog-post -->
+                    <% include ../partials/socialSharing.ejs %>
+
                     <div class="author-box">
 
                         <div class="photo">
@@ -554,7 +557,7 @@
     publishAttemptedForComment.trueFalse = false;    
     var likeAttempted = false; 
     var blogContent = <%- (content) %>; 
-    // console.log(JSON.stringify(blogContent));
+    console.log(JSON.stringify(blogContent));
     blogContent = blogContent[0];
     var blogComments = <%- (comments) %>; 
     // console.log(JSON.stringify(blogComments));

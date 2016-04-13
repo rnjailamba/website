@@ -381,9 +381,8 @@ jQuery(document).ready(function ($) {
   $('.rrssb-buttons').rrssb({
     // required:
     title: 'Saw this interesting link!!',
-    url: 'http://kurtnoble.com/labs/rrssb/',
-    // url: window.location.href ,
-
+    // url: 'http://kurtnoble.com/labs/rrssb/',
+    url: window.location.href ,
     description: 'Have a look at this interesting link - ',
     // emailBody: 'Usually email body is just the description + url, but you can customize it if you want'
   });
