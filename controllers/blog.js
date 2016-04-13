@@ -288,6 +288,25 @@ router.post('/galleryPostCommentsShowMore', function(req, res, next) {
 });
 
 
+// SEARCHTAGS
+// ==============================================
+router.get('/searchTags', function(req, res, next) {
+  console.log("in the searchTags ",req.query);
+  var randomNumberGenerator = modules.random.randomNumberGenerator;
+  var randomNumber = randomNumberGenerator(30);
+  // console.log(randomNumber);
+  var arr = [
+    {"id":"856","name":"House"},
+    {"id":"1035","name":"Desperate Housewives"}
+  ]
+  
+  res.status(200).send(JSON.stringify(arr));
+
+
+
+});
+
+
 // INDEX1
 // ==============================================
 router.get('/index1', function(req, res, next) {

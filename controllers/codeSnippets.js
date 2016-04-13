@@ -86,6 +86,13 @@ router.get('/switcher', function(req, res, next) {
   res.render('codeSnippets/switcher', { title: 'Express' });
 });
 
+
+// TAGS
+// ==============================================
+router.get('/tags', function(req, res, next) {
+  res.render('codeSnippets/tags', { title: 'Express' });
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }

@@ -7,6 +7,7 @@ var winston = require('winston'); // used for logging
 var request = require('request'); // used to make http requests
 var urlgenerator = require('urlgenerator'); // used to generate url from base url and parameters
 var os = require('os'); // used to get OS information during sign up
+var random = require('randomnumberandwordgenerator');
 
 
 //var $ = require('jquery');
@@ -21,3 +22,4 @@ module.exports.winston = winston;
 module.exports.request = request;
 module.exports.urlgenerator = urlgenerator;
 module.exports.os = os;
+module.exports.random = random;
