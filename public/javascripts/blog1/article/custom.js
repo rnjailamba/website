@@ -132,7 +132,8 @@ $( document ).ready(function() {
       }
       if ('modifiedDate' in data){
         commentSpan.text(getDateFormatted( new Date(data.modifiedDate) ));
-      }        
+      }   
+
 
 
       commentReplyDiv.append(commentReplyLink);    
@@ -964,6 +965,7 @@ $( document ).ready(function() {
             success: function(response, textStatus, xhr) {
                 console.log('Comment submission succesfull',xhr.status);
                 if(xhr.status == 200 ){
+                  data.commentId = response.commmentId;  
                   addCommentDynamically(data);
                 }
                 else{

@@ -220,14 +220,12 @@ router.post('/galleryPostComments', function(req, res, next) {
     },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
-                bodyRet = body; 
-
+          bodyRet = body; 
           console.log("pring returned bodyyy");
           res.status(200).send(body);
         }
         else{
-                      res.status(404).send(response);
-
+          res.status(404).send(response);
           console.log("not signed up successfully");
         }
    });
