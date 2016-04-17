@@ -302,21 +302,6 @@ jQuery(document).ready(function($){
                           listData.paragraphType = "Text";
                           convertedArray.push(listData);
                           break;
-            case 'image':
-                          console.log(JSON.stringify(data['file']));
-                          var imageData = {};
-                          var imageURLs = new Array();
-
-                          var singleImageData = {};
-                          singleImageData.imageUrl = data['file']['url'];
-                          singleImageData.imageUrl = singleImageData.imageUrl.substring(0, singleImageData.imageUrl.indexOf(".jpg")+4);
-                          singleImageData.imageCaption = "hello";
-                          imageURLs.push ( singleImageData );
-
-                          imageData.imageList = imageURLs;
-                          imageData.paragraphType = "Image";                          
-                          convertedArray.push(imageData);                      
-                          break;
             case 'quote':
                           console.log(JSON.stringify(data['text']));
                           // console.log(JSON.stringify(data['cite']));
@@ -325,6 +310,20 @@ jQuery(document).ready(function($){
                           quoteData.paragraphType = "Text"; 
                           convertedArray.push(quoteData);                      
                           break;
+            case 'image':
+                          console.log(JSON.stringify(data['file']));
+                          var imageData = {};
+                          var imageURLs = new Array();
+
+                          var singleImageData = {};
+                          singleImageData.imageUrl = data['file']['url'];
+                          singleImageData.imageCaption = "hello";
+                          imageURLs.push ( singleImageData );
+
+                          imageData.imageList = imageURLs;
+                          imageData.paragraphType = "Image";                          
+                          convertedArray.push(imageData);                      
+                          break;                          
             case 'video':
                           console.log(JSON.stringify(data['source']));
                           console.log(JSON.stringify(data['remote_id']));
@@ -340,7 +339,8 @@ jQuery(document).ready(function($){
                           videoData.paragraphType = "Video";                          
                           convertedArray.push(videoData);                      
                           break;
-            default : alert("this type is not known by system",type);
+            default : console.log("this type is not known by system",type);
+                      alert("this type is not known by system",type);
 
           }
         } // end outer for loop

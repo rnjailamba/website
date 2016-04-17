@@ -3546,6 +3546,7 @@ return /******/ (function(modules) { // webpackBootstrap
          success: function(response) {
            console.log('S3 url retrieval successs!',response);
            returnedURL = response;
+           returnedURL = returnedURL.substring(0, returnedURL.indexOf(".jpg")+4);
 
              xhr = $.ajax({
                url: returnedURL,
