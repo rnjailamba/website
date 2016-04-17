@@ -346,10 +346,23 @@ jQuery(document).ready(function($){
                           console.log(JSON.stringify(data['remote_id']));
                           var videoData = {};
                           var videoURLs = new Array();
+                          var source;
+                          var videoUrl;
 
                           var singleVideoData = {};
-                          singleVideoData.videoUrl = data['remote_id'];
-                          singleVideoData.videoCaption = "hello";
+                          // singleVideoData.videoCaption = "hello";
+                          source = data['source'];
+                          videoUrl = data['remote_id'];
+                          if( source == "youtube"){
+                            videoUrl = "https://www.youtube.com/watch?v=".concat(videoUrl);
+                          }
+                          else if( source == "vimeo" ){
+                            videoUrl = "https://vimeo.com/".concat(videoUrl);
+                          }
+                          else{
+                            console.log("not handling this video type");
+                          }
+                          singleVideoData.videoUrl = videoUrl;
                           videoURLs.push ( singleVideoData );
 
                           videoData.videoList = videoURLs;                          
