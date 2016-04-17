@@ -5,23 +5,8 @@ var appConfig = require('../config/appConfig'); // configure service api urls in
 var mappings = appConfig();
 var loginMiddleWare = require("../middleware/login.js");
 var redisClient = require('../helpers/exporters/export_redisClient').redisClient;
-var knoxClient = require('../helpers/exporters/export_knoxClient').knoxClient;
 var solrClient = require('../helpers/exporters/export_solrClient').solrClient;
 
-
-var promise = new modules.Promise(function(resolve, reject) {
-//  console.log("created the promise2",knoxClient);
-  if ( typeof knoxClient !== 'undefined' && knoxClient ){
-         console.log("resolved2");
-        resolve(knoxClient);
-   }
-});
-
-promise.then(function(knoxClient) {
-//  console.log(knoxClient,"in the final then"); // 1
-
-}).then(function() {
-});
 
 var AWS = require('aws-sdk');
 AWS.config.region = 'ap-southeast-1';
@@ -106,12 +91,16 @@ router.get('/writePost1', function(req, res, next) {
 router.post('/writePost1', function(req, res, next) {
     console.log("in the post1",req.body);
     var data = {};
+
     data.postedBy = loginMiddleWare.functions.getCustomerId(req,res);
     data.categoryId = req.body.category;
     data.subCategoryId = req.body.subcategory;
-    data.title = req.body.title;    
+    data.name = req.body.name;
+    data.userAboutus = req.body.about;
+    data.blogType = "dynamic";
+    data.title = req.body.title;
     data.isVerified = false;
-    data.noOfCommentsCollections = 0;    
+    data.noOfCommentsCollections = 0;
     data.paragraphs =  req.body.sirTrevorText;
     console.log(JSON.stringify(data));
 
@@ -302,7 +291,20 @@ router.get('/searchTags', function(req, res, next) {
   
   res.status(200).send(JSON.stringify(arr));
 
+});
 
+
+// TYPEAHEAD
+// ==============================================
+router.get('/searchTypeahead', function(req, res, next) {
+  console.log("in the searchTypeahead ",req.query);
+  var randomNumberGenerator = modules.random.randomNumberGenerator;
+  var randomNumber = randomNumberGenerator(30);
+  // console.log(randomNumber);
+  var arr = ["Andorra","United Arab Emirates","Afghanistan","Antigua and Barbuda","Anguilla","Albania","Armenia","Angola","Antarctica","Argentina","American Samoa","Austria","Australia","Aruba","Åland","Azerbaijan","Bosnia and Herzegovina","Barbados","Bangladesh","Belgium","Burkina Faso","Bulgaria","Bahrain","Burundi","Benin","Saint Barthélemy","Bermuda","Brunei","Bolivia","Bonaire","Brazil","Bahamas","Bhutan","Bouvet Island","Botswana","Belarus","Belize","Canada","Cocos [Keeling] Islands","Congo","Central African Republic","Republic of the Congo","Switzerland","Ivory Coast","Cook Islands","Chile","Cameroon","China","Colombia","Costa Rica","Cuba","Cape Verde","Curacao","Christmas Island","Cyprus","Czechia","Germany","Djibouti","Denmark","Dominica","Dominican Republic","Algeria","Ecuador","Estonia","Egypt","Western Sahara","Eritrea","Spain","Ethiopia","Finland","Fiji","Falkland Islands","Micronesia","Faroe Islands","France","Gabon","United Kingdom","Grenada","Georgia","French Guiana","Guernsey","Ghana","Gibraltar","Greenland","Gambia","Guinea","Guadeloupe","Equatorial Guinea","Greece","South Georgia and the South Sandwich Islands","Guatemala","Guam","Guinea-Bissau","Guyana","Hong Kong","Heard Island and McDonald Islands","Honduras","Croatia","Haiti","Hungary","Indonesia","Ireland","Israel","Isle of Man","India","British Indian Ocean Territory","Iraq","Iran","Iceland","Italy","Jersey","Jamaica","Jordan","Japan","Kenya","Kyrgyzstan","Cambodia","Kiribati","Comoros","Saint Kitts and Nevis","North Korea","South Korea","Kuwait","Cayman Islands","Kazakhstan","Laos","Lebanon","Saint Lucia","Liechtenstein","Sri Lanka","Liberia","Lesotho","Lithuania","Luxembourg","Latvia","Libya","Morocco","Monaco","Moldova","Montenegro","Saint Martin","Madagascar","Marshall Islands","Macedonia","Mali","Myanmar [Burma]","Mongolia","Macao","Northern Mariana Islands","Martinique","Mauritania","Montserrat","Malta","Mauritius","Maldives","Malawi","Mexico","Malaysia","Mozambique","Namibia","New Caledonia","Niger","Norfolk Island","Nigeria","Nicaragua","Netherlands","Norway","Nepal","Nauru","Niue","New Zealand","Oman","Panama","Peru","French Polynesia","Papua New Guinea","Philippines","Pakistan","Poland","Saint Pierre and Miquelon","Pitcairn Islands","Puerto Rico","Palestine","Portugal","Palau","Paraguay","Qatar","Réunion","Romania","Serbia","Russia","Rwanda","Saudi Arabia","Solomon Islands","Seychelles","Sudan","Sweden","Singapore","Saint Helena","Slovenia","Svalbard and Jan Mayen","Slovakia","Sierra Leone","San Marino","Senegal","Somalia","Suriname","South Sudan","São Tomé and Príncipe","El Salvador","Sint Maarten","Syria","Swaziland","Turks and Caicos Islands","Chad","French Southern Territories","Togo","Thailand","Tajikistan","Tokelau","East Timor","Turkmenistan","Tunisia","Tonga","Turkey","Trinidad and Tobago","Tuvalu","Taiwan","Tanzania","Ukraine","Uganda","U.S. Minor Outlying Islands","United States","Uruguay","Uzbekistan","Vatican City","Saint Vincent and the Grenadines","Venezuela","British Virgin Islands","U.S. Virgin Islands","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Kosovo","Yemen","Mayotte","South Africa","Zambia","Zimbabwe"];
+
+  
+  res.status(200).send(JSON.stringify(arr));
 
 });
 

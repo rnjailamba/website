@@ -2,8 +2,8 @@
 module.exports = {
 
     'secret': 'ilovescotchyscotch',
-    'amazonS3key': 'AKIAJDTELPCXKB6E3LBQ',
-    'amazonS3secret': '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'
+    'amazonS3key': 'AKIAJ2QOR4DTCUFS6NFQ',
+    'amazonS3secret': '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'
 
 };
 

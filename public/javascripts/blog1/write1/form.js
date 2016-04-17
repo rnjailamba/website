@@ -270,8 +270,10 @@ jQuery(document).ready(function($){
           switch(type){
             case 'heading':
                           console.log(JSON.stringify(data['text']));
+                          var headingElement = $('<h3>')
+                                                    .text(data['text']);
                           var headingData = {};
-                          headingData.text = data['text'];
+                          headingData.text = headingElement[0].outerHTML;
                           headingData.paragraphType = "Text";
                           convertedArray.push(headingData);
                           break;
@@ -307,7 +309,7 @@ jQuery(document).ready(function($){
 
                           var singleImageData = {};
                           singleImageData.imageUrl = data['file']['url'];
-                          singleImageData.imageUrl = singleImageData.imageUrl.substring(0, imageUrl.indexOf(".jpg")+4);
+                          singleImageData.imageUrl = singleImageData.imageUrl.substring(0, singleImageData.imageUrl.indexOf(".jpg")+4);
                           singleImageData.imageCaption = "hello";
                           imageURLs.push ( singleImageData );
 

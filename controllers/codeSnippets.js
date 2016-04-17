@@ -93,6 +93,13 @@ router.get('/tags', function(req, res, next) {
   res.render('codeSnippets/tags', { title: 'Express' });
 });
 
+
+// TYPEAHEAD
+// ==============================================
+router.get('/typeahead', function(req, res, next) {
+  res.render('codeSnippets/typeahead', { title: 'Express' });
+});
+
 var justPrintSomething = function(){
     console.log("print something");
 }
