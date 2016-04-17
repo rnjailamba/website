@@ -317,13 +317,30 @@ jQuery(document).ready(function($){
 
                           var singleImageData = {};
                           singleImageData.imageUrl = data['file']['url'];
-                          singleImageData.imageCaption = "hello";
                           imageURLs.push ( singleImageData );
-
                           imageData.imageList = imageURLs;
                           imageData.paragraphType = "Image";                          
                           convertedArray.push(imageData);                      
-                          break;                          
+                          break; 
+            case 'captioned_image':
+                          console.log(JSON.stringify(data['file']));
+                          var imageData = {};
+                          var imageURLs = new Array();
+                          var caption = data['text'];
+                          //caption comes as <p>blabla</p> or <p></br></p> when empty
+                          //will handle both the cases here so 
+                          caption = $(caption);
+                          captionText = caption[0].innerText;
+                          var singleImageData = {};
+                          if( captionText.trim().length > 0 ){
+                            singleImageData.imageCaption = captionText.trim();
+                          }
+                          singleImageData.imageUrl = data['file']['url'];
+                          imageURLs.push ( singleImageData );
+                          imageData.imageList = imageURLs;
+                          imageData.paragraphType = "Image";                          
+                          convertedArray.push(imageData);                      
+                          break;                                                    
             case 'video':
                           console.log(JSON.stringify(data['source']));
                           console.log(JSON.stringify(data['remote_id']));
