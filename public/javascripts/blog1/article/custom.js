@@ -411,13 +411,89 @@ $( document ).ready(function() {
         return;
       }
       else if( obj.length == 1 ){
-        alert("length is 1 of imageList");
         return createBlogHTMLImageSingle(imageList);
       } 
       else if( obj.length > 1 ){
         return createBlogHTMLImageMultiple(imageList);
       } 
     }  
+
+
+/* ======================================
+     CREATE BLOG VIDEO VIMEO
+   ====================================== */
+    function createBlogHTMLVideoVimeo(videoUrl){
+// <div class="thum-item">
+//    <div class="embed-responsive embed-responsive-16by9">
+//       <iframe src="https://player.vimeo.com/video/44801709?byline=0&amp;portrait=0" width="500" height="281" allowfullscreen=""></iframe>
+//     </div> <!-- End .embed-responsive -->
+// </div>
+      //https://vimeo.com/163097374#at=3
+      var stripUniqueId = videoUrl.substring(videoUrl.indexOf("vimeo.com/")+"vimeo.com/".length,videoUrl.length);
+      // alert(stripUniqueId);
+      videoUrl = ("https://player.vimeo.com/video/".concat(stripUniqueId)).concat("?byline=0&amp;portrait=0");
+      var outerMostDiv = $('<div>')
+                              .attr("class", "thum-item");
+      var innerDiv = $('<div>')
+                           .attr("class", "embed-responsive embed-responsive-16by9");                                    
+      
+      var iframe = $('<iframe>')
+                          .attr({ src:videoUrl, width:"500", height:"281" ,allowfullscreen:"" });                       
+
+      innerDiv.append(iframe);
+      return outerMostDiv.append(innerDiv);           
+    }      
+
+
+/* ======================================
+     CREATE BLOG VIDEO YOUTUBE
+   ====================================== */
+    function createBlogHTMLVideoYoutube(videoUrl){
+// <div class="thum-item">
+//     <div class="embed-responsive embed-responsive-16by9">
+//         <iframe width="854" height="510" src="https://www.youtube.com/embed/pXwaKB7YOjw" allowfullscreen=""></iframe>
+//     </div> <!-- End .embed-responsive -->
+// </div>    
+      //https://www.youtube.com/watch?v=S176AKQhcCk
+      var stripUniqueId = videoUrl.substring(videoUrl.indexOf("www.youtube.com/watch?v=")+"www.youtube.com/watch?v=".length,videoUrl.length);
+      // alert(stripUniqueId);
+      videoUrl = "https://www.youtube.com/embed/".concat(stripUniqueId);
+      var outerMostDiv = $('<div>')
+                              .attr("class", "thum-item");
+      var innerDiv = $('<div>')
+                           .attr("class", "embed-responsive embed-responsive-16by9");                                    
+      
+      var iframe = $('<iframe>')
+                          .attr({ src:videoUrl, width:"854", height:"510" ,allowfullscreen:"" })                             
+
+      innerDiv.append(iframe);
+      return outerMostDiv.append(innerDiv);   ;           
+    }        
+
+
+/* ======================================
+     CREATE BLOG HTML VIDEO HANDLER
+   ====================================== */
+    function createBlogHTMLVideoHandler(videoList){
+
+      var obj = videoList;
+      if( obj == null || typeof obj == 'undefined' || obj.length == 0 ){
+        return;
+      }
+      else {
+        for (var i=0; i<obj.length; i++){
+          var videoUrl = obj[i]["videoUrl"];
+          console.log(videoUrl);
+          if( videoUrl.indexOf("youtube") > -1 ){
+            return createBlogHTMLVideoYoutube(videoUrl);
+          }    
+          else if( videoUrl.indexOf("vimeo") > -1 ){
+            return createBlogHTMLVideoVimeo(videoUrl);
+          }
+        }
+      } 
+    }      
+
 
 
 /* ======================================
@@ -619,7 +695,7 @@ $( document ).ready(function() {
   $('#content .blog-post').append(createBlogHTMLTitle());
   
   var obj = blogContent.paragraphs;
-  // console.log(obj);
+  if ( typeof obj == 'undefined' ) return ;
   for (var i=0; i<obj.length; i++){
     switch( obj[i]["paragraphType"]){
       case 'Text':
@@ -635,6 +711,10 @@ $( document ).ready(function() {
                 var blogImage = createBlogHTMLImageHandler(obj[i]["imageList"]);
                 $('#content .blog-post').append(blogImage);
                 break;
+      case 'Video':
+                var blogVideo = createBlogHTMLVideoHandler(obj[i]["videoList"]);
+                $('#content .blog-post').append(blogVideo);
+                break;                
       default:
                 alert("paragraphType not supported");                                
                 break;
