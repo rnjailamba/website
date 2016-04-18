@@ -420,6 +420,39 @@ $( document ).ready(function() {
 
 
 /* ======================================
+     PARSE YOUTUBE URL
+   ====================================== */
+    function parseYoutubeUrl(videoUrl){
+      var url = videoUrl;
+      var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      var match = url.match(regExp);
+      if (match && match[2].length == 11) {
+        return match[2];
+      } else {
+          alert("not a youtube url");
+      }
+    }     
+
+
+/* ======================================
+     PARSE VIMEO URL
+   ====================================== */
+    function parseVimeoUrl(videoUrl){
+
+      var url = videoUrl;
+      var regExp =/http(s)?:\/\/(www\.)?vimeo.com\/(\d+)(\/)?(#.*)?/;
+
+      var match = url.match(regExp);
+
+      if (match){
+          return match[3];
+      }else{
+          alert("not a vimeo url");
+      }
+    }          
+
+
+/* ======================================
      CREATE BLOG VIDEO VIMEO
    ====================================== */
     function createBlogHTMLVideoVimeo(videoUrl){
@@ -429,7 +462,7 @@ $( document ).ready(function() {
 //     </div> <!-- End .embed-responsive -->
 // </div>
       //https://vimeo.com/163097374#at=3
-      var stripUniqueId = videoUrl.substring(videoUrl.indexOf("vimeo.com/")+"vimeo.com/".length,videoUrl.length);
+      var stripUniqueId = parseVimeoUrl(videoUrl);
       // alert(stripUniqueId);
       videoUrl = ("https://player.vimeo.com/video/".concat(stripUniqueId)).concat("?byline=0&amp;portrait=0");
       var outerMostDiv = $('<div>')
@@ -455,7 +488,7 @@ $( document ).ready(function() {
 //     </div> <!-- End .embed-responsive -->
 // </div>    
       //https://www.youtube.com/watch?v=S176AKQhcCk
-      var stripUniqueId = videoUrl.substring(videoUrl.indexOf("www.youtube.com/watch?v=")+"www.youtube.com/watch?v=".length,videoUrl.length);
+      var stripUniqueId = parseYoutubeUrl(videoUrl);
       // alert(stripUniqueId);
       videoUrl = "https://www.youtube.com/embed/".concat(stripUniqueId);
       var outerMostDiv = $('<div>')
