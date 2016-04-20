@@ -98,5 +98,5 @@ SirTrevor.Blocks.CaptionedImage = SirTrevor.Block.extend({
                 text: SirTrevor.toMarkdown( this.getTextBlock().html() )
             }
         });
-    },
+    }
 });

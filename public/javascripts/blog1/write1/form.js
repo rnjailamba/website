@@ -246,15 +246,16 @@ jQuery(document).ready(function($){
       var objectsirTrevorText = JSON.parse( sirTrevorText );   // { foo: "bar" }
       var convertedArray = new Array(); // or the shortcut: = []
 
-      console.log("in convertSirTrevorData ",JSON.stringify(objectsirTrevorText));
 
       if(!isEmpty(objectsirTrevorText)){
-         var obj = objectsirTrevorText["data"];
+          var obj = objectsirTrevorText["data"];
+          console.log("in convertSirTrevorData ",JSON.stringify(obj),obj.length);
           var type;
           var data;
         for (var i=0; i<obj.length; i++){
+            console.log("Item name: "+obj[i]['type']);
+
           for (var name in obj[i]) {
-            // console.log("Item name: "+name+obj[i][name]);
             switch(name){
               case 'type':
                           type = obj[i][name];
@@ -278,7 +279,7 @@ jQuery(document).ready(function($){
                           convertedArray.push(headingData);
                           break;
             case 'text':
-                          console.log(JSON.stringify(data['text']));
+                          console.log("text",JSON.stringify(data['text']));
                           var textData = {};
                           textData.text = data['text'];
                           textData.paragraphType = "Text";    
@@ -286,13 +287,13 @@ jQuery(document).ready(function($){
                           break;
             case 'list':
                           console.log(JSON.stringify(data["listItems"]));
-                          var obj = data["listItems"];
+                          var listobj = data["listItems"];
                           var list = document.createElement('ul');
-                          for (var i=0; i<obj.length; i++){
+                          for (var j=0; j<listobj.length; j++){
                             // Create the list item:
                             var item = document.createElement('li');
                             // Set its contents:
-                            item.appendChild(document.createTextNode(obj[i]["content"]));
+                            item.appendChild(document.createTextNode(listobj[j]["content"]));
                             // Add it to the list:
                             list.appendChild(item);
                           }   
@@ -323,7 +324,7 @@ jQuery(document).ready(function($){
                           convertedArray.push(imageData);                      
                           break; 
             case 'captioned_image':
-                          console.log(JSON.stringify(data['file']));
+                          console.log("captioned_image",JSON.stringify(data['file']));
                           var imageData = {};
                           var imageURLs = new Array();
                           var caption = data['text'];

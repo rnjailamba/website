@@ -5,7 +5,7 @@ HEADING
 -------------------------------- */
 
 .heading{
-    background: #2ecc71;
+    background: #ecf0f1;
     padding: 20px;
     text-align: center;
 
@@ -16,7 +16,7 @@ HEADING
 }
 
 .headingspan {
-    background: #2ecc71;
+    background: #f2ca27;
     padding: 20px;
     font-weight: 500;
     line-height: 1.1;    

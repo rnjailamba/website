@@ -23960,6 +23960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.uploader(
 	        file,
 	        function(data) {
+	          console.log("here the data is set for sir trevor image");
 	          this.setData(data);
 	          this.ready();
 	        },

@@ -733,11 +733,6 @@ $( document ).ready(function() {
     switch( obj[i]["paragraphType"]){
       case 'Text':
                 var blogText = createBlogTextContent(obj[i]["text"]);
-                // console.log((blogText));
-                // var $html = $(blogText);
-                // var str = $html.prop('outerHTML');
-                // console.log(str);
-                // blogText =  '<div class="post"><div class="content"><p>Lorem ipsum dolor sit amet, consectetur .</p></div></div>';
                 $('#content .blog-post').append( blogText );
                 break;
       case 'Image':
