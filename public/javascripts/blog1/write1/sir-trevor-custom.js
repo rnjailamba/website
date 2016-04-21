@@ -8,22 +8,22 @@ $(document).ready(function () {
 //            "Heading",
 //            "Text"
 //          ],
-         onEditorRender : function() {
-              this.block_manager.createBlock("OrderedList");
-              this.block_manager.createBlock("CaptionedImage");
+           onEditorRender : function() {
+                // this.block_manager.createBlock("OrderedList");
+                // this.block_manager.createBlock("CaptionedImage");
 
-            },
-           blockTypes: [
-                       "Text",
-                       "Heading",
-                       "Image",
-                       "List",
-                       "Quote",
-                       "Tweet",
-                       "Video",
-                       "OrderedList",
-                       "CaptionedImage"
-                     ],
+              },
+             blockTypes: [
+                         "Text",
+                         "Heading",
+                         "Image",
+                         // "CaptionedImage",
+                         "List",
+                         // "Quote",
+                         // "Tweet",
+                         "Video",
+                         // "OrderedList",
+                       ],
         onFormSubmit: function(){
             alert("form submitted");
         }
