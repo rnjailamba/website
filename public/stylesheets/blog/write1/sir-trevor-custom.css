@@ -32,3 +32,7 @@ CUSTOM SIR TREVOR STYLES
 .st-list-block__list { 
     list-style: inherit !important; 
 }
+
+.st-list-block__ordered_list li{
+    list-style-type: decimal;
+}

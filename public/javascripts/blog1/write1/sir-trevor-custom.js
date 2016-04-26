@@ -9,7 +9,7 @@ $(document).ready(function () {
 //            "Text"
 //          ],
            onEditorRender : function() {
-                // this.block_manager.createBlock("OrderedList");
+                this.block_manager.createBlock("OrderedList");
                 // this.block_manager.createBlock("CaptionedImage");
 
               },
@@ -22,7 +22,7 @@ $(document).ready(function () {
                          // "Quote",
                          // "Tweet",
                          "Video",
-                         // "OrderedList",
+                         "OrderedList"
                        ],
         onFormSubmit: function(){
             alert("form submitted");
