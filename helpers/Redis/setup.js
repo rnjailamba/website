@@ -1,5 +1,5 @@
 var redis = require('redis');
-var redisClient = redis.createClient().on('connect', function() {
+var redisClient = redis.createClient('redis-lively-77028').on('connect', function() {
      console.log('connected to redis in helper');
  }); //creates a new client
 
