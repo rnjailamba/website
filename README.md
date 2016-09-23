@@ -5,8 +5,9 @@
   - http://cementify.herokuapp.com/ - development happening here
   - Created redis-lively-77028 as REDIS_URL
   - https://devcenter.heroku.com/articles/heroku-redis#connecting-in-node-js
-
-  - 
+  - https://devcenter.heroku.com/articles/custom-domains
+  - http://stackoverflow.com/questions/7170664/how-to-configure-heroku-application-dns-to-godaddy-domain
+  
 ## Purpose
 
 **EXPRESS SET UP**
