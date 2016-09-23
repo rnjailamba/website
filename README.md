@@ -1,4 +1,12 @@
 # Cementify Express JS code
+#Deploy to heroku
+  - https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app
+  - https://github.com/bmizerany/heroku-docs/blob/master/docs/renaming-apps.txt
+  - http://cementify.herokuapp.com/ - development happening here
+  - Created redis-lively-77028 as REDIS_URL
+  - https://devcenter.heroku.com/articles/heroku-redis#connecting-in-node-js
+
+  - 
 ## Purpose
 
 **EXPRESS SET UP**
