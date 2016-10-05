@@ -12,8 +12,8 @@ router.get('/', function(req, res){
 
 // INDEX
 // ==============================================
-router.get('/index', function(req, res, next) {
-	loginMiddleWare.functions.isLoggedInWithRender(req,res,redisClient,'basicPages/home3',null);
+router.get('/contact', function(req, res, next) {
+  res.render('index/contact', { title: 'Express' });
 
 });
 
@@ -21,7 +21,7 @@ router.get('/index', function(req, res, next) {
 // ABOUT
 // ==============================================
 router.get('/about', function(req, res, next) {
-  res.render('basicPages/about', { title: 'Express' });
+  res.render('index/about', { title: 'Express' });
 });
 
 
