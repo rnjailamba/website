@@ -13,6 +13,9 @@ app.use('/bower', modules.express.static(__dirname + '/bower_components/'));
 app.use('/css', modules.express.static(__dirname + '/public/stylesheets/'));
 app.use('/js', modules.express.static(__dirname + '/public/javascripts/'));
 app.use('/img', modules.express.static(__dirname + '/public/images/'));
+app.use('/cssNew', modules.express.static(__dirname + '/public/stylesheets/cssNew'));
+app.use('/imgNew', modules.express.static(__dirname + '/public/images/imgNew'));
+app.use('/jsNew', modules.express.static(__dirname + '/public/javascripts/jsNew'));
 app.use(modules.flash()); // use connect-flash for flash messages stored in session
 app.set('superSecret', modules.config.secret); // secret variable
 app.use(modules.logger('dev')); // log every request to the console
