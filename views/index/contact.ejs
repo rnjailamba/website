@@ -93,28 +93,48 @@
 	</div>	<!-- CONTAINER -->
 	<div class="container inforow">
 		<div class="col-sm-4">
-			<h3>Contact Form</h3>
+			<h3>Contact Form [ Only the email is necessary, Rest all can go blank ]</h3>
 		</div>
 		<div class="col-sm-7 col-sm-offset-1">
 			<form   id="foo"  >
 				<div class="form-wrap">
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<input type="text" name="name" id="fname" placeholder="Name">
-					</div>
+					</div> -->
 					<div class="form-group">
 						<input type="email" name="email" id="femail" placeholder="Email" required>
 					</div>
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<input name="phone"  type="text" placeholder="Telephone" id="fphone" />
-					</div>
+					</div> -->
 					<div class="form-group">
-						<textarea name="message"  placeholder="Message" id="fmessage"></textarea>
+						<input name="message" type="text"  placeholder="Any details/expectations of the work you want to get done." id="fmessage"></input>
 					</div>
+					<div class="">
+						<p>Approximate budget that you are looking at for your construction work-</p>
+						<input type="radio" name="cost" value="greater1lpa"> > 1 Lakh <br>
+						<input type="radio" name="cost" value="less1lpa"> <= 1 Lakh<br>
+						<input type="radio" name="cost" value="other" checked> Other  
+					</div>	
+					<div class="">
+						<p>What irritates you the most about construction work(let your feelings out!) -</p>
+						<input type="radio" name="issue" value="bad work"> Below par work of Contractor <br>
+						<input type="radio" name="issue" value="late work"> Work never gets done on time <br>
+						<input type="radio" name="issue" value="money"> Contractors are too expensive <br>						
+						<input type="radio" name="issue" value="other" checked> Other  
+					</div>						
+					<div class="">
+						<p>How would you classify yourself -</p>
+						<input type="radio" name="details" value="job"> Job <br>
+						<input type="radio" name="details" value="business"> Business<br>
+						<input type="radio" name="details" value="senior"> Senior Citizen<br>
+						<input type="radio" name="details" value="other" checked> Unclassifiable :)
+					</div>					
 
 				</div>
 
 				<button  onclick="myFunction(event)" id= "fbutton" class="btn btn-primary" >Send</button>
-				<p  id="result"></p>
+				<p style="color:green" id="result"></p>
 
 			</form>
 		</div>
